@@ -1,0 +1,79 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "parser": "babel-eslint",
+  "globals": {
+    "describe": true,
+    "it": true,
+    "expect": true,
+    "jest": true,
+    "before": true,
+    "after": true,
+    "sinon": true,
+    "beforeEach": true,
+    "afterEach": true,
+    "createServerFactory": true
+  },
+  "ecmaFeatures": {
+    "arrowFunctions": true,
+    "blockBindings": true,
+    "classes": true,
+    "defaultParams": true,
+    "destructuring": true,
+    "forOf": true,
+    "generators": true,
+    "modules": true,
+    "spread": true,
+    "templateStrings": true,
+    "jsx": true
+  },
+  "settings": {
+      "ecmascript": 6,
+      "jsx": true
+  },
+  "rules": {
+    "comma-dangle": 1,
+    "no-debugger": 2,
+    "no-extra-semi": 1,
+    "no-unreachable": 1,
+    "no-dupe-keys": 1,
+    "no-unused-expressions": 0,
+    "eqeqeq": 1,
+    "new-cap": 0,
+    "no-alert": 2,
+    "no-shadow": 0,
+    "no-lone-blocks": 1,
+    "no-loop-func": 1,
+    "no-multi-spaces": 1,
+    "no-native-reassign": 1,
+    "no-redeclare": 1,
+    "radix": 1,
+    "no-console": 0,
+    "handle-callback-err": 0,
+    "no-undef": 1,
+    "no-unused-vars": [1, {"vars": "all", "args": "none"}],
+    "no-use-before-define": 0,
+    "space-return-throw-case": 1,
+    "space-infix-ops": 1,
+    "space-in-parens": [1, "never"],
+    "space-before-blocks":  [1, "always"],
+    "space-after-keywords":  [1, "always"],
+    "semi": [1, "always"],
+    "quotes": [1, "single"],
+    "one-var": [1, "never"],
+    "no-trailing-spaces": 1,
+    "semi-spacing": 1,
+    "no-multiple-empty-lines": 1,
+    "no-mixed-spaces-and-tabs": 1,
+    "key-spacing": [1, {
+     "beforeColon": false,
+     "afterColon": true
+    }],
+    "object-shorthand": [2, "methods"],
+    "camelcase": 0,
+    "comma-spacing": [2, {"before": false, "after": true}]
+  }
+}
