@@ -17,7 +17,6 @@
   },
   "homepage": "https://github.com/peterKaleta/react-token-autocomplete#readme",
   "dependencies": {
-    "radium": "^0.13.8",
     "babel": "^5.8.21",
     "babel-core": "^5.8.22",
     "babel-eslint": "^4.0.10",
@@ -39,6 +38,7 @@
     "nodemon": "^1.4.1",
     "path": "^0.11.14",
     "peters-toolbelt": "^0.1.0",
+    "radium": "^0.13.8",
     "react": "^0.13.3",
     "react-bootstrap": "^0.24.5",
     "react-hot-loader": "^1.2.9",
