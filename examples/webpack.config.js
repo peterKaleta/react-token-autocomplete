@@ -11,7 +11,7 @@ plugins.push(new HtmlWebpackPlugin({
 
 
 var conf = new webpackConf({
-                entry: './index.jsx',
+                entry: path.join(__dirname, '/index.jsx'),
                 output: {
                     path: path.join(__dirname, '/examples/build'),
                     filename: 'index.js'
