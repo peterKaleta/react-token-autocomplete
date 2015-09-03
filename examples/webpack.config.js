@@ -6,14 +6,14 @@ var plugins = [];
 
 plugins.push(new HtmlWebpackPlugin({
   filename: 'index.html',
-  template: './examples/index.template.html',
+  template: './examples/index.template.html'
 }));
 
 
 var conf = new webpackConf({
                 entry: path.join(__dirname, '/index.jsx'),
                 output: {
-                    path: path.join(__dirname, '/examples/build'),
+                    path: path.join(__dirname, '/dist'),
                     filename: 'index.js'
                 },
                 plugins: plugins

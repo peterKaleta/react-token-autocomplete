@@ -8,7 +8,6 @@ export NODE_ENV=production
   --devtool eval \
   --progress \
   --display-chunks \
-  --content-base dist \
   --optimize-occurence-order \
   --bail
 
@@ -20,6 +19,5 @@ export NODE_ENV=production
   --devtool inline-source-map \
   --progress \
   --display-chunks \
-  --content-base dist \
   --optimize-occurence-order \
   --bail

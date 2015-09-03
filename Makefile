@@ -20,7 +20,7 @@ dev-examples:
 	./scripts/dev-examples.sh
 
 build:
-	./scripts/build.client.sh
+	./scripts/build.sh
 
 lint:
 	./scripts/lint.sh
