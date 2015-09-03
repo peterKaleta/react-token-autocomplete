@@ -16,6 +16,9 @@ setup-hooks:
 dev:
 	./scripts/dev.sh
 
+dev-examples:
+	./scripts/dev-examples.sh
+
 build:
 	./scripts/build.client.sh
 
