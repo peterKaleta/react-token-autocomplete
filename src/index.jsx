@@ -14,10 +14,10 @@ export default class TokenAutocomplete extends React.Component{
   static propTypes = {
   }
 
-  contextTypes = {
+  static contextTypes = {
   }
 
-  static defaultProps = {
+  defaultProps = {
   }
 
   state = {
@@ -26,6 +26,7 @@ export default class TokenAutocomplete extends React.Component{
   render() {
     return (
       <div ref="wrapper" style={styles.wrapper}>
+        test
       </div>
     );
   }
