@@ -2,8 +2,12 @@
   "env": {
     "browser": true,
     "node": true,
-    "es6": true
-  },
+    "es6": true,
+    "es7": true,
+  },  
+  "plugins": [
+    "react"
+  ],
   "parser": "babel-eslint",
   "globals": {
     "describe": true,
@@ -18,6 +22,7 @@
     "createServerFactory": true
   },
   "ecmaFeatures": {
+    "jsx": true,
     "arrowFunctions": true,
     "blockBindings": true,
     "classes": true,
@@ -27,8 +32,7 @@
     "generators": true,
     "modules": true,
     "spread": true,
-    "templateStrings": true,
-    "jsx": true
+    "templateStrings": true
   },
   "settings": {
       "ecmascript": 6,
