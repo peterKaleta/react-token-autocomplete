@@ -1,6 +1,6 @@
 import React from 'react';
 import radium from 'radium';
-
+import Options from './options';
 const styles = {
   wrapper: {
   }
@@ -12,22 +12,43 @@ export default class TokenAutocomplete extends React.Component {
   static displayName = 'TokenAutocomplete';
 
   static propTypes = {
+
   }
 
   static contextTypes = {
   }
 
   static defaultProps = {
-    options: []
+    options: [],
+    values: [],
+    placeholder: 'add new tag',
+    treshold: 3
   }
 
   state = {
+    inputValue: ''
+  }
+
+  onInputChange = (e) => {
+    this.setState({
+      inputValue: e.target.value
+    });
+  }
+
+  renderOptions = () => {
+    return this.state.inputValue.length >= this.props.treshold
+      ? <Options ref="options" options={this.props.options} />
+      : null;
   }
 
   render() {
+
     return (
       <div ref="wrapper" style={styles.wrapper}>
+        <input onChange={this.onInputChange} placeholder={this.props.placeholder} ref="input"/>
+        {this.renderOptions()}
       </div>
     );
+
   }
 }
