@@ -1,12 +1,18 @@
 var RewirePlugin = require('rewire-webpack');
 var webpack = require('webpack');
-var webpackConf = require('peters-toolbelt').webpack;
 
 var CI = !process.env.WATCH_TESTS;
-var conf = new webpackConf({
+var conf = {
   cache: true,
   resolve: {
-    modulesDirectories: ['node_modules']
+    modulesDirectories: ['node_modules'],
+    extensions: ['', '.jsx', '.js']
+  },
+  module: {
+    loaders: [
+      { test: /\.(js?|jsx?)$/, exclude: /node_modules|(spec\.js)$/, loader: 'isparta?{babel: { stage: 0, plugins: ["babel-plugin-rewire"] } }' },
+      { test: /spec\.js$/, exclude: /node_modules/, loader: 'babel-loader?stage=0&plugins=babel-plugin-rewire' }
+    ]
   },
   plugins: [
     new RewirePlugin(),
@@ -20,8 +26,7 @@ var conf = new webpackConf({
    dns: 'empty',
    fs: 'empty'
   }
-}).iNeedReact()
-  .getConfig();
+};
 
 module.exports = function(config) {
   config.set({
