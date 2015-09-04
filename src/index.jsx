@@ -12,7 +12,10 @@ export default class TokenAutocomplete extends React.Component {
   static displayName = 'TokenAutocomplete';
 
   static propTypes = {
-
+    options: React.PropTypes.array,
+    values: React.PropTypes.array,
+    placeholder: React.PropTypes.string,
+    treshold: React.PropTypes.number
   }
 
   static contextTypes = {
