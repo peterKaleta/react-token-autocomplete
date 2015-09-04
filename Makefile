@@ -29,4 +29,4 @@ test:
 	./scripts/test.sh
 
 test-watch:
-	./scripts/test.watch.sh
+	./scripts/test.sh -w
