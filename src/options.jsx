@@ -1,11 +1,7 @@
 import React from 'react';
 import radium from 'radium';
+import styles from './options.styles';
 import _ from 'lodash';
-
-const styles = {
-  wrapper: {
-  }
-};
 
 @radium
 export default class OptionList extends React.Component {
