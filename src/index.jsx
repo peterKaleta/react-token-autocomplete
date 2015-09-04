@@ -3,11 +3,11 @@ import radium from 'radium';
 
 const styles = {
   wrapper: {
-  },
+  }
 };
 
 @radium
-export default class TokenAutocomplete extends React.Component{
+export default class TokenAutocomplete extends React.Component {
 
   static displayName = 'TokenAutocomplete';
 
@@ -17,7 +17,8 @@ export default class TokenAutocomplete extends React.Component{
   static contextTypes = {
   }
 
-  defaultProps = {
+  static defaultProps = {
+    options: []
   }
 
   state = {
@@ -26,7 +27,6 @@ export default class TokenAutocomplete extends React.Component{
   render() {
     return (
       <div ref="wrapper" style={styles.wrapper}>
-        test
       </div>
     );
   }
