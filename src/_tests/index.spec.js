@@ -85,17 +85,27 @@ describe('TokenAutocomplete', () => {
 
   });
 
-  it('passes values as alreadySelected props to options list', () => {
+  describe('passes to options list', () => {
 
-    const component = renderComponent({
-      values: ['a', 'b']
+    beforeEach(() => {
+      component = renderComponent({
+        values: ['a', 'b']
+      });
+
+      var inputNode = React.findDOMNode(component.refs.input);
+      inputNode.value = 'def';
+      React.addons.TestUtils.Simulate.change(inputNode);
+
     });
 
-    var inputNode = React.findDOMNode(component.refs.input);
-    inputNode.value = 'def';
-    React.addons.TestUtils.Simulate.change(inputNode);
+    it('values as alreadySelected props', () => {
+      expect(component.refs.options.props.alreadySelected).to.include('a', 'b');
+    });
 
-    expect(component.refs.options.props.alreadySelected).to.include('a', 'b');
+    it('inputValues as filter props', () => {
+      expect(component.refs.options.props.filter).to.equal('def');
+    });
+
 
   });
 

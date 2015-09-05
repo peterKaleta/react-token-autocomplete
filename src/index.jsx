@@ -41,7 +41,7 @@ export default class TokenAutocomplete extends React.Component {
 
   renderOptionsDropdown = () => {
     return this.state.inputValue.length >= this.props.treshold
-      ? <OptionList ref="options" alreadySelected={this.props.values} options={this.props.options} />
+      ? <OptionList ref="options" alreadySelected={this.props.values} options={this.props.options} filter={this.state.inputValue}/>
       : null;
   }
 

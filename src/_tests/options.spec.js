@@ -35,6 +35,10 @@ describe('Option list', () => {
         expect(component.props.alreadySelected).to.be.empty;
     });
 
+    it('has empty filter', () => {
+        expect(component.props.filter).to.be.equal('');
+    });
+
   });
 
 
@@ -60,6 +64,18 @@ describe('Option list', () => {
 
     var options = React.findDOMNode(component.refs.wrapper).querySelectorAll('div');
     expect(options.length).to.equal(1);
+
+  });
+
+  it('dont show options not matching filter', () => {
+
+    const component = renderComponent({
+      options: ['ann', 'ccanndd', 'ddddann', 'ddd'],
+      filter: 'ann'
+    });
+
+    var options = React.findDOMNode(component.refs.wrapper).querySelectorAll('div');
+    expect(options.length).to.equal(3);
 
   });
 
