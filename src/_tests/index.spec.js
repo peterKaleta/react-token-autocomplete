@@ -74,12 +74,12 @@ describe('TokenAutocomplete', () => {
 
   });
 
+
   //UNIT
 
   it('stores input value in state.inputValue', () => {
 
     const component = renderComponent();
-
 
     expect(component.state.inputValue).to.equal('');
 
@@ -104,6 +104,7 @@ describe('TokenAutocomplete', () => {
 
 
   });
+
 
   //FUNCTIONAL
 
@@ -157,26 +158,43 @@ describe('TokenAutocomplete', () => {
     expect(component.refs.options.props.options.length).to.equal(1);
     expect(component.refs.options.props.options).to.include('aaa4');
 
-
   });
 
-  
-  it('adds currently selected element on enter', () => {
+  describe('on enter', () => {
 
-    const component = renderComponent({
-      options: ['aaa'],
-      defaultValues: ['bbb']
+    it('adds currently selected element on enter', () => {
+
+      const component = renderComponent({
+        options: ['aaa', 'ccc'],
+        defaultValues: ['bbb']
+      });
+
+      changeInputValue(component, 'aaa');
+      hitEnter(component);
+
+      expect(component.state.values.size).to.equal(2);
+
+      changeInputValue(component, 'aaa');
+
+      expect(component.refs.options.props.options).to.be.empty;
+
     });
 
-    changeInputValue(component, 'aaa');
-    hitEnter(component);
+    it('clears inputValue', () => {
 
-    expect(component.state.values.size).to.equal(2);
-    expect(component.refs.options.props.options).to.be.empty;
+      const component = renderComponent({
+        options: ['aaa'],
+        defaultValues: ['bbb']
+      });
+
+      changeInputValue(component, 'aaa');
+      hitEnter(component);
+
+      expect(component.state.inputValue).to.be.empty;
+
+    });
 
   });
-
-
 
 
 });

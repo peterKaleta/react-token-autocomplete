@@ -60,12 +60,13 @@ export default class TokenAutocomplete extends React.Component {
   }
 
   addSelectedValue() {
-
     if (this.refs.options.props.options.length){
       const newValue = this.refs.options.getSelected();
       this.setState({
-        values: this.state.values.push(newValue)
+        values: this.state.values.push(newValue),
+        inputValue: ''
       })
+
     }
 
   }

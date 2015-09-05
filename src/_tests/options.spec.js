@@ -59,4 +59,22 @@ describe('Option list', () => {
 
   });
 
+  it('cycles through list', () => {
+
+    const component = renderComponent({
+      options: ['a', 'a', 'a']
+    });
+
+    component.selectNext();
+    expect(component.state.selected).to.equal(1);
+    component.selectNext();
+    component.selectNext();
+    expect(component.state.selected).to.equal(0);
+    component.selectPrev();
+    expect(component.state.selected).to.equal(2);
+    component.selectPrev();
+    expect(component.state.selected).to.equal(1);
+
+  });
+
 });
