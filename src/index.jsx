@@ -5,7 +5,7 @@ import Token from './token';
 import {difference, map, filter} from 'lodash';
 import {contains} from 'underscore.string'
 import Immutable from 'immutable';
-import keyCodes from './keyCodes';
+import keyCodes from 'utils/keyCodes';
 
 const styles = {
   wrapper: {
@@ -129,7 +129,7 @@ export default class TokenAutocomplete extends React.Component {
       <div ref="wrapper" style={styles.wrapper}>
         {this.renderTokens()}
         <input
-          onKeyDown={this.onKeyDown} 
+          onKeyDown={this.onKeyDown}
           onChange={this.onInputChange}
           value={this.state.inputValue}
           placeholder={this.props.placeholder}

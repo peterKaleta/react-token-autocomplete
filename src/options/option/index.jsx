@@ -1,6 +1,6 @@
 import React from 'react';
 import radium from 'radium';
-import styles from './option.styles';
+import styles from './styles';
 import {merge} from 'lodash';
 
 @radium

@@ -1,8 +1,8 @@
 import React from 'react';
 import radium from 'radium';
-import styles from './options.styles';
+import styles from './styles';
 import {map} from 'lodash';
-import keyCodes from './keyCodes';
+import keyCodes from 'utils/keyCodes';
 import Option from './option';
 
 @radium

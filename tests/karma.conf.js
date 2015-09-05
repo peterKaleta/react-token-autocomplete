@@ -1,5 +1,6 @@
 var RewirePlugin = require('rewire-webpack');
 var webpack = require('webpack');
+var path = require('path');
 
 var CI = !process.env.WATCH_TESTS;
 var conf = {
@@ -7,7 +8,11 @@ var conf = {
   devtool: 'inline-source-map',
   resolve: {
     modulesDirectories: ['node_modules'],
-    extensions: ['', '.jsx', '.js']
+    extensions: ['', '.jsx', '.js'],
+    alias: {
+      TestUtils: path.join(__dirname, '../src/_tests/utils.js'),
+      utils: path.join(__dirname, '../src/_utils/')
+    }
   },
   module: {
     loaders: [

@@ -1,6 +1,6 @@
 import React from 'react';
 import radium from 'radium';
-import styles from './token.styles';
+import styles from './styles';
 import _ from 'lodash';
 
 @radium

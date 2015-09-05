@@ -1,6 +1,6 @@
 import React from 'react/addons';
-import Options from '../options';
-import TestUtils from './utils';
+import Options from './';
+import TestUtils from 'TestUtils';
 
 let component;
 

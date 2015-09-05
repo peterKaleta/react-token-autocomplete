@@ -1,7 +1,7 @@
 import React from 'react/addons';
-import TokenAutocomplete from '../';
-import Token from '../token';
-import TestUtils from './utils';
+import TokenAutocomplete from './';
+import Token from './token';
+import TestUtils from 'TestUtils';
 
 let component;
 
