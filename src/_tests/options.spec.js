@@ -27,7 +27,11 @@ describe('Option list', () => {
     });
 
     it('has empty term', () => {
-        expect(component.props.term).to.be.equal('');
+        expect(component.props.term).to.equal('');
+    });
+
+    it('has default empty info', () => {
+        expect(component.props.emptyInfo).to.equal('no suggestions');
     });
 
   });
@@ -72,6 +76,26 @@ describe('Option list', () => {
     expect(component.state.selected).to.equal(2);
     component.selectPrev();
     expect(component.state.selected).to.equal(1);
+
+  });
+
+
+  it('displays empty info if options list is empty', () => {
+
+    let component = TestUtils.renderComponent(Options, {
+      options: ['a']
+    });
+
+    expect(component.refs.emptyInfo).not.to.exist;
+
+    component = TestUtils.renderComponent(Options, {
+      options: []
+    });
+
+    let emptyInfoNode = React.findDOMNode(component.refs.emptyInfo);
+
+    expect(component.refs.emptyInfo).to.exist;
+    expect(emptyInfoNode.textContent).to.equal('no suggestions');
 
   });
 

@@ -18,7 +18,8 @@ export default class OptionList extends React.Component {
 
   static defaultProps = {
     options: [],
-    term: ''
+    term: '',
+    emptyInfo: 'no suggestions'
   }
 
   state = {
@@ -78,10 +79,14 @@ export default class OptionList extends React.Component {
     return this.props.options[this.state.selected];
   }
 
+  renderEmptyInfo(){
+    return <div ref="emptyInfo" style={styles.emptyInfo}>{this.props.emptyInfo}</div>;
+  }
+
   render() {
     return (
       <div ref="wrapper" style={styles.wrapper}>
-        {this.renderOptions()}
+        {this.props.options.length ? this.renderOptions() : this.renderEmptyInfo()}
       </div>
     );
   }
