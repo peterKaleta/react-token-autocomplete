@@ -30,13 +30,8 @@ describe('Option list', () => {
         expect(component.props.options).to.be.empty;
     });
 
-    it('has empty alreadySelected array', () => {
-        expect(component.props.alreadySelected).to.be.instanceof(Array);
-        expect(component.props.alreadySelected).to.be.empty;
-    });
-
-    it('has empty filter', () => {
-        expect(component.props.filter).to.be.equal('');
+    it('has empty term', () => {
+        expect(component.props.term).to.be.equal('');
     });
 
   });
@@ -54,30 +49,6 @@ describe('Option list', () => {
 
   });
 
-
-  it('dont show already selected options', () => {
-
-    const component = renderComponent({
-      options: ['a', 'b', 'c', 'd'],
-      alreadySelected: ['a', 'b', 'c']
-    });
-
-    var options = React.findDOMNode(component.refs.wrapper).querySelectorAll('div');
-    expect(options.length).to.equal(1);
-
-  });
-
-  it('dont show options not matching filter', () => {
-
-    const component = renderComponent({
-      options: ['ann', 'ccanndd', 'ddddann', 'ddd'],
-      filter: 'ann'
-    });
-
-    var options = React.findDOMNode(component.refs.wrapper).querySelectorAll('div');
-    expect(options.length).to.equal(3);
-
-  });
 
 
 });

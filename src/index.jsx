@@ -2,6 +2,11 @@ import React from 'react';
 import radium from 'radium';
 import OptionList from './options';
 import Token from './token';
+import {difference, map, filter} from 'lodash';
+import {contains} from 'underscore.string'
+
+
+
 const styles = {
   wrapper: {
   }
@@ -39,9 +44,31 @@ export default class TokenAutocomplete extends React.Component {
     });
   }
 
+
+    getAvailableOptions() {
+
+      //notselected
+      let availableOptions = difference(this.props.options, this.props.values);
+
+      //filter
+      availableOptions = filter(availableOptions, option => {
+        return contains(option, this.state.inputValue);
+      });
+
+      return availableOptions;
+
+    }
+
+
   renderOptionsDropdown = () => {
+
+    let passProps = {
+        options: this.getAvailableOptions(),
+        term: this.state.inputValue
+    };
+
     return this.state.inputValue.length >= this.props.treshold
-      ? <OptionList ref="options" alreadySelected={this.props.values} options={this.props.options} filter={this.state.inputValue}/>
+      ? <OptionList ref="options" {...passProps}/>
       : null;
   }
 

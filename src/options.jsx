@@ -1,8 +1,8 @@
 import React from 'react';
 import radium from 'radium';
 import styles from './options.styles';
-import {difference, map, filter} from 'lodash';
-import {contains} from 'underscore.string'
+import {map} from 'lodash';
+
 @radium
 export default class OptionList extends React.Component {
 
@@ -11,37 +11,20 @@ export default class OptionList extends React.Component {
   static propTypes = {
     options: React.PropTypes.array,
     alreadySelected: React.PropTypes.array,
-    filter: React.PropTypes.string
+    term: React.PropTypes.string
   }
 
   static defaultProps = {
     options: [],
-    alreadySelected: [],
-    filter: ''
+    term: ''
   }
 
   state = {
   }
 
-
-  getAvailableOptions() {
-
-    //notselected
-    let availableOptions = difference(this.props.options, this.props.alreadySelected);
-
-    //filter
-    availableOptions = filter(availableOptions, option => {
-      return contains(option, this.props.filter);
-    });
-
-    return availableOptions;
-
-  }
-
-
   renderOptions() {
 
-    return map(this.getAvailableOptions(), (option, index) => {
+    return map(this.props.options, (option, index) => {
       return <div key={index}>option</div>;
     });
 

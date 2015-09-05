@@ -55,7 +55,6 @@ describe('TokenAutocomplete', () => {
         const placeholder = 'add new tag';
         expect(component.props.placeholder).to.be.equal(placeholder);
         expect(component.refs.input.props.placeholder).to.equal(placeholder);
-
     });
 
   });
@@ -98,12 +97,8 @@ describe('TokenAutocomplete', () => {
 
     });
 
-    it('values as alreadySelected props', () => {
-      expect(component.refs.options.props.alreadySelected).to.include('a', 'b');
-    });
-
-    it('inputValues as filter props', () => {
-      expect(component.refs.options.props.filter).to.equal('def');
+    it('inputValue as term props', () => {
+      expect(component.refs.options.props.term).to.equal('def');
     });
 
 
@@ -132,6 +127,39 @@ describe('TokenAutocomplete', () => {
 
     let tokens = TestUtils.scryRenderedComponentsWithType(component.refs.wrapper, Token);
     expect(tokens.length).to.equal(4);
+
+  });
+
+  it('dont show already selected options', () => {
+
+    const component = renderComponent({
+      options: ['aaa1', 'aaa2', 'aaa3', 'aaa4'],
+      values: ['aaa1', 'aaa2', 'aaa3']
+    });
+
+
+    var inputNode = React.findDOMNode(component.refs.input);
+    inputNode.value = 'aaa';
+    React.addons.TestUtils.Simulate.change(inputNode);
+
+    expect(component.refs.options.props.options).to.include('aaa4');
+
+  });
+
+  it('dont show options not matching filter', () => {
+
+    const component = renderComponent({
+      options: ['aaa1', 'aaa2', 'aaa3', 'aaa4', 'ddd1'],
+      values: ['aaa1', 'aaa2', 'aaa3']
+    });
+
+    var inputNode = React.findDOMNode(component.refs.input);
+    inputNode.value = 'aaa';
+    React.addons.TestUtils.Simulate.change(inputNode);
+
+    expect(component.refs.options.props.options.length).to.equal(1);
+    expect(component.refs.options.props.options).to.include('aaa4');
+
 
   });
 
