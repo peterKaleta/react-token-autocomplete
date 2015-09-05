@@ -33,7 +33,7 @@ export default class TokenAutocomplete extends React.Component {
     inputValue: ''
   }
 
-  onInputChange = (e) => {
+  onInputChange = e => {
     this.setState({
       inputValue: e.target.value
     });

@@ -2,7 +2,7 @@ import React from 'react/addons';
 import Options from '../options';
 const {TestUtils} = React.addons;
 
-function renderComponent(props={}) {
+function renderComponent(props = {}) {
   return TestUtils.renderIntoDocument(<Options {...props}/>);
 }
 
