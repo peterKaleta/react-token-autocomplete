@@ -11,7 +11,6 @@ export NODE_ENV=production
   --optimize-occurence-order \
   --bail
 
-
 ./node_modules/.bin/webpack \
   --config ./examples/webpack.config.js \
   --colors \

@@ -3,6 +3,7 @@ import radium from 'radium';
 import styles from './options.styles';
 import {map} from 'lodash';
 import keyCodes from './keyCodes';
+import Option from './option';
 
 @radium
 export default class OptionList extends React.Component {
@@ -46,9 +47,14 @@ export default class OptionList extends React.Component {
   }
 
   renderOptions() {
-
     return map(this.props.options, (option, index) => {
-      return <div key={index}>{option}</div>;
+      return(
+        <Option
+          key={index}
+          selected={index === this.state.selected}>
+            {option}
+        </Option>
+      );
     });
   }
 
