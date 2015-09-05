@@ -3,6 +3,6 @@ export default {
     position: 'absolute'
   },
   emptyInfo: {
-    
+
   }
 };
