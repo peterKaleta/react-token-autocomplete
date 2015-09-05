@@ -7,6 +7,12 @@ function renderComponent(props = {}) {
   return TestUtils.renderIntoDocument(<TokenAutocomplete {...props}/>);
 }
 
+function changeInputValue(component, value) {
+  var inputNode = React.findDOMNode(component.refs.input);
+  inputNode.value = value;
+  React.addons.TestUtils.Simulate.change(inputNode);
+}
+
 let component;
 
 describe('TokenAutocomplete', () => {
@@ -73,12 +79,11 @@ describe('TokenAutocomplete', () => {
   it('stores input value in state.inputValue', () => {
 
     const component = renderComponent();
-    var inputNode = React.findDOMNode(component.refs.input);
+
 
     expect(component.state.inputValue).to.equal('');
 
-    inputNode.value = 'abc';
-    React.addons.TestUtils.Simulate.change(inputNode);
+    changeInputValue(component, 'abc');
 
     expect(component.state.inputValue).to.equal('abc');
 
@@ -90,11 +95,7 @@ describe('TokenAutocomplete', () => {
       component = renderComponent({
         values: ['a', 'b']
       });
-
-      var inputNode = React.findDOMNode(component.refs.input);
-      inputNode.value = 'def';
-      React.addons.TestUtils.Simulate.change(inputNode);
-
+      changeInputValue(component, 'def');
     });
 
     it('inputValue as term props', () => {
@@ -107,13 +108,12 @@ describe('TokenAutocomplete', () => {
   //FUNCTIONAL
 
   it('displays a list when options are provided and treshold is achieved', () => {
-    const component = renderComponent();
-    var inputNode = React.findDOMNode(component.refs.input);
 
+    const component = renderComponent();
     expect(component.refs.options).not.to.exist;
 
-    inputNode.value = 'abc';
-    React.addons.TestUtils.Simulate.change(inputNode);
+    changeInputValue(component, 'abc');
+
 
     expect(component.refs.options).to.exist;
 
@@ -138,9 +138,8 @@ describe('TokenAutocomplete', () => {
     });
 
 
-    var inputNode = React.findDOMNode(component.refs.input);
-    inputNode.value = 'aaa';
-    React.addons.TestUtils.Simulate.change(inputNode);
+    changeInputValue(component, 'aaa');
+
 
     expect(component.refs.options.props.options).to.include('aaa4');
 
@@ -153,9 +152,7 @@ describe('TokenAutocomplete', () => {
       values: ['aaa1', 'aaa2', 'aaa3']
     });
 
-    var inputNode = React.findDOMNode(component.refs.input);
-    inputNode.value = 'aaa';
-    React.addons.TestUtils.Simulate.change(inputNode);
+    changeInputValue(component, 'aaa');
 
     expect(component.refs.options.props.options.length).to.equal(1);
     expect(component.refs.options.props.options).to.include('aaa4');
