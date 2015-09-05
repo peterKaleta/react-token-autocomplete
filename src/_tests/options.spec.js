@@ -2,7 +2,7 @@ import React from 'react/addons';
 import Options from '../options';
 const {TestUtils} = React.addons;
 
-function renderComponent(props) {
+function renderComponent(props={}) {
   return TestUtils.renderIntoDocument(<Options {...props}/>);
 }
 
@@ -29,6 +29,12 @@ describe('Option list', () => {
         expect(component.props.options).to.be.instanceof(Array);
         expect(component.props.options).to.be.empty;
     });
+
+    it('has empty alreadySelected array', () => {
+        expect(component.props.alreadySelected).to.be.instanceof(Array);
+        expect(component.props.alreadySelected).to.be.empty;
+    });
+
 
   });
 

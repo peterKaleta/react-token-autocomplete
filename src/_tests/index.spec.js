@@ -1,9 +1,10 @@
 import React from 'react/addons';
 import TokenAutocomplete from '../';
+import Token from '../token';
 const {TestUtils} = React.addons;
 
-function renderComponent() {
-  return TestUtils.renderIntoDocument(<TokenAutocomplete/>);
+function renderComponent(props = {}) {
+  return TestUtils.renderIntoDocument(<TokenAutocomplete {...props}/>);
 }
 
 let component;
@@ -97,6 +98,17 @@ describe('TokenAutocomplete', () => {
     React.addons.TestUtils.Simulate.change(inputNode);
 
     expect(component.refs.options).to.exist;
+
+  });
+
+  it('displays a token for each passed value', () => {
+
+    const component = renderComponent({
+      values: ['a', 'b', 'c', 'd']
+    });
+
+    let tokens = TestUtils.scryRenderedComponentsWithType(component.refs.wrapper, Token);
+    expect(tokens.length).to.equal(4);
 
   });
 

@@ -9,11 +9,13 @@ export default class OptionList extends React.Component {
   static displayName = 'Option List';
 
   static propTypes = {
-    options: React.PropTypes.array
+    options: React.PropTypes.array,
+    alreadySelected: React.PropTypes.array
   }
 
   static defaultProps = {
-    options: []
+    options: [],
+    alreadySelected: []
   }
 
   state = {
