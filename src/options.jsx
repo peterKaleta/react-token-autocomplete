@@ -22,9 +22,12 @@ export default class OptionList extends React.Component {
   }
 
   renderOptions() {
-    return _.map(this.props.options, (option, index) => {
+
+    const notSelected = _.difference(this.props.options, this.props.alreadySelected);
+    return _.map(notSelected, (option, index) => {
       return <div key={index}>option</div>;
     });
+
   }
 
   render() {

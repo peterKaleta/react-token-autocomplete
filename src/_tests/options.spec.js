@@ -35,7 +35,6 @@ describe('Option list', () => {
         expect(component.props.alreadySelected).to.be.empty;
     });
 
-
   });
 
 
@@ -48,6 +47,19 @@ describe('Option list', () => {
     var options = React.findDOMNode(component.refs.wrapper).querySelectorAll('div');
 
     expect(options.length).to.equal(6);
+
+  });
+
+
+  it('dont show already selected options', () => {
+
+    const component = renderComponent({
+      options: ['a', 'b', 'c', 'd'],
+      alreadySelected: ['a', 'b', 'c']
+    });
+
+    var options = React.findDOMNode(component.refs.wrapper).querySelectorAll('div');
+    expect(options.length).to.equal(1);
 
   });
 
