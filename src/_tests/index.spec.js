@@ -15,7 +15,12 @@ function changeInputValue(component, value) {
 
 function hitEnter(component) {
   var inputNode = React.findDOMNode(component.refs.input);
-  TestUtils.Simulate.keyDown(inputNode, {key: 'Enter', keyCode: 13, which: 13});
+  TestUtils.Simulate.keyDown(inputNode, {keyCode: 13});
+}
+
+function hitBackspace(component) {
+  var inputNode = React.findDOMNode(component.refs.input);
+  TestUtils.Simulate.keyDown(inputNode, {keyCode: 8});
 }
 
 let component;
@@ -141,7 +146,6 @@ describe('TokenAutocomplete', () => {
 
     changeInputValue(component, 'aaa');
 
-
     expect(component.refs.options.props.options).to.include('aaa4');
 
   });
@@ -175,7 +179,6 @@ describe('TokenAutocomplete', () => {
       expect(component.state.values.size).to.equal(2);
 
       changeInputValue(component, 'aaa');
-
       expect(component.refs.options.props.options).to.be.empty;
 
     });
@@ -196,5 +199,17 @@ describe('TokenAutocomplete', () => {
 
   });
 
+
+  it('on backspace when input is empty deletes the last value', () => {
+
+    const component = renderComponent({
+      defaultValues: ['aaa1', 'aaa2', 'aaa3']
+    });
+
+    hitBackspace(component);
+    expect(component.state.values.size).to.equal(2);
+    hitBackspace(component);
+    expect(component.state.values.size).to.equal(1);
+  });
 
 });

@@ -5,14 +5,11 @@ import Token from './token';
 import {difference, map, filter} from 'lodash';
 import {contains} from 'underscore.string'
 import Immutable from 'immutable';
+import keyCodes from './keyCodes';
 
 const styles = {
   wrapper: {
   }
-};
-
-const keyCodes = {
-  ENTER: 13
 };
 
 @radium
@@ -55,8 +52,22 @@ export default class TokenAutocomplete extends React.Component {
 
   onKeyDown = e => {
     switch (e.keyCode) {
-      case keyCodes.ENTER : this.addSelectedValue(); break;
+      case keyCodes.ENTER:
+        this.addSelectedValue();
+        break;
+      case keyCodes.BACKSPACE:
+        if (!this.state.inputValue.length) {
+          this.deleteValue(this.state.values.size - 1);
+        }
+        break;
     }
+  }
+
+  deleteValue = index => {
+    this.setState({
+       values: this.state.values.delete(index)
+    });
+
   }
 
   addSelectedValue() {

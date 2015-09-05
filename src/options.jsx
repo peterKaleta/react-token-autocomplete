@@ -37,6 +37,7 @@ export default class OptionList extends React.Component {
       case keyCodes.UP : this.selectPrev(); break;
       case keyCodes.DOWN : this.selectNext(); break;
     }
+    e.preventDefault();
   }
 
   renderOptions() {
