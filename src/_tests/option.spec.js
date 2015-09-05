@@ -1,7 +1,6 @@
 import React from 'react/addons';
-import Token from '../token';
+import Token from '../option';
 import TestUtils from './utils';
-
 
 let component;
 

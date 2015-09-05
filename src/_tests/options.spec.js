@@ -1,10 +1,6 @@
 import React from 'react/addons';
 import Options from '../options';
-const {TestUtils} = React.addons;
-
-function renderComponent(props = {}) {
-  return TestUtils.renderIntoDocument(<Options {...props}/>);
-}
+import TestUtils from './utils';
 
 let component;
 
@@ -22,7 +18,7 @@ describe('Option list', () => {
   describe('by default', () => {
 
     beforeEach(() => {
-      component = renderComponent();
+      component = TestUtils.renderComponent(Options);
     });
 
     it('has empty options array', () => {
@@ -35,13 +31,13 @@ describe('Option list', () => {
     });
 
   });
-  
+
   //UNIT
 
   //FUNCTIONAL
   it('displays options', () => {
 
-    const component = renderComponent({
+    const component = TestUtils.renderComponent(Options, {
       options: ['a', 'a', 'a', 'a', 'a', 'a']
     });
 
@@ -53,7 +49,7 @@ describe('Option list', () => {
 
   it('selects first option by default', () => {
 
-    const component = renderComponent({
+    const component = TestUtils.renderComponent(Options, {
       options: ['a', 'a', 'a', 'a', 'a', 'a']
     });
 
@@ -63,7 +59,7 @@ describe('Option list', () => {
 
   it('cycles through list', () => {
 
-    const component = renderComponent({
+    const component = TestUtils.renderComponent(Options, {
       options: ['a', 'a', 'a']
     });
 

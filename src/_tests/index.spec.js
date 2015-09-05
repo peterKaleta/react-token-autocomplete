@@ -1,27 +1,7 @@
 import React from 'react/addons';
 import TokenAutocomplete from '../';
 import Token from '../token';
-const {TestUtils} = React.addons;
-
-function renderComponent(props = {}) {
-  return TestUtils.renderIntoDocument(<TokenAutocomplete {...props}/>);
-}
-
-function changeInputValue(component, value) {
-  var inputNode = React.findDOMNode(component.refs.input);
-  inputNode.value = value;
-  TestUtils.Simulate.change(inputNode);
-}
-
-function hitEnter(component) {
-  var inputNode = React.findDOMNode(component.refs.input);
-  TestUtils.Simulate.keyDown(inputNode, {keyCode: 13});
-}
-
-function hitBackspace(component) {
-  var inputNode = React.findDOMNode(component.refs.input);
-  TestUtils.Simulate.keyDown(inputNode, {keyCode: 8});
-}
+import TestUtils from './utils';
 
 let component;
 
@@ -38,7 +18,7 @@ describe('TokenAutocomplete', () => {
 
   describe('by default', () => {
     beforeEach(() => {
-      component = renderComponent();
+      component = TestUtils.renderComponent(TokenAutocomplete);
     });
 
     it('has empty options array', () => {
@@ -62,7 +42,7 @@ describe('TokenAutocomplete', () => {
     });
 
     it('has predefined place', () => {
-        const component = renderComponent();
+        const component = TestUtils.renderComponent(TokenAutocomplete);
         const placeholder = 'add new tag';
         expect(component.props.placeholder).to.be.equal(placeholder);
         expect(component.refs.input.props.placeholder).to.equal(placeholder);
@@ -73,7 +53,7 @@ describe('TokenAutocomplete', () => {
   describe('contains', () => {
 
       it('input with placeholder', () => {
-        const component = renderComponent();
+        const component = TestUtils.renderComponent(TokenAutocomplete);
         expect(component.refs.input).to.exist;
       });
 
@@ -84,11 +64,11 @@ describe('TokenAutocomplete', () => {
 
   it('stores input value in state.inputValue', () => {
 
-    const component = renderComponent();
+    const component = TestUtils.renderComponent(TokenAutocomplete);
 
     expect(component.state.inputValue).to.equal('');
 
-    changeInputValue(component, 'abc');
+    TestUtils.changeInputValue(component, 'abc');
 
     expect(component.state.inputValue).to.equal('abc');
 
@@ -97,10 +77,10 @@ describe('TokenAutocomplete', () => {
   describe('passes to options list', () => {
 
     beforeEach(() => {
-      component = renderComponent({
+      component = TestUtils.renderComponent(TokenAutocomplete, {
         defaultValues: ['a', 'b']
       });
-      changeInputValue(component, 'def');
+      TestUtils.changeInputValue(component, 'def');
     });
 
     it('inputValue as term props', () => {
@@ -115,10 +95,10 @@ describe('TokenAutocomplete', () => {
 
   it('displays a list when options are provided and treshold is achieved', () => {
 
-    const component = renderComponent();
+    const component = TestUtils.renderComponent(TokenAutocomplete);
     expect(component.refs.options).not.to.exist;
 
-    changeInputValue(component, 'abc');
+    TestUtils.changeInputValue(component, 'abc');
 
 
     expect(component.refs.options).to.exist;
@@ -127,7 +107,7 @@ describe('TokenAutocomplete', () => {
 
   it('displays a token for each passed value', done => {
 
-    const component = renderComponent({
+    const component = TestUtils.renderComponent(TokenAutocomplete, {
       defaultValues: ['a', 'b', 'c', 'd']
     });
 
@@ -138,13 +118,13 @@ describe('TokenAutocomplete', () => {
 
   it('dont show already selected options', () => {
 
-    const component = renderComponent({
+    const component = TestUtils.renderComponent(TokenAutocomplete, {
       options: ['aaa1', 'aaa2', 'aaa3', 'aaa4'],
       defaultValues: ['aaa1', 'aaa2', 'aaa3']
     });
 
 
-    changeInputValue(component, 'aaa');
+    TestUtils.changeInputValue(component, 'aaa');
 
     expect(component.refs.options.props.options).to.include('aaa4');
 
@@ -152,12 +132,12 @@ describe('TokenAutocomplete', () => {
 
   it('dont show options not matching currently type value', () => {
 
-    const component = renderComponent({
+    const component = TestUtils.renderComponent(TokenAutocomplete, {
       options: ['aaa1', 'aaa2', 'aaa3', 'aaa4', 'ddd1'],
       defaultValues: ['aaa1', 'aaa2', 'aaa3']
     });
 
-    changeInputValue(component, 'aaa');
+    TestUtils.changeInputValue(component, 'aaa');
 
     expect(component.refs.options.props.options.length).to.equal(1);
     expect(component.refs.options.props.options).to.include('aaa4');
@@ -168,30 +148,30 @@ describe('TokenAutocomplete', () => {
 
     it('adds currently selected element on enter', () => {
 
-      const component = renderComponent({
+      const component = TestUtils.renderComponent(TokenAutocomplete, {
         options: ['aaa', 'ccc'],
         defaultValues: ['bbb']
       });
 
-      changeInputValue(component, 'aaa');
-      hitEnter(component);
+      TestUtils.changeInputValue(component, 'aaa');
+      TestUtils.hitEnter(component);
 
       expect(component.state.values.size).to.equal(2);
 
-      changeInputValue(component, 'aaa');
+      TestUtils.changeInputValue(component, 'aaa');
       expect(component.refs.options.props.options).to.be.empty;
 
     });
 
     it('clears inputValue', () => {
 
-      const component = renderComponent({
+      const component = TestUtils.renderComponent(TokenAutocomplete, {
         options: ['aaa'],
         defaultValues: ['bbb']
       });
 
-      changeInputValue(component, 'aaa');
-      hitEnter(component);
+      TestUtils.changeInputValue(component, 'aaa');
+      TestUtils.hitEnter(component);
 
       expect(component.state.inputValue).to.be.empty;
 
@@ -202,13 +182,13 @@ describe('TokenAutocomplete', () => {
 
   it('on backspace when input is empty deletes the last value', () => {
 
-    const component = renderComponent({
+    const component = TestUtils.renderComponent(TokenAutocomplete, {
       defaultValues: ['aaa1', 'aaa2', 'aaa3']
     });
 
-    hitBackspace(component);
+    TestUtils.hitBackspace(component);
     expect(component.state.values.size).to.equal(2);
-    hitBackspace(component);
+    TestUtils.hitBackspace(component);
     expect(component.state.values.size).to.equal(1);
   });
 
