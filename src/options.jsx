@@ -34,10 +34,15 @@ export default class OptionList extends React.Component {
 
   onKeyDown = e => {
     switch (e.keyCode) {
-      case keyCodes.UP : this.selectPrev(); break;
-      case keyCodes.DOWN : this.selectNext(); break;
+      case keyCodes.UP :
+        this.selectPrev();
+        e.preventDefault();
+        break;
+      case keyCodes.DOWN :
+        this.selectNext();
+        e.preventDefault();
+        break;
     }
-    e.preventDefault();
   }
 
   renderOptions() {

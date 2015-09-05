@@ -40,9 +40,11 @@ export default class TokenAutocomplete extends React.Component {
   }
 
   onInputChange = e => {
+
     this.setState({
       inputValue: e.target.value
     });
+
   }
 
   componentDidMount(){
@@ -57,6 +59,9 @@ export default class TokenAutocomplete extends React.Component {
         break;
       case keyCodes.BACKSPACE:
         if (!this.state.inputValue.length) {
+          this.setState({
+            inputValue: this.state.inputValue.slice(0, -1)
+          })
           this.deleteValue(this.state.values.size - 1);
         }
         break;
@@ -120,11 +125,15 @@ export default class TokenAutocomplete extends React.Component {
   }
 
   render() {
-
     return (
       <div ref="wrapper" style={styles.wrapper}>
         {this.renderTokens()}
-        <input onKeyDown={this.onKeyDown} onChange={this.onInputChange} placeholder={this.props.placeholder} ref="input"/>
+        <input
+          onKeyDown={this.onKeyDown} 
+          onChange={this.onInputChange}
+          value={this.state.inputValue}
+          placeholder={this.props.placeholder}
+          ref="input"/>
         {this.renderOptionsDropdown()}
       </div>
     );

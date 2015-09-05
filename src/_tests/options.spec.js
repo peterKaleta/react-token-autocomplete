@@ -35,8 +35,10 @@ describe('Option list', () => {
     });
 
   });
+  
+  //UNIT
 
-
+  //FUNCTIONAL
   it('displays options', () => {
 
     const component = renderComponent({
