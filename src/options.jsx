@@ -20,6 +20,7 @@ export default class OptionList extends React.Component {
   }
 
   state = {
+    selected: 0
   }
 
   renderOptions() {
@@ -27,7 +28,10 @@ export default class OptionList extends React.Component {
     return map(this.props.options, (option, index) => {
       return <div key={index}>option</div>;
     });
+  }
 
+  getSelected() {
+    return this.props.options[this.state.selected];
   }
 
   render() {

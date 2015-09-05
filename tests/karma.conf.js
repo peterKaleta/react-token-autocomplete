@@ -4,6 +4,7 @@ var webpack = require('webpack');
 var CI = !process.env.WATCH_TESTS;
 var conf = {
   cache: true,
+  devtool: 'inline-source-map',
   resolve: {
     modulesDirectories: ['node_modules'],
     extensions: ['', '.jsx', '.js']
@@ -32,10 +33,10 @@ module.exports = function(config) {
   config.set({
     singleRun: CI,
     autoWatch: !CI,
-    browsers: ['PhantomJS'],
+    browsers: ['PhantomJS2'],
     browserNoActivityTimeout: 60000,
     browserDisconnectTimeout: 10000,
-    frameworks: ['mocha', 'chai', 'sinon', 'es6-shim'],
+    frameworks: ['mocha', 'chai', 'sinon'],
     reporters: ['mocha', 'coverage'],
     client: { mocha: { timeout: 5000 } },
     files: [ { pattern: '../tests/webpack.tests.js', watched: false } ],

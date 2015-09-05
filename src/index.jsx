@@ -4,12 +4,15 @@ import OptionList from './options';
 import Token from './token';
 import {difference, map, filter} from 'lodash';
 import {contains} from 'underscore.string'
-
-
+import Immutable from 'immutable';
 
 const styles = {
   wrapper: {
   }
+};
+
+const keyCodes = {
+  ENTER: 13
 };
 
 @radium
@@ -29,13 +32,14 @@ export default class TokenAutocomplete extends React.Component {
 
   static defaultProps = {
     options: [],
-    values: [],
+    defaultValues: [],
     placeholder: 'add new tag',
     treshold: 3
   }
 
   state = {
-    inputValue: ''
+    inputValue: '',
+    values: Immutable.List([])
   }
 
   onInputChange = e => {
@@ -44,21 +48,46 @@ export default class TokenAutocomplete extends React.Component {
     });
   }
 
+  componentDidMount(){
+    let values = Immutable.List(this.props.defaultValues);
+    this.setState({values});
+  }
 
-    getAvailableOptions() {
+  onKeyDown = e => {
+    switch (e.keyCode) {
+      case keyCodes.ENTER : this.addSelectedValue(); break;
+    }
+  }
 
-      //notselected
-      let availableOptions = difference(this.props.options, this.props.values);
+  addSelectedValue() {
 
-      //filter
-      availableOptions = filter(availableOptions, option => {
-        return contains(option, this.state.inputValue);
-      });
-
-      return availableOptions;
-
+    if (this.refs.options.props.options.length){
+      const newValue = this.refs.options.getSelected();
+      this.setState({
+        values: this.state.values.push(newValue)
+      })
     }
 
+  }
+
+  getAvailableOptions() {
+
+    //notselected
+    let availableOptions = difference(this.props.options, this.state.values.toArray());
+
+    //filter
+    availableOptions = filter( availableOptions, option => {
+      return contains(option, this.state.inputValue);
+    });
+
+    return availableOptions;
+
+  }
+
+
+  isTresholdReached() {
+    return this.state.inputValue.length >= this.props.treshold;
+  }
 
   renderOptionsDropdown = () => {
 
@@ -67,14 +96,14 @@ export default class TokenAutocomplete extends React.Component {
         term: this.state.inputValue
     };
 
-    return this.state.inputValue.length >= this.props.treshold
+    return this.isTresholdReached()
       ? <OptionList ref="options" {...passProps}/>
       : null;
   }
 
   renderTokens = () => {
-    return _.map(this.props.values, (value, index) => {
-      return <Token key={index}>{value}</Token>
+    return this.state.values.map((value, key) => {
+      return <Token key={key} >{value}</Token>;
     });
   }
 
@@ -83,7 +112,7 @@ export default class TokenAutocomplete extends React.Component {
     return (
       <div ref="wrapper" style={styles.wrapper}>
         {this.renderTokens()}
-        <input onChange={this.onInputChange} placeholder={this.props.placeholder} ref="input"/>
+        <input onKeyDown={this.onKeyDown} onChange={this.onInputChange} placeholder={this.props.placeholder} ref="input"/>
         {this.renderOptionsDropdown()}
       </div>
     );

@@ -10,7 +10,12 @@ function renderComponent(props = {}) {
 function changeInputValue(component, value) {
   var inputNode = React.findDOMNode(component.refs.input);
   inputNode.value = value;
-  React.addons.TestUtils.Simulate.change(inputNode);
+  TestUtils.Simulate.change(inputNode);
+}
+
+function hitEnter(component) {
+  var inputNode = React.findDOMNode(component.refs.input);
+  TestUtils.Simulate.keyDown(inputNode, {key: 'Enter', keyCode: 13, which: 13});
 }
 
 let component;
@@ -36,14 +41,9 @@ describe('TokenAutocomplete', () => {
         expect(component.props.options).to.be.empty;
     });
 
-    it('has empty value array', () => {
-        expect(component.props.values).to.be.instanceof(Array);
-        expect(component.props.values).to.be.empty;
-    });
-
     it('has empty value array by default', () => {
-        expect(component.props.values).to.be.instanceof(Array);
-        expect(component.props.values).to.be.empty;
+        expect(component.props.defaultValues).to.be.instanceof(Array);
+        expect(component.props.defaultValues).to.be.empty;
     });
 
     it('has treshold of 3', () => {
@@ -93,7 +93,7 @@ describe('TokenAutocomplete', () => {
 
     beforeEach(() => {
       component = renderComponent({
-        values: ['a', 'b']
+        defaultValues: ['a', 'b']
       });
       changeInputValue(component, 'def');
     });
@@ -119,22 +119,22 @@ describe('TokenAutocomplete', () => {
 
   });
 
-  it('displays a token for each passed value', () => {
+  it('displays a token for each passed value', done => {
 
     const component = renderComponent({
-      values: ['a', 'b', 'c', 'd']
+      defaultValues: ['a', 'b', 'c', 'd']
     });
 
     let tokens = TestUtils.scryRenderedComponentsWithType(component.refs.wrapper, Token);
     expect(tokens.length).to.equal(4);
-
+    done();
   });
 
   it('dont show already selected options', () => {
 
     const component = renderComponent({
       options: ['aaa1', 'aaa2', 'aaa3', 'aaa4'],
-      values: ['aaa1', 'aaa2', 'aaa3']
+      defaultValues: ['aaa1', 'aaa2', 'aaa3']
     });
 
 
@@ -145,11 +145,11 @@ describe('TokenAutocomplete', () => {
 
   });
 
-  it('dont show options not matching filter', () => {
+  it('dont show options not matching currently type value', () => {
 
     const component = renderComponent({
       options: ['aaa1', 'aaa2', 'aaa3', 'aaa4', 'ddd1'],
-      values: ['aaa1', 'aaa2', 'aaa3']
+      defaultValues: ['aaa1', 'aaa2', 'aaa3']
     });
 
     changeInputValue(component, 'aaa');
@@ -159,6 +159,24 @@ describe('TokenAutocomplete', () => {
 
 
   });
+
+  
+  it('adds currently selected element on enter', () => {
+
+    const component = renderComponent({
+      options: ['aaa'],
+      defaultValues: ['bbb']
+    });
+
+    changeInputValue(component, 'aaa');
+    hitEnter(component);
+
+    expect(component.state.values.size).to.equal(2);
+    expect(component.refs.options.props.options).to.be.empty;
+
+  });
+
+
 
 
 });

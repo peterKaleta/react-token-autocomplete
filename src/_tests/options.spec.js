@@ -49,6 +49,14 @@ describe('Option list', () => {
 
   });
 
+  it('selects first option by default', () => {
 
+    const component = renderComponent({
+      options: ['a', 'a', 'a', 'a', 'a', 'a']
+    });
+
+    expect(component.state.selected).to.equal(0);
+
+  });
 
 });
