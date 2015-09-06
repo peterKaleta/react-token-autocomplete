@@ -1,16 +1,15 @@
 export default {
   wrapper: {
     borderRadius: 2,
-    display: 'inline-block',
     background: '#aaa',
     marginRight: 3,
     padding: 0,
     overflow: 'hidden',
     position: 'relative',
-    border: '1px solid #999'
+    border: '1px solid #999',
+    flexGrow: 1
   },
   removeBtn: {
-    display: 'inline-block',
     marginLeft: 2,
     top: 0,
     right: 0,
@@ -32,7 +31,6 @@ export default {
     padding: '2px 5px',
     marginRight: 20,
     fontSize: 13,
-    display: 'inline-block',
     verticalAlign: 'middle'
   }
 };

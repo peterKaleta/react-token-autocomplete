@@ -125,9 +125,7 @@ export default class TokenAutocomplete extends React.Component {
     return (
       <div ref="wrapper" style={styles.wrapper}>
         <div ref="inputWrapper" style={styles.inputWrapper}>
-          <div ref="valuesWrapper" style={styles.valuesWrapper}>
-            {this.renderTokens()}
-            </div>
+          <div ref="valuesWrapper" style={styles.valuesWrapper}>{this.renderTokens()}</div>
           <input
           style={styles.input}
           onKeyDown={this.onKeyDown}

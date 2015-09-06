@@ -36,7 +36,7 @@ export default class Token extends React.Component {
           ref="removeBtn"
           className='token-remove-btn'
           onClick={this.onRemoveBtnClick}>x</div>
-      </div>
+        </div>
     );
   }
 }

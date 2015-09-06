@@ -8,6 +8,7 @@ export default {
   input: {
     verticalAlign: 'middle',
     border: 'none',
+    flexGrow: 1,
     display: 'inline-block',
     fontSize: 13,
     lineHeight: '100%',
@@ -17,10 +18,11 @@ export default {
   },
   valuesWrapper: {
     verticalAlign: 'middle',
-    display: 'inline-block'
+    display: 'flex'
   },
   inputWrapper: {
     border: '1px solid #999',
-    padding: '3px 4px'
+    padding: '3px 4px',
+    display: 'flex'
   }
 };
