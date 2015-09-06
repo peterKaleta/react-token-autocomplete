@@ -10,6 +10,7 @@ export default {
     flexGrow: 1,
     display: 'inline-block',
     fontSize: 13,
+    minHeight: 25,
     fontFamily: '"Helvetica Neue", "Helvetica", "Arial", sans-serif',
     ':focus': {
       outline: 0
@@ -20,7 +21,6 @@ export default {
     padding: '1px 4px',
     display: 'flex',
     fontWeight: 400,
-    minHeight: 21,
     overflow: 'hidden',
     flexWrap: 'wrap'
   }
