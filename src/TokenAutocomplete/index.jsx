@@ -6,11 +6,7 @@ import {difference, map, filter} from 'lodash';
 import {contains} from 'underscore.string'
 import Immutable from 'immutable';
 import keyCodes from 'utils/keyCodes';
-
-const styles = {
-  wrapper: {
-  }
-};
+import styles from './styles';
 
 @radium
 export default class TokenAutocomplete extends React.Component {

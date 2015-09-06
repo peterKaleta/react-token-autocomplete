@@ -28,10 +28,11 @@ export default class Token extends React.Component {
   render() {
     return (
       <div ref="wrapper" style={styles.wrapper}>
-        <div ref="value">
+        <div ref="value" style={styles.value}>
           {this.props.children}
         </div>
         <div
+          style={styles.removeBtn}
           ref="removeBtn"
           className='token-remove-btn'
           onClick={this.onRemoveBtnClick}>x</div>

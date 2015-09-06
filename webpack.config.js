@@ -15,6 +15,7 @@ var conf = new webpackConf({
                 plugins: plugins
             })
             .iNeedReact()
+            .iNeedWebFonts()
             .iNeedHotDevServer()
             .getConfig();
 

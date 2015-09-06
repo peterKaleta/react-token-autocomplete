@@ -1,6 +1,6 @@
 export default {
   wrapper: {
-    position: 'absolute'
+    ///position: 'absolute'
   },
   selected: {
     background: '#aaa'
