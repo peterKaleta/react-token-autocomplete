@@ -179,7 +179,6 @@ describe('TokenAutocomplete', () => {
 
   });
 
-
   it('on backspace when input is empty deletes the last value', () => {
 
     const component = TestUtils.renderComponent(TokenAutocomplete, {
@@ -190,6 +189,23 @@ describe('TokenAutocomplete', () => {
     expect(component.state.values.size).to.equal(2);
     TestUtils.hitBackspace(component);
     expect(component.state.values.size).to.equal(1);
+  });
+
+  it('handles token removal', () => {
+
+    const component = TestUtils.renderComponent(TokenAutocomplete, {
+      defaultValues: ['aaa1']
+    });
+
+    const removeBtnNode = React.findDOMNode(component.refs.valuesWrapper);
+    const TokenNode = removeBtnNode.querySelectorAll('div')[0];
+    const TokenRemoveBtnNode = TokenNode.querySelectorAll('.token-remove-btn')[0];
+
+    expect(component.state.values.size).to.equal(1);
+    TestUtils.Simulate.click(TokenRemoveBtnNode);
+
+    expect(component.state.values.size).to.equal(0);
+
   });
 
 });

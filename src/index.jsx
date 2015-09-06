@@ -116,18 +116,21 @@ export default class TokenAutocomplete extends React.Component {
     return this.isTresholdReached()
       ? <OptionList ref="options" {...passProps}/>
       : null;
+
   }
 
   renderTokens = () => {
     return this.state.values.map((value, key) => {
-      return <Token key={key} >{value}</Token>;
+      return <Token key={key} index={key} handleRemove={this.deleteValue}>{value}</Token>;
     });
   }
 
   render() {
     return (
       <div ref="wrapper" style={styles.wrapper}>
-        {this.renderTokens()}
+        <div ref="valuesWrapper">
+          {this.renderTokens()}
+        </div>
         <input
           onKeyDown={this.onKeyDown}
           onChange={this.onInputChange}
