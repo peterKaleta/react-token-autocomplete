@@ -2,8 +2,8 @@ import React from 'react';
 import radium from 'radium';
 import OptionList from './options';
 import Token from './token';
-import {difference, map, filter} from 'lodash';
-import {contains} from 'underscore.string'
+import {difference, filter} from 'lodash';
+import {contains} from 'underscore.string';
 import Immutable from 'immutable';
 import keyCodes from 'utils/keyCodes';
 import styles from './styles';
@@ -43,7 +43,7 @@ export default class TokenAutocomplete extends React.Component {
 
   }
 
-  componentDidMount(){
+  componentDidMount() {
     let values = Immutable.List(this.props.defaultValues);
     this.setState({values});
   }
@@ -57,7 +57,7 @@ export default class TokenAutocomplete extends React.Component {
         if (!this.state.inputValue.length) {
           this.setState({
             inputValue: this.state.inputValue.slice(0, -1)
-          })
+          });
           this.deleteValue(this.state.values.size - 1);
         }
         break;
@@ -71,13 +71,13 @@ export default class TokenAutocomplete extends React.Component {
 
   }
 
-  addSelectedValue() {
-    if (this.refs.options.props.options.length){
+  addSelectedValue = () => {
+    if (this.refs.options.props.options.length) {
       const newValue = this.refs.options.getSelected();
       this.setState({
         values: this.state.values.push(newValue),
         inputValue: ''
-      })
+      });
 
     }
 
@@ -89,7 +89,7 @@ export default class TokenAutocomplete extends React.Component {
     let availableOptions = difference(this.props.options, this.state.values.toArray());
 
     //filter
-    availableOptions = filter( availableOptions, option => {
+    availableOptions = filter(availableOptions, option => {
       return contains(option, this.state.inputValue);
     });
 
@@ -106,7 +106,8 @@ export default class TokenAutocomplete extends React.Component {
 
     let passProps = {
         options: this.getAvailableOptions(),
-        term: this.state.inputValue
+        term: this.state.inputValue,
+        handleAddSelected: this.addSelectedValue
     };
 
     return this.isTresholdReached()

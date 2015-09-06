@@ -57,6 +57,4 @@ describe('Option list', () => {
     expect(wrapperNode.textContent).to.equal('someValue');
   });
 
-
-
 });

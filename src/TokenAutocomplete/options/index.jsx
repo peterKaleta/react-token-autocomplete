@@ -1,7 +1,7 @@
 import React from 'react';
 import radium from 'radium';
 import styles from './styles';
-import {map} from 'lodash';
+import {map, noop} from 'lodash';
 import keyCodes from 'utils/keyCodes';
 import Option from './option';
 
@@ -19,7 +19,8 @@ export default class OptionList extends React.Component {
   static defaultProps = {
     options: [],
     term: '',
-    emptyInfo: 'no suggestions'
+    emptyInfo: 'no suggestions',
+    handleAddSelected: noop
   }
 
   state = {
@@ -49,9 +50,11 @@ export default class OptionList extends React.Component {
 
   renderOptions() {
     return map(this.props.options, (option, index) => {
-      return(
+      return (
         <Option
           key={index}
+          index={index}
+          handleSelect={this.handleSelect}
           selected={index === this.state.selected}>
             {option}
         </Option>
@@ -59,33 +62,39 @@ export default class OptionList extends React.Component {
     });
   }
 
-  selectNext(){
+  selectNext = () => {
     this.setState({
       selected: this.state.selected === this.props.options.length - 1
         ? 0
         : this.state.selected + 1
-    })
+    });
   }
 
-  selectPrev(){
+  selectPrev = () => {
     this.setState({
       selected: !this.state.selected
         ? this.props.options.length - 1
         : this.state.selected - 1
-    })
+    });
+  }
+
+  handleSelect = index => {
+    this.setState({
+      selected: index
+    });
   }
 
   getSelected() {
     return this.props.options[this.state.selected];
   }
 
-  renderEmptyInfo(){
+  renderEmptyInfo() {
     return <div ref="emptyInfo" style={styles.emptyInfo}>{this.props.emptyInfo}</div>;
   }
 
   render() {
     return (
-      <div ref="wrapper" style={styles.wrapper}>
+      <div ref="wrapper" style={styles.wrapper} onClick={this.props.handleAddSelected}>
         {this.props.options.length ? this.renderOptions() : this.renderEmptyInfo()}
       </div>
     );

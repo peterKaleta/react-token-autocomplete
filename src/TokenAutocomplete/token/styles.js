@@ -1,12 +1,12 @@
 export default {
   wrapper: {
     borderRadius: 2,
-    background: '#aaa',
+    background: '#fff',
     marginRight: 3,
     padding: 0,
     overflow: 'hidden',
     position: 'relative',
-    border: '1px solid #999',
+    border: '1px solid #bbb',
     flexGrow: 1
   },
   removeBtn: {
@@ -17,19 +17,20 @@ export default {
     padding: '4px 6px',
     color: '#888',
     fontSize: 10,
-    borderLeft: '1px solid #888',
+    borderLeft: '1px solid #bbb',
     lineHeight: '100%',
     position: 'absolute',
     verticalAlign: 'middle',
     cursor: 'pointer',
     ':hover': {
       color: '#777',
-      background: '#999'
+      background: '#bbb'
     }
   },
   value: {
     padding: '2px 5px',
     marginRight: 20,
+    color: '#555',
     fontSize: 13,
     verticalAlign: 'middle'
   }

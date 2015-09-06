@@ -3,6 +3,6 @@ export default {
     padding: 5
   },
   selected: {
-    background: '#aaa'
+    background: '#d4d4d4'
   }
 };

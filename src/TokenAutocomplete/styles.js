@@ -2,7 +2,6 @@ export default {
   wrapper: {
     fontFamily: '"Helvetica Neue", "Helvetica", "Arial", sans-serif',
     fontSize: 13,
-    fontWeight: 300,
     position: 'relative'
   },
   input: {
@@ -11,7 +10,7 @@ export default {
     flexGrow: 1,
     display: 'inline-block',
     fontSize: 13,
-    lineHeight: '100%',
+    fontFamily: '"Helvetica Neue", "Helvetica", "Arial", sans-serif',
     ':focus': {
       outline: 0
     }
@@ -23,6 +22,8 @@ export default {
   inputWrapper: {
     border: '1px solid #999',
     padding: '3px 4px',
-    display: 'flex'
+    display: 'flex',
+    fontWeight: 400,
+    minHeight: 21
   }
 };
