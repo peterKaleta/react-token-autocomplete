@@ -31,6 +31,7 @@ export default {
   value: {
     padding: '2px 5px',
     marginRight: 20,
+    fontSize: 13,
     display: 'inline-block',
     verticalAlign: 'middle'
   }
