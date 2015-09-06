@@ -3,11 +3,13 @@ export default {
     borderRadius: 2,
     background: '#fff',
     marginRight: 3,
+    marginTop: 3,
+    marginBottom: 3,
     padding: 0,
     overflow: 'hidden',
     position: 'relative',
     border: '1px solid #bbb',
-    flexGrow: 1
+    width: 'auto'
   },
   removeBtn: {
     marginLeft: 2,

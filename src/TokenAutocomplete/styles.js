@@ -15,15 +15,13 @@ export default {
       outline: 0
     }
   },
-  valuesWrapper: {
-    verticalAlign: 'middle',
-    display: 'flex'
-  },
   inputWrapper: {
     border: '1px solid #999',
-    padding: '3px 4px',
+    padding: '1px 4px',
     display: 'flex',
     fontWeight: 400,
-    minHeight: 21
+    minHeight: 21,
+    overflow: 'hidden',
+    flexWrap: 'wrap'
   }
 };

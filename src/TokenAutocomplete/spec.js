@@ -197,7 +197,7 @@ describe('TokenAutocomplete', () => {
       defaultValues: ['aaa1']
     });
 
-    const removeBtnNode = React.findDOMNode(component.refs.valuesWrapper);
+    const removeBtnNode = React.findDOMNode(component.refs.inputWrapper);
     const TokenNode = removeBtnNode.querySelectorAll('div')[0];
     const TokenRemoveBtnNode = TokenNode.querySelectorAll('.token-remove-btn')[0];
 
