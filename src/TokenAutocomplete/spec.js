@@ -65,11 +65,13 @@ describe('TokenAutocomplete', () => {
 
   //API
   describe('provides API', () => {
+
     it('to set initial focus', () => {
       const component = TestUtils.renderComponent(TokenAutocomplete, {focus: true});
       React.findDOMNode(component.refs.input);
       //TODO
     });
+
   });
 
 
@@ -238,4 +240,10 @@ describe('TokenAutocomplete', () => {
 
   });
 
+  it('displays processing status', () => {
+    const component = TestUtils.renderComponent(TokenAutocomplete, {
+      processing: true
+    });
+    expect(component.refs.processing).to.exist;
+  });
 });

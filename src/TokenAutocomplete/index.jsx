@@ -158,6 +158,10 @@ export default class TokenAutocomplete extends React.Component {
     });
   }
 
+  renderProcessing = () => {
+    return this.props.processing ? <div ref='processing' style={styles.processing}/> : null;
+  }
+
   render() {
     return (
       <div ref="wrapper" style={styles.wrapper}>
@@ -172,6 +176,7 @@ export default class TokenAutocomplete extends React.Component {
             value={this.state.inputValue}
             placeholder={this.props.placeholder}
             ref="input"/>
+          {this.renderProcessing()}
         </div>
         {this.renderOptionsDropdown()}
       </div>

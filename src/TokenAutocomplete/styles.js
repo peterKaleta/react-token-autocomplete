@@ -23,5 +23,8 @@ export default {
     fontWeight: 400,
     overflow: 'hidden',
     flexWrap: 'wrap'
+  },
+  processing: {
+    
   }
 };
