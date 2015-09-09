@@ -43,10 +43,8 @@ describe('TokenAutocomplete', () => {
         expect(component.refs.input.props.placeholder).to.equal(placeholder);
     });
 
-    it('has predefined place', () => {
-        const placeholder = 'add new tag';
-        expect(component.props.placeholder).to.be.equal(placeholder);
-        expect(component.refs.input.props.placeholder).to.equal(placeholder);
+    it('in not processing place', () => {
+        expect(component.props.processing).to.be.false;
     });
 
     //state

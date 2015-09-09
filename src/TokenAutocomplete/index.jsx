@@ -18,7 +18,8 @@ export default class TokenAutocomplete extends React.Component {
     values: React.PropTypes.array,
     placeholder: React.PropTypes.string,
     treshold: React.PropTypes.number,
-    focus: React.PropTypes.bool
+    focus: React.PropTypes.bool,
+    processing: React.PropTypes.bool
   }
 
   static contextTypes = {
@@ -29,7 +30,8 @@ export default class TokenAutocomplete extends React.Component {
     defaultValues: [],
     placeholder: 'add new tag',
     treshold: 3,
-    focus: false
+    focus: false,
+    processing: false
   }
 
   state = {
@@ -38,13 +40,8 @@ export default class TokenAutocomplete extends React.Component {
     values: Immutable.List([])
   }
 
-  onInputChange = e => {
 
-    this.setState({
-      inputValue: e.target.value
-    });
-
-  }
+  //LIFECYCLE
 
   componentDidMount() {
     let values = Immutable.List(this.props.defaultValues);
@@ -52,6 +49,17 @@ export default class TokenAutocomplete extends React.Component {
     if (this.props.focus) {
       this.focus();
     }
+  }
+
+
+  //EVENT HANDLERS
+
+  onInputChange = e => {
+
+    this.setState({
+      inputValue: e.target.value
+    });
+
   }
 
   onKeyDown = e => {
@@ -70,16 +78,19 @@ export default class TokenAutocomplete extends React.Component {
     }
   }
 
-  focus() {
-    React.findDOMNode(this.refs.input).focus();
-  }
-
   onFocus = e => {
     this.setState({focused: true});
   }
 
   onBlur = e => {
     this.setState({focused: false});
+  }
+
+
+  //ACTIONS
+
+  focus = () => {
+    React.findDOMNode(this.refs.input).focus();
   }
 
   deleteValue = index => {
@@ -101,7 +112,10 @@ export default class TokenAutocomplete extends React.Component {
 
   }
 
-  getAvailableOptions() {
+
+  //HELPERS
+
+  getAvailableOptions = () => {
 
     //notselected
     let availableOptions = difference(this.props.options, this.state.values.toArray());
@@ -115,10 +129,12 @@ export default class TokenAutocomplete extends React.Component {
 
   }
 
-
-  isTresholdReached() {
+  isTresholdReached = () => {
     return this.state.inputValue.length >= this.props.treshold;
   }
+
+
+  //RENDERERS
 
   renderOptionsDropdown = () => {
 
@@ -162,4 +178,5 @@ export default class TokenAutocomplete extends React.Component {
     );
 
   }
+
 }
