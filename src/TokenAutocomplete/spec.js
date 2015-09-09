@@ -17,10 +17,12 @@ describe('TokenAutocomplete', () => {
   //INITIAL STATE
 
   describe('by default', () => {
+
     beforeEach(() => {
       component = TestUtils.renderComponent(TokenAutocomplete);
     });
 
+    //props
     it('has empty options array', () => {
         expect(component.props.options).to.be.instanceof(Array);
         expect(component.props.options).to.be.empty;
@@ -42,10 +44,14 @@ describe('TokenAutocomplete', () => {
     });
 
     it('has predefined place', () => {
-        const component = TestUtils.renderComponent(TokenAutocomplete);
         const placeholder = 'add new tag';
         expect(component.props.placeholder).to.be.equal(placeholder);
         expect(component.refs.input.props.placeholder).to.equal(placeholder);
+    });
+
+    //state
+    it('is unfocused by default', () => {
+       expect(component.state.focused).to.be.false;
     });
 
   });
@@ -57,6 +63,15 @@ describe('TokenAutocomplete', () => {
         expect(component.refs.input).to.exist;
       });
 
+  });
+
+  //API
+  describe('provides API', () => {
+    it('to set initial focus', () => {
+      const component = TestUtils.renderComponent(TokenAutocomplete, {focus: true});
+      React.findDOMNode(component.refs.input);
+      //TODO
+    });
   });
 
 
@@ -205,6 +220,23 @@ describe('TokenAutocomplete', () => {
     TestUtils.Simulate.click(TokenRemoveBtnNode);
 
     expect(component.state.values.size).to.equal(0);
+
+  });
+
+  it('refocuses after token removal', () => {
+    //TODO
+  });
+
+  it('hides list on blur', () => {
+
+    const component = TestUtils.renderComponent(TokenAutocomplete, {
+      options: ['aaa1', 'aaa2', 'aaa3', 'aaa4', 'ddd1']
+    });
+
+    TestUtils.changeInputValue(component, 'aaa');
+    TestUtils.blur(component);
+
+    expect(component.refs.options).not.to.exist;
 
   });
 

@@ -6,9 +6,20 @@ function renderComponent(Component, props = {}) {
 }
 
 function changeInputValue(component, value) {
+  focus(component);
   var inputNode = React.findDOMNode(component.refs.input);
   inputNode.value = value;
   TestUtils.Simulate.change(inputNode);
+}
+
+function blur(component) {
+  var inputNode = React.findDOMNode(component.refs.input);
+  TestUtils.Simulate.blur(inputNode);
+}
+
+function focus(component) {
+  var inputNode = React.findDOMNode(component.refs.input);
+  TestUtils.Simulate.focus(inputNode);
 }
 
 function hitEnter(component) {
@@ -26,5 +37,6 @@ export default {
   changeInputValue,
   hitEnter,
   hitBackspace,
+  blur,
   ...TestUtils
 };

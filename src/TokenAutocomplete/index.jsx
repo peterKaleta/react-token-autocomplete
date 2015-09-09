@@ -17,7 +17,8 @@ export default class TokenAutocomplete extends React.Component {
     options: React.PropTypes.array,
     values: React.PropTypes.array,
     placeholder: React.PropTypes.string,
-  treshold: React.PropTypes.number
+    treshold: React.PropTypes.number,
+    focus: React.PropTypes.bool
   }
 
   static contextTypes = {
@@ -27,10 +28,12 @@ export default class TokenAutocomplete extends React.Component {
     options: [],
     defaultValues: [],
     placeholder: 'add new tag',
-    treshold: 3
+    treshold: 3,
+    focus: false
   }
 
   state = {
+    focused: false,
     inputValue: '',
     values: Immutable.List([])
   }
@@ -46,6 +49,9 @@ export default class TokenAutocomplete extends React.Component {
   componentDidMount() {
     let values = Immutable.List(this.props.defaultValues);
     this.setState({values});
+    if (this.props.focus) {
+      this.focus();
+    }
   }
 
   onKeyDown = e => {
@@ -64,11 +70,23 @@ export default class TokenAutocomplete extends React.Component {
     }
   }
 
+  focus() {
+    React.findDOMNode(this.refs.input).focus();
+  }
+
+  onFocus = e => {
+    this.setState({focused: true});
+  }
+
+  onBlur = e => {
+    this.setState({focused: false});
+  }
+
   deleteValue = index => {
     this.setState({
        values: this.state.values.delete(index)
     });
-
+    this.focus();
   }
 
   addSelectedValue = () => {
@@ -104,15 +122,17 @@ export default class TokenAutocomplete extends React.Component {
 
   renderOptionsDropdown = () => {
 
-    let passProps = {
-        options: this.getAvailableOptions(),
-        term: this.state.inputValue,
-        handleAddSelected: this.addSelectedValue
-    };
+    if (this.isTresholdReached() && this.state.focused) {
+      let passProps = {
+          options: this.getAvailableOptions(),
+          term: this.state.inputValue,
+          handleAddSelected: this.addSelectedValue
+      };
+      return <OptionList ref="options" {...passProps}/>;
+    } else {
+      return null;
+    }
 
-    return this.isTresholdReached()
-      ? <OptionList ref="options" {...passProps}/>
-      : null;
 
   }
 
@@ -128,12 +148,14 @@ export default class TokenAutocomplete extends React.Component {
         <div ref="inputWrapper" style={styles.inputWrapper}>
           {this.renderTokens()}
           <input
-          style={styles.input}
-          onKeyDown={this.onKeyDown}
-          onChange={this.onInputChange}
-          value={this.state.inputValue}
-          placeholder={this.props.placeholder}
-          ref="input"/>
+            style={styles.input}
+            onKeyDown={this.onKeyDown}
+            onChange={this.onInputChange}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            value={this.state.inputValue}
+            placeholder={this.props.placeholder}
+            ref="input"/>
         </div>
         {this.renderOptionsDropdown()}
       </div>

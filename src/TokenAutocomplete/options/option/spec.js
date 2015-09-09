@@ -39,6 +39,10 @@ describe('Option list', () => {
       expect(wrapperNode.style.background).to.equal('rgb(0, 0, 0)');
     });
 
+    it('calls passed handleSelect onMouseEnter', () => {
+      //TODO
+    });
+
   //FUNCTIONAL
 
   it('displays passed value', () => {
@@ -58,7 +62,7 @@ describe('Option list', () => {
     });
     const wrapperNode = React.findDOMNode(component.refs.wrapper);
     expect(wrapperNode.style.background).to.equal('rgb(255, 255, 255)');
-
   });
+
 
 });
