@@ -43,8 +43,12 @@ describe('TokenAutocomplete', () => {
         expect(component.refs.input.props.placeholder).to.equal(placeholder);
     });
 
-    it('in not processing place', () => {
+    it('is not processing', () => {
         expect(component.props.processing).to.be.false;
+    });
+
+    it('is not limiting tags to options', () => {
+        expect(component.props.limitToOptions).to.be.false;
     });
 
     //state
@@ -70,6 +74,39 @@ describe('TokenAutocomplete', () => {
       const component = TestUtils.renderComponent(TokenAutocomplete, {focus: true});
       React.findDOMNode(component.refs.input);
       //TODO
+    });
+
+    it('to limit tags to options', () => {
+      const component = TestUtils.renderComponent(TokenAutocomplete, {
+        options: ['aaa', 'ccc'],
+        defaultValues: ['bbb'],
+        limitToOptions: true
+      });
+
+
+      expect(component.state.values.size).to.equal(1);
+
+      TestUtils.changeInputValue(component, 'ddd');
+      TestUtils.hitEnter(component);
+
+      expect(component.state.values.size).to.equal(1);
+
+    });
+
+    it('to add custom tags ', () => {
+      const component = TestUtils.renderComponent(TokenAutocomplete, {
+        options: ['aaa', 'ccc'],
+        defaultValues: ['bbb']
+      });
+
+
+      expect(component.state.values.size).to.equal(1);
+
+      TestUtils.changeInputValue(component, 'ddd');
+      TestUtils.hitEnter(component);
+
+      expect(component.state.values.size).to.equal(1);
+
     });
 
   });

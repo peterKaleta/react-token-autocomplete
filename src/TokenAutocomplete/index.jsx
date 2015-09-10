@@ -19,7 +19,8 @@ export default class TokenAutocomplete extends React.Component {
     placeholder: React.PropTypes.string,
     treshold: React.PropTypes.number,
     focus: React.PropTypes.bool,
-    processing: React.PropTypes.bool
+    processing: React.PropTypes.bool,
+    limitToOptions: React.PropTypes.bool
   }
 
   static contextTypes = {
@@ -31,7 +32,8 @@ export default class TokenAutocomplete extends React.Component {
     placeholder: 'add new tag',
     treshold: 3,
     focus: false,
-    processing: false
+    processing: false,
+    limitToOptions: false
   }
 
   state = {

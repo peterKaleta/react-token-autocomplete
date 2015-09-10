@@ -10,11 +10,14 @@ export default class Option extends React.Component {
 
   static propTypes = {
     selected: React.PropTypes.bool,
-    index: React.PropTypes.number
+    index: React.PropTypes.number,
+    handleSelect: React.PropTypes.func,
+    handleAdd: React.PropTypes.func
   }
 
   static defaultProps = {
     handleSelect: noop,
+    handleAdd: noop,
     selected: false,
     styles,
     index: 0
@@ -25,11 +28,16 @@ export default class Option extends React.Component {
     this.props.handleSelect(this.props.index);
   }
 
+  onClick = () => {
+    this.props.handleAdd(this.props.index);
+  }
+
 
   render() {
     return (
       <div
         ref="wrapper"
+        onClick={this.onClick}
         onMouseEnter={this.onMouseEnter}
         style={[this.props.styles.wrapper, this.props.selected && this.props.styles.selected]}>
           {this.props.children}
