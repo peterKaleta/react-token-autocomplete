@@ -6,5 +6,5 @@ document.body.appendChild(wrapper);
 
 React.render(<TokenAutocomplete
     focus
-    defaultValues={['aaaa', 'ccc1ccc1ccc1ccc1', 'ccc2ccc2ccc2ccc2', 'ccc3ccc3ccc3ccc3']}
-    options={['ccc4ccc4ccc4ccc4','ccc4ccc4ccc4ccc6','ccc4ccc4ccc4ccc7','ccc4ccc4ccc4ccc14', 'gggggggggggggggggggg']}/>, wrapper);
+    defaultValues={['aaa', 'bbb', 'cccc', 'dddd']}
+    options={['aaa1', 'aaa2', 'aaa3', 'aaa4', 'bbb1']}/>, wrapper);

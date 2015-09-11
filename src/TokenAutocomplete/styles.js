@@ -25,6 +25,5 @@ export default {
     flexWrap: 'wrap'
   },
   processing: {
-    
   }
 };
