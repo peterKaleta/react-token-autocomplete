@@ -1,0 +1,7 @@
+{
+  "changelogCommand": "git log --pretty=format:'* %s (%h)' [REV_RANGE]",
+  "buildCommand": "make lint && make test && make build",
+  "github": {
+   "release": true
+  }
+}
