@@ -48,6 +48,7 @@ export default class TokenAutocomplete extends React.Component {
   componentDidMount() {
     let values = Immutable.List(this.props.defaultValues);
     this.setState({values});
+    this.a = 0;
     if (this.props.focus) {
       this.focus();
     }
@@ -81,6 +82,7 @@ export default class TokenAutocomplete extends React.Component {
   }
 
   onFocus = e => {
+    this.a = 3;
     this.setState({focused: true});
   }
 
@@ -93,6 +95,7 @@ export default class TokenAutocomplete extends React.Component {
 
   focus = () => {
     React.findDOMNode(this.refs.input).focus();
+    this.onFocus();
   }
 
   deleteValue = index => {

@@ -1,5 +1,5 @@
 {
-  "changelogCommand": "git log --pretty=format:'* %s (%h)' [REV_RANGE]",
+  "changelogCommand": "CHANGELOG.MD < it log --pretty=format:'* %s (%h)' [REV_RANGE]",
   "buildCommand": "make lint && make test && make build",
   "github": {
    "release": true,

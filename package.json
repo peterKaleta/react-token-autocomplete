@@ -61,6 +61,8 @@
     "rewire-webpack": "^1.0.0",
     "sass": "^0.5.0",
     "sass-loader": "^2.0.1",
+    "sinon": "^1.16.1",
+    "sinon-chai": "^2.8.0",
     "style-loader": "^0.12.3",
     "underscore.string": "^3.2.1",
     "url-loader": "^0.5.6",

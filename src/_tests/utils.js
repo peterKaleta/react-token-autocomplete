@@ -38,5 +38,6 @@ export default {
   hitEnter,
   hitBackspace,
   blur,
+  focus,
   ...TestUtils
 };

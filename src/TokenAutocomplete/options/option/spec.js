@@ -4,7 +4,7 @@ import TestUtils from 'TestUtils';
 
 let component;
 
-describe('Option list', () => {
+describe('Single option', () => {
 
   afterEach(done => {
     React.unmountComponentAtNode(document.body);
@@ -39,9 +39,30 @@ describe('Option list', () => {
       expect(wrapperNode.style.background).to.equal('rgb(0, 0, 0)');
     });
 
-    it('calls passed handleSelect onMouseEnter', () => {
-      //TODO
+    it('calls handleSelect onMouseEnter', () => {
+      let spy = sinon.spy();
+
+      component = TestUtils.renderComponent(Option, {
+        handleSelect: spy
+      });
+
+      TestUtils.SimulateNative.mouseOver(React.findDOMNode(component.refs.wrapper));
+      expect(spy.called).to.be.true;
+
     });
+
+    it('calls handleAdd when clicked', () => {
+      let spy = sinon.spy();
+
+      component = TestUtils.renderComponent(Option, {
+        handleAdd: spy
+      });
+
+      TestUtils.Simulate.click(React.findDOMNode(component.refs.wrapper));
+      expect(spy.called).to.be.true;
+
+    });
+
 
   //FUNCTIONAL
 
@@ -63,8 +84,5 @@ describe('Option list', () => {
     const wrapperNode = React.findDOMNode(component.refs.wrapper);
     expect(wrapperNode.style.background).to.equal('rgb(255, 255, 255)');
   });
-
-
-  //TODO handle adding
 
 });

@@ -71,9 +71,12 @@ describe('TokenAutocomplete', () => {
   describe('provides API', () => {
 
     it('to set initial focus', () => {
-      const component = TestUtils.renderComponent(TokenAutocomplete, {focus: true});
-      React.findDOMNode(component.refs.input);
-      //TODO
+
+      const component1 = TestUtils.renderComponent(TokenAutocomplete, {focus: false});
+      const component2 = TestUtils.renderComponent(TokenAutocomplete, {focus: true});
+
+      expect(component1.state.focused).to.be.false;
+      expect(component2.state.focused).to.be.true;
     });
 
     it('to limit tags to options', () => {
@@ -81,22 +84,6 @@ describe('TokenAutocomplete', () => {
         options: ['aaa', 'ccc'],
         defaultValues: ['bbb'],
         limitToOptions: true
-      });
-
-
-      expect(component.state.values.size).to.equal(1);
-
-      TestUtils.changeInputValue(component, 'ddd');
-      TestUtils.hitEnter(component);
-
-      expect(component.state.values.size).to.equal(1);
-
-    });
-
-    it('to add custom tags ', () => {
-      const component = TestUtils.renderComponent(TokenAutocomplete, {
-        options: ['aaa', 'ccc'],
-        defaultValues: ['bbb']
       });
 
 
@@ -261,7 +248,20 @@ describe('TokenAutocomplete', () => {
   });
 
   it('refocuses after token removal', () => {
-    //TODO
+
+    let component = TestUtils.renderComponent(TokenAutocomplete, {
+      defaultValues: ['aaa1'],
+      focus: false
+    });
+
+
+    expect(component.state.focused).to.equal(false);
+    TestUtils.focus(component);
+    expect(component.state.focused).to.equal(true);
+    TestUtils.hitBackspace(component);
+    expect(component.state.focused).to.equal(true);
+
+
   });
 
   it('hides list on blur', () => {
