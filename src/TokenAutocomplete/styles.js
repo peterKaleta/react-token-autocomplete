@@ -37,7 +37,9 @@ export default {
     marginTop: 3,
     position: 'relative',
     animation: `${rotateKeyframe} .75s infinite linear`,
-    border: '2px solid #ddd',
+    borderRight: '2px solid #ddd',
+    borderLeft: '2px solid #ddd',
+    borderBottom: '2px solid #ddd',
     borderTop: '2px solid #888',
     borderRadius: '100%'
   }
