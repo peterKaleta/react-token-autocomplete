@@ -9,4 +9,4 @@ React.render(<TokenAutocomplete
     processing
     limitToOptions={false}
     defaultValues={['aaa', 'bbb', 'cccc', 'dddd']}
-    options={['aaa1', 'aaa2', 'aaa3', 'aaa4', 'bbb1']}/>, wrapper);
+    options={['aaa1', 'aaa2', 'aaa3', 'aaa4', 'aaa5', 'aaa6', 'aaa7', 'bbb1']}/>, wrapper);

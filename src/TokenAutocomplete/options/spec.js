@@ -79,7 +79,6 @@ describe('Option list', () => {
 
   });
 
-
   it('displays empty info if options list is empty', () => {
 
     let component = TestUtils.renderComponent(Options, {
