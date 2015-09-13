@@ -106,8 +106,23 @@ export default class TokenAutocomplete extends React.Component {
   }
 
   addSelectedValue = () => {
-    if (this.refs.options.props.options.length) {
-      const newValue = this.refs.options.getSelected();
+
+    let newValue;
+    let areOptionsAvailable = this.getAvailableOptions().length;
+
+    //if we are limited to options
+    if (this.props.limitToOptions) {
+      //and there are actually some options
+      newValue = areOptionsAvailable ? this.refs.options.getSelected() : void 0;
+    } else {
+      newValue = areOptionsAvailable ? this.refs.options.getSelected() : this.state.inputValue;
+    }
+
+    const isAlreadySelected = contains(this.state.values, newValue);
+
+
+    if (!!newValue && !isAlreadySelected) {
+
       this.setState({
         values: this.state.values.push(newValue),
         inputValue: ''
@@ -122,13 +137,18 @@ export default class TokenAutocomplete extends React.Component {
 
   getAvailableOptions = () => {
 
-    //notselected
-    let availableOptions = difference(this.props.options, this.state.values.toArray());
+    let availableOptions = [];
 
-    //filter
-    availableOptions = filter(availableOptions, option => {
-      return contains(option, this.state.inputValue);
-    });
+    if (this.isTresholdReached()) {
+      //notselected
+      availableOptions = difference(this.props.options, this.state.values.toArray());
+
+      //filter
+      availableOptions = filter(availableOptions, option => {
+        return contains(option, this.state.inputValue);
+      });
+
+    }
 
     return availableOptions;
 

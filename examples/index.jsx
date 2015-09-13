@@ -6,5 +6,6 @@ document.body.appendChild(wrapper);
 
 React.render(<TokenAutocomplete
     focus
+    limitToOptions={false}
     defaultValues={['aaa', 'bbb', 'cccc', 'dddd']}
     options={['aaa1', 'aaa2', 'aaa3', 'aaa4', 'bbb1']}/>, wrapper);

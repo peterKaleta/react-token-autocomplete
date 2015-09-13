@@ -96,6 +96,36 @@ describe('TokenAutocomplete', () => {
 
     });
 
+    it('to allow custom tags', () => {
+      const component = TestUtils.renderComponent(TokenAutocomplete, {
+        options: ['aaa', 'ccc'],
+        defaultValues: ['bbb'],
+        limitToOptions: false
+      });
+
+
+      expect(component.state.values.size).to.equal(1);
+
+      TestUtils.changeInputValue(component, 'ddd');
+      TestUtils.hitEnter(component);
+
+      expect(component.state.values.size).to.equal(2);
+
+    });
+
+    it('to display processing status', () => {
+      const component1 = TestUtils.renderComponent(TokenAutocomplete, {
+        processing: true
+      });
+
+      const component2 = TestUtils.renderComponent(TokenAutocomplete, {
+        processing: false
+      });
+      expect(component1.refs.processing).to.exist;
+      expect(component2.refs.processing).not.to.exist;
+
+    });
+
   });
 
 
@@ -144,7 +174,7 @@ describe('TokenAutocomplete', () => {
 
   });
 
-  it('displays a token for each passed value', done => {
+  it('displays a token for each passed value', () => {
 
     const component = TestUtils.renderComponent(TokenAutocomplete, {
       defaultValues: ['a', 'b', 'c', 'd']
@@ -152,7 +182,6 @@ describe('TokenAutocomplete', () => {
 
     let tokens = TestUtils.scryRenderedComponentsWithType(component.refs.wrapper, Token);
     expect(tokens.length).to.equal(4);
-    done();
   });
 
   it('dont show already selected options', () => {
@@ -169,7 +198,7 @@ describe('TokenAutocomplete', () => {
 
   });
 
-  it('dont show options not matching currently type value', () => {
+  it('dont show options not matching currently typed value', () => {
 
     const component = TestUtils.renderComponent(TokenAutocomplete, {
       options: ['aaa1', 'aaa2', 'aaa3', 'aaa4', 'ddd1'],
@@ -264,23 +293,36 @@ describe('TokenAutocomplete', () => {
 
   });
 
-  it('hides list on blur', () => {
+  it('toggles options list on focus/blur', () => {
+
+    const component = TestUtils.renderComponent(TokenAutocomplete);
+
+    TestUtils.changeInputValue(component, 'aaa');
+
+    TestUtils.blur(component);
+    expect(component.refs.options).not.to.exist;
+
+    TestUtils.focus(component);
+    expect(component.refs.options).to.exist;
+
+
+  });
+
+  it('doesn\'t allow duplicates', () => {
 
     const component = TestUtils.renderComponent(TokenAutocomplete, {
-      options: ['aaa1', 'aaa2', 'aaa3', 'aaa4', 'ddd1']
+      limitToOptions: false
     });
 
     TestUtils.changeInputValue(component, 'aaa');
-    TestUtils.blur(component);
+    TestUtils.hitEnter(component);
+    expect(component.state.values.size).to.equal(1);
 
-    expect(component.refs.options).not.to.exist;
+    TestUtils.changeInputValue(component, 'aaa');
+    TestUtils.hitEnter(component);
+    expect(component.state.values.size).to.equal(1);
+
 
   });
 
-  it('displays processing status', () => {
-    const component = TestUtils.renderComponent(TokenAutocomplete, {
-      processing: true
-    });
-    expect(component.refs.processing).to.exist;
-  });
 });
