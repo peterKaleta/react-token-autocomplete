@@ -1,3 +1,10 @@
+import radium from 'radium';
+
+const rotateKeyframe = radium.keyframes({
+  'from': {transform: 'rotate(0deg)'},
+  'to': {transform: 'rotate(360deg)'}
+});
+
 export default {
   wrapper: {
     fontFamily: '"Helvetica Neue", "Helvetica", "Arial", sans-serif',
@@ -25,5 +32,13 @@ export default {
     flexWrap: 'wrap'
   },
   processing: {
+    width: 18,
+    height: 18,
+    marginTop: 3,
+    position: 'relative',
+    animation: `${rotateKeyframe} .75s infinite linear`,
+    border: '2px solid #ddd',
+    borderTop: '2px solid #888',
+    borderRadius: '100%'
   }
 };

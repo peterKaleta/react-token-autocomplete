@@ -156,7 +156,6 @@ describe('TokenAutocomplete', () => {
       expect(component.refs.options.props.term).to.equal('def');
     });
 
-
   });
 
 
