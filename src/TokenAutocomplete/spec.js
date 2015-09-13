@@ -2,6 +2,7 @@ import React from 'react/addons';
 import TokenAutocomplete from './';
 import Token from './token';
 import TestUtils from 'TestUtils';
+import {noop} from 'lodash';
 
 let component;
 
@@ -49,6 +50,18 @@ describe('TokenAutocomplete', () => {
 
     it('is not limiting tags to options', () => {
         expect(component.props.limitToOptions).to.be.false;
+    });
+
+    it('handle on input change with noop', () => {
+      expect(component.props.onInputChange).to.equal(noop);
+    });
+
+    it('handle onAdd add with noop', () => {
+      expect(component.props.onAdd).to.equal(noop);
+    });
+
+    it('handle onRemove add with noop', () => {
+      expect(component.props.onRemove).to.equal(noop);
     });
 
     //state
@@ -126,11 +139,51 @@ describe('TokenAutocomplete', () => {
 
     });
 
+    it('to handle input value change ', () => {
+
+        var spy = sinon.spy();
+        const component = TestUtils.renderComponent(TokenAutocomplete, {
+          onInputChange: spy
+        });
+
+        TestUtils.changeInputValue(component, 'aaaaa');
+        expect(spy.calledWith('aaaaa')).to.be.true;
+    });
+
+    it('to handle value addition', () => {
+
+        var spy = sinon.spy();
+        const component = TestUtils.renderComponent(TokenAutocomplete, {
+          onAdd: spy,
+          defaultValues: ['bbb'],
+          limitToOptions: false
+        });
+
+        TestUtils.changeInputValue(component, 'aaaaa');
+        TestUtils.hitEnter(component);
+        expect(spy.calledWith('aaaaa', component.state.values)).to.be.true;
+    });
+
+    it('to handle value deletion', () => {
+
+        var spy = sinon.spy();
+        const component = TestUtils.renderComponent(TokenAutocomplete, {
+          onRemove: spy,
+          defaultValues: ['bbb'],
+          limitToOptions: false
+        });
+
+        TestUtils.changeInputValue(component, 'bbbb');
+        TestUtils.hitEnter(component);
+        TestUtils.hitBackspace(component);
+
+        expect(spy.calledWith('bbbb', component.state.values)).to.be.true;
+    });
+
   });
 
 
   //UNIT
-
   it('stores input value in state.inputValue', () => {
 
     const component = TestUtils.renderComponent(TokenAutocomplete);

@@ -2,7 +2,7 @@ import React from 'react';
 import radium from 'radium';
 import OptionList from './options';
 import Token from './token';
-import {difference, filter} from 'lodash';
+import {difference, filter, noop, clone} from 'lodash';
 import {contains} from 'underscore.string';
 import Immutable from 'immutable';
 import keyCodes from 'utils/keyCodes';
@@ -14,26 +14,39 @@ export default class TokenAutocomplete extends React.Component {
   static displayName = 'TokenAutocomplete';
 
   static propTypes = {
+    //initial state
     options: React.PropTypes.array,
-    values: React.PropTypes.array,
     placeholder: React.PropTypes.string,
     treshold: React.PropTypes.number,
-    focus: React.PropTypes.bool,
+    defaultValues: React.PropTypes.array,
     processing: React.PropTypes.bool,
-    limitToOptions: React.PropTypes.bool
+    focus: React.PropTypes.bool,
+    //behaviour
+    limitToOptions: React.PropTypes.bool,
+    //handles
+    onInputChange: React.PropTypes.func,
+    onAdd: React.PropTypes.func,
+    onRemove: React.PropTypes.func
   }
 
   static contextTypes = {
   }
 
   static defaultProps = {
+    //initial state
     options: [],
     defaultValues: [],
     placeholder: 'add new tag',
     treshold: 3,
     focus: false,
     processing: false,
-    limitToOptions: false
+    //behaviour
+    limitToOptions: false,
+    //handles
+    onInputChange: noop,
+    onAdd: noop,
+    onRemove: noop
+
   }
 
   state = {
@@ -59,6 +72,7 @@ export default class TokenAutocomplete extends React.Component {
 
   onInputChange = e => {
 
+    this.props.onInputChange(e.target.value);
     this.setState({
       inputValue: e.target.value
     });
@@ -99,9 +113,12 @@ export default class TokenAutocomplete extends React.Component {
   }
 
   deleteValue = index => {
-    this.setState({
-       values: this.state.values.delete(index)
-    });
+
+    const valueRemoved = this.state.values.get(index);
+    const values = this.state.values.delete(index);
+    this.props.onRemove(valueRemoved, values);
+
+    this.setState({values});
     this.focus();
   }
 
@@ -123,8 +140,10 @@ export default class TokenAutocomplete extends React.Component {
 
     if (!!newValue && !isAlreadySelected) {
 
+      const values = this.state.values.push(newValue);
+      this.props.onAdd(newValue, values);
       this.setState({
-        values: this.state.values.push(newValue),
+        values,
         inputValue: ''
       });
 
