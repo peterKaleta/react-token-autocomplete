@@ -2,8 +2,7 @@ language: node_js
 node_js:
     - "0.10"
 install:
-  - mkdir travis-phantomjs
-  - wget https://github.com/cantonic/phantomjs/archive/2.0.1-regression-12506.tar.gz -O $PWD/travis-phantomjs/p.tar.bz2
-  - tar -xvf $PWD/travis-phantomjs/p.tar.bz2 -C $PWD/travis-phantomjs
-  - export PATH=$PWD/travis-phantomjs:$PATH
+before_install:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
   - npm install
