@@ -38,7 +38,7 @@ module.exports = function(config) {
   config.set({
     singleRun: CI,
     autoWatch: !CI,
-    browsers: ['PhantomJS2'],
+    browsers: ['PhantomJS'],
     browserNoActivityTimeout: 60000,
     browserDisconnectTimeout: 10000,
     frameworks: ['mocha', 'chai', 'sinon'],
