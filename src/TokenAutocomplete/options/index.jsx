@@ -1,7 +1,7 @@
 import React from 'react';
 import radium from 'radium';
 import styles from './styles';
-import {map, noop} from 'lodash';
+import {each, noop, isEmpty} from 'lodash';
 import keyCodes from 'utils/keyCodes';
 import Option from './option';
 
@@ -13,14 +13,16 @@ export default class OptionList extends React.Component {
   static propTypes = {
     options: React.PropTypes.array,
     alreadySelected: React.PropTypes.array,
-    term: React.PropTypes.string
+    term: React.PropTypes.string,
+    limitToOptions: React.PropTypes.bool
   }
 
   static defaultProps = {
     options: [],
     term: '',
     emptyInfo: 'no suggestions',
-    handleAddSelected: noop
+    handleAddSelected: noop,
+    limitToOptions: true
   }
 
   state = {
@@ -48,18 +50,31 @@ export default class OptionList extends React.Component {
     }
   }
 
+  renderOption = (option, index) => {
+    return (
+      <Option
+        key={index}
+        index={index}
+        handleSelect={this.handleSelect}
+        selected={index === this.state.selected}>
+          {option}
+      </Option>
+    );
+  }
+
   renderOptions() {
-    return map(this.props.options, (option, index) => {
-      return (
-        <Option
-          key={index}
-          index={index}
-          handleSelect={this.handleSelect}
-          selected={index === this.state.selected}>
-            {option}
-        </Option>
-      );
+
+    let options = [];
+
+    if (!this.props.limitToOptions && !isEmpty(this.props.term)) {
+      options.push(this.renderOption(this.props.term, 0));
+    }
+
+    each(this.props.options, (option, index) => {
+      options.push(this.renderOption(option, index + 1));
     });
+
+    return options;
   }
 
   selectNext = () => {
@@ -93,10 +108,16 @@ export default class OptionList extends React.Component {
   }
 
   render() {
+    //display empty info when there are no options and we are limited to them,
+    //or there are no options and term is not provided;
+    const displayEmptyInfo = !this.props.options.length
+      && (this.props.limitToOptions || isEmpty(this.props.term));
+
     return (
       <div ref="wrapper" style={styles.wrapper} onClick={this.props.handleAddSelected}>
-        {this.props.options.length ? this.renderOptions() : this.renderEmptyInfo()}
+        {displayEmptyInfo ? this.renderEmptyInfo() : this.renderOptions() }
       </div>
+
     );
   }
 }

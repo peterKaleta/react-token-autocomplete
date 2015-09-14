@@ -34,6 +34,10 @@ describe('Option list', () => {
         expect(component.props.emptyInfo).to.equal('no suggestions');
     });
 
+    it('has limitToOptions flag set', () => {
+      expect(component.props.limitToOptions).to.be.true;
+    });
+
   });
 
   //UNIT
@@ -45,7 +49,7 @@ describe('Option list', () => {
       options: ['a', 'a', 'a', 'a', 'a', 'a']
     });
 
-    var options = React.findDOMNode(component.refs.wrapper).querySelectorAll('div');
+    const options = React.findDOMNode(component.refs.wrapper).querySelectorAll('div');
 
     expect(options.length).to.equal(6);
 
@@ -81,21 +85,59 @@ describe('Option list', () => {
 
   it('displays empty info if options list is empty', () => {
 
-    let component = TestUtils.renderComponent(Options, {
+    const component1 = TestUtils.renderComponent(Options, {
       options: ['a']
     });
 
-    expect(component.refs.emptyInfo).not.to.exist;
+    const component2 = TestUtils.renderComponent(Options, {
+        options: []
+      });
 
-    component = TestUtils.renderComponent(Options, {
-      options: []
-    });
+    const emptyInfoNode = React.findDOMNode(component2.refs.emptyInfo);
 
-    let emptyInfoNode = React.findDOMNode(component.refs.emptyInfo);
-
-    expect(component.refs.emptyInfo).to.exist;
+    expect(component1.refs.emptyInfo).not.to.exist;
+    expect(component2.refs.emptyInfo).to.exist;
     expect(emptyInfoNode.textContent).to.equal('no suggestions');
 
   });
+
+
+  describe('when not limited to options', () => {
+
+    it('displays additional option containing non-empty term ', () => {
+
+      const component1 = TestUtils.renderComponent(Options, {
+        limitToOptions: false,
+        options: ['aaa2', 'aaa1'],
+        term: 'aaa'
+      });
+
+      const component2 = TestUtils.renderComponent(Options, {
+        limitToOptions: false,
+        options: ['aaa2', 'aaa1'],
+        term: ''
+      });
+
+      const options1 = React.findDOMNode(component1.refs.wrapper).querySelectorAll('div');
+      const options2 = React.findDOMNode(component2.refs.wrapper).querySelectorAll('div');
+
+      expect(options1.length).to.equal(3);
+      expect(options2.length).to.equal(2);
+
+    });
+
+    it('hides empty info when term is provided', () => {
+      const component = TestUtils.renderComponent(Options, {
+        limitToOptions: false,
+        term: 'aaa'
+      });
+      const options = React.findDOMNode(component.refs.wrapper).querySelectorAll('div');
+
+      expect(options.length).to.equal(1);
+      expect(options[0].textContent).to.equal('aaa');
+    });
+
+  });
+
 
 });

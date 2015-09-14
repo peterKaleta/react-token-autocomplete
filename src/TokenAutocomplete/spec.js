@@ -39,9 +39,8 @@ describe('TokenAutocomplete', () => {
     });
 
     it('has predefined placeholder', () => {
-        const placeholder = 'add new tag';
-        expect(component.props.placeholder).to.be.equal(placeholder);
-        expect(component.refs.input.props.placeholder).to.equal(placeholder);
+        expect(component.props.placeholder).to.be.equal('add new tag');
+        expect(component.refs.input.props.placeholder).to.equal('add new tag');
     });
 
     it('is not processing', () => {
@@ -209,8 +208,11 @@ describe('TokenAutocomplete', () => {
       expect(component.refs.options.props.term).to.equal('def');
     });
 
-  });
+    it('limit to options', () => {
+      expect(component.refs.options.props.limitToOptions).to.be.false;
+    });
 
+  });
 
   //FUNCTIONAL
 
@@ -336,11 +338,11 @@ describe('TokenAutocomplete', () => {
     });
 
 
-    expect(component.state.focused).to.equal(false);
+    expect(component.state.focused).to.be.false;
     TestUtils.focus(component);
-    expect(component.state.focused).to.equal(true);
+    expect(component.state.focused).to.be.true;
     TestUtils.hitBackspace(component);
-    expect(component.state.focused).to.equal(true);
+    expect(component.state.focused).to.be.true;
 
 
   });

@@ -2,7 +2,7 @@ import React from 'react';
 import radium from 'radium';
 import OptionList from './options';
 import Token from './token';
-import {difference, filter, noop, clone} from 'lodash';
+import {difference, filter, noop} from 'lodash';
 import {contains} from 'underscore.string';
 import Immutable from 'immutable';
 import keyCodes from 'utils/keyCodes';
@@ -186,7 +186,8 @@ export default class TokenAutocomplete extends React.Component {
       let passProps = {
           options: this.getAvailableOptions(),
           term: this.state.inputValue,
-          handleAddSelected: this.addSelectedValue
+          handleAddSelected: this.addSelectedValue,
+          limitToOptions: this.props.limitToOptions
       };
       return <OptionList ref="options" {...passProps}/>;
     } else {
