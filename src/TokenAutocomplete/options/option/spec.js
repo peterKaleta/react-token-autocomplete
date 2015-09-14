@@ -32,11 +32,11 @@ describe('Single option', () => {
     it('accepts passed style objects', () => {
       component = TestUtils.renderComponent(Option, {
         styles: {
-          wrapper: { background: '#000' }
+          wrapper: { backgroundColor: '#000' }
         }
       });
       const wrapperNode = React.findDOMNode(component.refs.wrapper);
-      expect(wrapperNode.style.background).to.equal('rgb(0, 0, 0)');
+      expect(wrapperNode.style.backgroundColor).to.equal('rgb(0, 0, 0)');
     });
 
     it('calls handleSelect onMouseEnter', () => {
@@ -77,12 +77,12 @@ describe('Single option', () => {
     component = TestUtils.renderComponent(Option, {
       selected: true,
       styles: {
-        wrapper: { background: '#ddd' },
-        selected: { background: '#fff' }
+        wrapper: { backgroundColor: '#ddd' },
+        selected: { backgroundColor: '#fff' }
       }
     });
     const wrapperNode = React.findDOMNode(component.refs.wrapper);
-    expect(wrapperNode.style.background).to.equal('rgb(255, 255, 255)');
+    expect(wrapperNode.style.backgroundColor).to.equal('rgb(255, 255, 255)');
   });
 
 });
