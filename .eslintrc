@@ -2,9 +2,8 @@
   "env": {
     "browser": true,
     "node": true,
-    "es6": true,
-    "es7": true,
-  },  
+    "es6": true
+  },
   "plugins": [
     "react"
   ],
