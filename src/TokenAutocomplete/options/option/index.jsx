@@ -2,8 +2,11 @@ import React from 'react';
 import radium from 'radium';
 import styles from './styles';
 import {noop} from 'lodash';
+import {decorators} from 'peters-toolbelt';
+const {StyleDefaults} = decorators;
 
 @radium
+@StyleDefaults(styles)
 export default class Option extends React.Component {
 
   static displayName = 'Option';
@@ -19,7 +22,6 @@ export default class Option extends React.Component {
     handleSelect: noop,
     handleAdd: noop,
     selected: false,
-    styles,
     index: 0
   }
 

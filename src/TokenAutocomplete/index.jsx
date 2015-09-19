@@ -2,13 +2,16 @@ import React from 'react';
 import radium from 'radium';
 import OptionList from './options';
 import Token from './token';
-import {difference, filter, noop} from 'lodash';
+import {include, difference, filter, noop} from 'lodash';
 import {contains} from 'underscore.string';
 import Immutable from 'immutable';
-import keyCodes from 'utils/keyCodes';
 import styles from './styles';
+import keyCodes from 'utils/keyCodes';
+import {decorators} from 'peters-toolbelt';
+const {StyleDefaults} = decorators;
 
 @radium
+@StyleDefaults(styles)
 export default class TokenAutocomplete extends React.Component {
 
   static displayName = 'TokenAutocomplete';
@@ -96,7 +99,6 @@ export default class TokenAutocomplete extends React.Component {
   }
 
   onFocus = e => {
-    this.a = 3;
     this.setState({focused: true});
   }
 
@@ -127,16 +129,16 @@ export default class TokenAutocomplete extends React.Component {
     let newValue;
     let areOptionsAvailable = this.getAvailableOptions().length;
 
+
     //if we are limited to options
     if (this.props.limitToOptions) {
-      //and there are actually some options
+      console.log('t');
       newValue = areOptionsAvailable ? this.refs.options.getSelected() : void 0;
     } else {
       newValue = areOptionsAvailable ? this.refs.options.getSelected() : this.state.inputValue;
     }
 
-    const isAlreadySelected = contains(this.state.values, newValue);
-
+    const isAlreadySelected = include(this.state.values.toArray(), newValue);
 
     if (!!newValue && !isAlreadySelected) {
 
@@ -204,16 +206,16 @@ export default class TokenAutocomplete extends React.Component {
   }
 
   renderProcessing = () => {
-    return this.props.processing ? <div ref='processing' style={styles.processing}/> : null;
+    return this.props.processing ? <div ref='processing' style={this.props.styles.processing}/> : null;
   }
 
   render() {
     return (
-      <div ref="wrapper" style={styles.wrapper}>
-        <div ref="inputWrapper" style={styles.inputWrapper}>
+      <div ref="wrapper" style={this.props.styles.wrapper}>
+        <div ref="inputWrapper" style={this.props.styles.inputWrapper}>
           {this.renderTokens()}
           <input
-            style={styles.input}
+            style={this.props.styles.input}
             onKeyDown={this.onKeyDown}
             onChange={this.onInputChange}
             onFocus={this.onFocus}

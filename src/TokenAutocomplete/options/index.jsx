@@ -4,8 +4,11 @@ import styles from './styles';
 import {each, noop, isEmpty} from 'lodash';
 import keyCodes from 'utils/keyCodes';
 import Option from './option';
+import {decorators} from 'peters-toolbelt';
+const {StyleDefaults} = decorators;
 
 @radium
+@StyleDefaults(styles)
 export default class OptionList extends React.Component {
 
   static displayName = 'Option List';
@@ -104,7 +107,7 @@ export default class OptionList extends React.Component {
   }
 
   renderEmptyInfo() {
-    return <div ref="emptyInfo" style={styles.emptyInfo}>{this.props.emptyInfo}</div>;
+    return <div ref="emptyInfo" style={this.props.styles.emptyInfo}>{this.props.emptyInfo}</div>;
   }
 
   render() {
@@ -114,7 +117,7 @@ export default class OptionList extends React.Component {
       && (this.props.limitToOptions || isEmpty(this.props.term));
 
     return (
-      <div ref="wrapper" style={styles.wrapper} onClick={this.props.handleAddSelected}>
+      <div ref="wrapper" style={this.props.styles.wrapper} onMouseDown={this.props.handleAddSelected}>
         {displayEmptyInfo ? this.renderEmptyInfo() : this.renderOptions() }
       </div>
 
