@@ -58,10 +58,10 @@ export default class OptionList extends React.Component {
       <Option
         key={index}
         index={index}
+        parse={this.parseOption}
         handleSelect={this.handleSelect}
-        selected={index === this.state.selected}>
-          {option}
-      </Option>
+        value={option}
+        selected={index === this.state.selected}/>
     );
   }
 

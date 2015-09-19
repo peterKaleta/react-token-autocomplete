@@ -195,23 +195,27 @@ describe('TokenAutocomplete', () => {
 
   });
 
-  describe('passes to options list', () => {
+  describe('passes', () => {
 
-    beforeEach(() => {
-      component = TestUtils.renderComponent(TokenAutocomplete, {
-        defaultValues: ['a', 'b']
+    describe('to options list', () => {
+
+      beforeEach(() => {
+        component = TestUtils.renderComponent(TokenAutocomplete, {
+          defaultValues: ['a', 'b']
+        });
+        TestUtils.changeInputValue(component, 'def');
       });
-      TestUtils.changeInputValue(component, 'def');
-    });
 
-    it('inputValue as term props', () => {
-      expect(component.refs.options.props.term).to.equal('def');
-    });
+      it('inputValue as term props', () => {
+        expect(component.refs.options.props.term).to.equal('def');
+      });
 
-    it('limit to options', () => {
-      expect(component.refs.options.props.limitToOptions).to.be.false;
-    });
+      it('limit to options', () => {
+        expect(component.refs.options.props.limitToOptions).to.be.false;
+      });
 
+    });
+    
   });
 
   //FUNCTIONAL

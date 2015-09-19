@@ -25,12 +25,17 @@ describe('Option list', () => {
       expect(component.props.handleRemove).to.equal(_.noop);
     });
 
+    it('displays passed value without parsing', () => {
+      component = TestUtils.renderComponent(Token, {value: 'someValue'});
+      const wrapperNode = React.findDOMNode(component.refs.value);
+      expect(wrapperNode.textContent).to.equal('someValue');
+    });
+
   });
 
   //STRUCTURE
 
   describe('contains', () => {
-
 
     beforeEach(() => {
       component = TestUtils.renderComponent(Token);
@@ -51,10 +56,16 @@ describe('Option list', () => {
 
   //FUNCTIONAL
 
-  it('displays passed value', () => {
-    component = TestUtils.renderComponent(Token, {children: 'someValue'});
+  it('displays passed value after parsing', () => {
+
+    function parser(value) {
+      return 'sth ' + value;
+    }
+
+    component = TestUtils.renderComponent(Token,
+      { parse: parser, value: 'someValue'});
     const wrapperNode = React.findDOMNode(component.refs.value);
-    expect(wrapperNode.textContent).to.equal('someValue');
+    expect(wrapperNode.textContent).to.equal('sth someValue');
   });
 
 });

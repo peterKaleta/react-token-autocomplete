@@ -67,7 +67,7 @@ describe('Single option', () => {
   //FUNCTIONAL
 
   it('displays passed value', () => {
-    component = TestUtils.renderComponent(Option, {children: 'someValue'});
+    component = TestUtils.renderComponent(Option, {value: 'someValue'});
     const wrapperNode = React.findDOMNode(component.refs.wrapper);
     expect(wrapperNode.textContent).to.equal('someValue');
   });

@@ -1,7 +1,7 @@
 import React from 'react';
 import radium from 'radium';
 import styles from './styles';
-import {noop} from 'lodash';
+import {noop, identity} from 'lodash';
 import {decorators} from 'peters-toolbelt';
 const {StyleDefaults} = decorators;
 
@@ -15,14 +15,16 @@ export default class Option extends React.Component {
     selected: React.PropTypes.bool,
     index: React.PropTypes.number,
     handleSelect: React.PropTypes.func,
-    handleAdd: React.PropTypes.func
+    handleAdd: React.PropTypes.func,
+    parse: React.PropTypes.func
   }
 
   static defaultProps = {
     handleSelect: noop,
     handleAdd: noop,
     selected: false,
-    index: 0
+    index: 0,
+    parse: identity
   }
 
 
@@ -42,7 +44,7 @@ export default class Option extends React.Component {
         onClick={this.onClick}
         onMouseEnter={this.onMouseEnter}
         style={[this.props.style.wrapper, this.props.selected && this.props.style.selected]}>
-          {this.props.children}
+          {this.props.parse(this.props.value)}
       </div>
     );
   }

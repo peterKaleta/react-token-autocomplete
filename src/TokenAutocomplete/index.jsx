@@ -188,7 +188,8 @@ export default class TokenAutocomplete extends React.Component {
           options: this.getAvailableOptions(),
           term: this.state.inputValue,
           handleAddSelected: this.addSelectedValue,
-          limitToOptions: this.props.limitToOptions
+          limitToOptions: this.props.limitToOptions,
+          parseOption: this.props.parseOption
       };
       return <OptionList ref="options" {...passProps}/>;
     } else {
@@ -200,7 +201,14 @@ export default class TokenAutocomplete extends React.Component {
 
   renderTokens = () => {
     return this.state.values.map((value, key) => {
-      return <Token key={key} index={key} handleRemove={this.deleteValue}>{value}</Token>;
+      return (
+        <Token
+          key={key}
+          index={key}
+          value={value}
+          parse={this.props.parseToken}
+          handleRemove={this.deleteValue}/>
+      );
     });
   }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import radium from 'radium';
 import styles from './styles';
-import _ from 'lodash';
+import {identity, noop} from 'lodash';
 import {decorators} from 'peters-toolbelt';
 const {StyleDefaults} = decorators;
 
@@ -13,11 +13,13 @@ export default class Token extends React.Component {
 
   static propTypes = {
     handleRemove: React.PropTypes.func,
-    index: React.PropTypes.number
+    index: React.PropTypes.number,
+    parse: React.PropTypes.func
   }
 
   static defaultProps = {
-    handleRemove: _.noop,
+    handleRemove: noop,
+    parse: identity,
     index: 0
   }
 
@@ -28,11 +30,15 @@ export default class Token extends React.Component {
     this.props.handleRemove(this.props.index);
   }
 
+  parseLabel = value => {
+
+  }
+
   render() {
     return (
       <div ref="wrapper" style={this.props.style.wrapper}>
         <div ref="value" style={this.props.style.value}>
-          {this.props.children}
+          { this.props.parse(this.props.value) }
         </div>
         <div
           style={this.props.style.removeBtn}
