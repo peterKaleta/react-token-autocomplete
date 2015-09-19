@@ -107,7 +107,7 @@ export default class OptionList extends React.Component {
   }
 
   renderEmptyInfo() {
-    return <div ref="emptyInfo" style={this.props.styles.emptyInfo}>{this.props.emptyInfo}</div>;
+    return <div ref="emptyInfo" style={this.props.style.emptyInfo}>{this.props.emptyInfo}</div>;
   }
 
   render() {
@@ -117,7 +117,7 @@ export default class OptionList extends React.Component {
       && (this.props.limitToOptions || isEmpty(this.props.term));
 
     return (
-      <div ref="wrapper" style={this.props.styles.wrapper} onMouseDown={this.props.handleAddSelected}>
+      <div ref="wrapper" style={this.props.style.wrapper} onMouseDown={this.props.handleAddSelected}>
         {displayEmptyInfo ? this.renderEmptyInfo() : this.renderOptions() }
       </div>
 

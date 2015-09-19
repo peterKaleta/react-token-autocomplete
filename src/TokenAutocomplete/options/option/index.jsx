@@ -41,7 +41,7 @@ export default class Option extends React.Component {
         ref="wrapper"
         onClick={this.onClick}
         onMouseEnter={this.onMouseEnter}
-        style={[this.props.styles.wrapper, this.props.selected && this.props.styles.selected]}>
+        style={[this.props.style.wrapper, this.props.selected && this.props.style.selected]}>
           {this.props.children}
       </div>
     );

@@ -31,7 +31,7 @@ describe('Single option', () => {
 
     it('accepts passed style objects', () => {
       component = TestUtils.renderComponent(Option, {
-        styles: {
+        style: {
           wrapper: { backgroundColor: '#000' }
         }
       });
@@ -76,7 +76,7 @@ describe('Single option', () => {
   it('displays proper style if selected', () => {
     component = TestUtils.renderComponent(Option, {
       selected: true,
-      styles: {
+      style: {
         wrapper: { backgroundColor: '#ddd' },
         selected: { backgroundColor: '#fff' }
       }

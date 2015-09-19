@@ -132,7 +132,6 @@ export default class TokenAutocomplete extends React.Component {
 
     //if we are limited to options
     if (this.props.limitToOptions) {
-      console.log('t');
       newValue = areOptionsAvailable ? this.refs.options.getSelected() : void 0;
     } else {
       newValue = areOptionsAvailable ? this.refs.options.getSelected() : this.state.inputValue;
@@ -206,16 +205,16 @@ export default class TokenAutocomplete extends React.Component {
   }
 
   renderProcessing = () => {
-    return this.props.processing ? <div ref='processing' style={this.props.styles.processing}/> : null;
+    return this.props.processing ? <div ref='processing' style={this.props.style.processing}/> : null;
   }
 
   render() {
     return (
-      <div ref="wrapper" style={this.props.styles.wrapper}>
-        <div ref="inputWrapper" style={this.props.styles.inputWrapper}>
+      <div ref="wrapper" style={this.props.style.wrapper}>
+        <div ref="inputWrapper" style={this.props.style.inputWrapper}>
           {this.renderTokens()}
           <input
-            style={this.props.styles.input}
+            style={this.props.style.input}
             onKeyDown={this.onKeyDown}
             onChange={this.onInputChange}
             onFocus={this.onFocus}
