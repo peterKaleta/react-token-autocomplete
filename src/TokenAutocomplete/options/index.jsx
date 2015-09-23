@@ -1,7 +1,7 @@
 import React from 'react';
 import radium from 'radium';
 import styles from './styles';
-import {each, noop, isEmpty} from 'lodash';
+import {noop, isEmpty, map} from 'lodash';
 import keyCodes from 'utils/keyCodes';
 import Option from './option';
 import {decorators} from 'peters-toolbelt';
@@ -29,7 +29,8 @@ export default class OptionList extends React.Component {
   }
 
   state = {
-    selected: 0
+    selected: 0,
+    suggestions: []
   }
 
   componentDidMount() {
@@ -38,6 +39,16 @@ export default class OptionList extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('keydown', this.onKeyDown);
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (newProps.options.length <= this.state.selected) {
+      this.setState({selected: newProps.options.length - 1});
+    }
+
+    if (!newProps.options.length) {
+      this.setState({selected: 0});
+    }
   }
 
   onKeyDown = e => {
@@ -65,22 +76,19 @@ export default class OptionList extends React.Component {
     );
   }
 
+
+  shouldAddCustomTag() {
+    return !this.props.limitToOptions && !isEmpty(this.props.term);
+  }
+
   renderOptions() {
-
-    let options = [];
-
-    if (!this.props.limitToOptions && !isEmpty(this.props.term)) {
-      options.push(this.renderOption(this.props.term, 0));
-    }
-
-    each(this.props.options, (option, index) => {
-      options.push(this.renderOption(option, index + 1));
+    return map(this.props.options, (option, index) => {
+      return this.renderOption(option, index);
     });
-
-    return options;
   }
 
   selectNext = () => {
+
     this.setState({
       selected: this.state.selected === this.props.options.length - 1
         ? 0
@@ -89,6 +97,7 @@ export default class OptionList extends React.Component {
   }
 
   selectPrev = () => {
+
     this.setState({
       selected: !this.state.selected
         ? this.props.options.length - 1
@@ -111,10 +120,8 @@ export default class OptionList extends React.Component {
   }
 
   render() {
-    //display empty info when there are no options and we are limited to them,
-    //or there are no options and term is not provided;
-    const displayEmptyInfo = !this.props.options.length
-      && (this.props.limitToOptions || isEmpty(this.props.term));
+
+    const displayEmptyInfo = !this.props.options.length;
 
     return (
       <div ref="wrapper" style={this.props.style.wrapper} onMouseDown={this.props.handleAddSelected}>
