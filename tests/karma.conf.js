@@ -38,7 +38,7 @@ var conf = {
 module.exports = function(config) {
   config.set({
     singleRun: !WATCH,
-    autoWatch: !CI,
+    autoWatch: true,
     browsers: [ CI ? 'Firefox' : 'PhantomJS2'],
     browserNoActivityTimeout: 60000,
     browserDisconnectTimeout: 10000,
@@ -54,7 +54,9 @@ module.exports = function(config) {
       dir: 'coverage/',
       reporters: [
         { type: 'lcov', subdir: 'report-lcov' },
-        { type: 'text-summary' }
+        { type: 'text-summary' },
+        { type: 'cobertura', subdir: 'cobertura'}
+
       ]
     }
   });
