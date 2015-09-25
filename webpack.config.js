@@ -11,7 +11,8 @@ var conf = new webpackConf({
                 resolve: {
                   alias: {
                     utils: path.join(__dirname, 'src/_utils')
-                  }
+                  },
+                  modulesDirectories: ['node_modules']
                 },
                 plugins: plugins
             })

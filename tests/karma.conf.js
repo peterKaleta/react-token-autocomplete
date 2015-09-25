@@ -3,6 +3,7 @@ var webpack = require('webpack');
 var path = require('path');
 
 var CI = process.env.NODE_ENV !== 'development';
+var WATCH = !!process.env.WATCH_TESTS;
 var conf = {
   cache: true,
   devtool: 'inline-source-map',
@@ -36,7 +37,7 @@ var conf = {
 
 module.exports = function(config) {
   config.set({
-    singleRun: CI,
+    singleRun: !WATCH,
     autoWatch: !CI,
     browsers: [ CI ? 'Firefox' : 'PhantomJS2'],
     browserNoActivityTimeout: 60000,
