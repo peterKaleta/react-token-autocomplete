@@ -2,7 +2,7 @@ import React from 'react';
 import radium from 'radium';
 import OptionList from './options';
 import Token from './token';
-import {include, difference, filter, noop} from 'lodash';
+import {include, difference, filter, noop, identity, isEmpty} from 'lodash';
 import {contains} from 'underscore.string';
 import Immutable from 'immutable';
 import styles from './styles';
@@ -26,6 +26,8 @@ export default class TokenAutocomplete extends React.Component {
     focus: React.PropTypes.bool,
     //behaviour
     limitToOptions: React.PropTypes.bool,
+    parseOption: React.PropTypes.func,
+    parseToken: React.PropTypes.func,
     //handles
     onInputChange: React.PropTypes.func,
     onAdd: React.PropTypes.func,
@@ -40,11 +42,13 @@ export default class TokenAutocomplete extends React.Component {
     options: [],
     defaultValues: [],
     placeholder: 'add new tag',
-    treshold: 3,
+    treshold: 0,
     focus: false,
     processing: false,
     //behaviour
     limitToOptions: false,
+    parseOption: identity,
+    parseToken: identity,
     //handles
     onInputChange: noop,
     onAdd: noop,
@@ -126,16 +130,8 @@ export default class TokenAutocomplete extends React.Component {
 
   addSelectedValue = () => {
 
-    let newValue;
     let areOptionsAvailable = this.getAvailableOptions().length;
-
-
-    //if we are limited to options
-    if (this.props.limitToOptions) {
-      newValue = areOptionsAvailable ? this.refs.options.getSelected() : void 0;
-    } else {
-      newValue = areOptionsAvailable ? this.refs.options.getSelected() : this.state.inputValue;
-    }
+    let newValue = areOptionsAvailable ? this.refs.options.getSelected() : void 0;
 
     const isAlreadySelected = include(this.state.values.toArray(), newValue);
 
@@ -168,6 +164,12 @@ export default class TokenAutocomplete extends React.Component {
         return contains(option, this.state.inputValue);
       });
 
+    }
+
+    if (!this.props.limitToOptions &&
+        !isEmpty(this.state.inputValue) &&
+        !include(availableOptions, this.state.inputValue)) {
+      availableOptions.unshift(this.state.inputValue);
     }
 
     return availableOptions;

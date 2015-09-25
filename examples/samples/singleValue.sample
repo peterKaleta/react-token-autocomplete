@@ -1,0 +1,6 @@
+<TokenAutocomplete
+  placeholder="type to limit suggestions"
+  limitToOptions="true"
+  limit={1}
+  options={['apple', 'banana', 'carrot', 'watermelon']}
+/>

@@ -101,43 +101,4 @@ describe('Option list', () => {
 
   });
 
-
-  describe('when not limited to options', () => {
-
-    it('displays additional option containing non-empty term ', () => {
-
-      const component1 = TestUtils.renderComponent(Options, {
-        limitToOptions: false,
-        options: ['aaa2', 'aaa1'],
-        term: 'aaa'
-      });
-
-      const component2 = TestUtils.renderComponent(Options, {
-        limitToOptions: false,
-        options: ['aaa2', 'aaa1'],
-        term: ''
-      });
-
-      const options1 = React.findDOMNode(component1.refs.wrapper).querySelectorAll('div');
-      const options2 = React.findDOMNode(component2.refs.wrapper).querySelectorAll('div');
-
-      expect(options1.length).to.equal(3);
-      expect(options2.length).to.equal(2);
-
-    });
-
-    it('hides empty info when term is provided', () => {
-      const component = TestUtils.renderComponent(Options, {
-        limitToOptions: false,
-        term: 'aaa'
-      });
-      const options = React.findDOMNode(component.refs.wrapper).querySelectorAll('div');
-
-      expect(options.length).to.equal(1);
-      expect(options[0].textContent).to.equal('aaa');
-    });
-
-  });
-
-
 });

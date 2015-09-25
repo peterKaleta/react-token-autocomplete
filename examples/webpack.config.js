@@ -9,11 +9,17 @@ plugins.push(new HtmlWebpackPlugin({
   template: './examples/index.template.html'
 }));
 
+let outputPath;
+if (process.env.BRANCH === 'gh-pages') {
+  outputPath = __dirname;
+} else {
+  outputPath.join(__dirname, '/dist');
+}
 
 var conf = new webpackConf({
                 entry: path.join(__dirname, '/index.jsx'),
                 output: {
-                    path: path.join(__dirname, '/dist'),
+                    path: outputPath,
                     filename: 'index.js'
                 },
                 resolve: {
@@ -25,6 +31,7 @@ var conf = new webpackConf({
             })
             .iNeedReact()
             .iNeedWebFonts()
+            .iNeedSCSS()
             .iNeedHotDevServer()
             .getConfig();
 

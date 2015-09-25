@@ -34,8 +34,8 @@ describe('TokenAutocomplete', () => {
         expect(component.props.defaultValues).to.be.empty;
     });
 
-    it('has treshold of 3', () => {
-        expect(component.props.treshold).to.be.equal(3);
+    it('has treshold of 0', () => {
+        expect(component.props.treshold).to.be.equal(0);
     });
 
     it('has predefined placeholder', () => {
@@ -215,7 +215,7 @@ describe('TokenAutocomplete', () => {
       });
 
     });
-    
+
   });
 
   //FUNCTIONAL
@@ -259,6 +259,7 @@ describe('TokenAutocomplete', () => {
   it('dont show options not matching currently typed value', () => {
 
     const component = TestUtils.renderComponent(TokenAutocomplete, {
+      limitToOptions: true,
       options: ['aaa1', 'aaa2', 'aaa3', 'aaa4', 'ddd1'],
       defaultValues: ['aaa1', 'aaa2', 'aaa3']
     });
@@ -276,7 +277,8 @@ describe('TokenAutocomplete', () => {
 
       const component = TestUtils.renderComponent(TokenAutocomplete, {
         options: ['aaa', 'ccc'],
-        defaultValues: ['bbb']
+        defaultValues: ['bbb'],
+        limitToOptions: true
       });
 
       TestUtils.changeInputValue(component, 'aaa');

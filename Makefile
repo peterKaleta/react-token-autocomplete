@@ -1,4 +1,4 @@
-.PHONY: clean build init setup-hooks lint test test-watch dev
+.PHONY: clean build init setup-hooks lint test test-watch dev ghpages
 
 clean:
 	rm -rf ./dist
@@ -30,3 +30,6 @@ test:
 
 test-watch:
 	./scripts/test.sh -w
+
+ghpages:
+	./scripts/gh-pages.sh
