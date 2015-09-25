@@ -9,7 +9,7 @@ const styles = {
   wrapper: {
     maxWidth: 600,
     margin: 'auto',
-    fontFamily: 'Helvetica Neue',
+    fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
     fontWeight: 200
   },
   code: {
