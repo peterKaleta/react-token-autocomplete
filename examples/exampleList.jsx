@@ -18,7 +18,7 @@ const styles = {
     background: '#fff'
   },
   badge: {
-    marginRight: 10,
+    marginRight: 15,
     maxWidth: 90,
     display: 'inline-block'
   }
@@ -50,9 +50,9 @@ export default class Examples extends React.Component {
         <h1>react-token-autocomplete</h1>
 
         <p>
-          An easily stylable React select / token / autocomplete component ready to
+          An easily stylable React select / token / autocomplete ready to
           work with flux flow.
-          <br/>
+          <br />
           All examples below were created with the awesome <a target="_blank" href="https://github.com/FormidableLabs/component-playground">component playground</a> so feel free to <b>change the code around and play with it in real time</b>.
           If you are not really into examples go directly to <a href="#props">props listing</a> and <a href="#props">component state</a>.
         </p>
@@ -63,9 +63,10 @@ export default class Examples extends React.Component {
           <img src="https://img.shields.io/github/release/peterKaleta/react-token-autocomplete.svg"/>
         </div>
         <div style={styles.badge}>
-          <img src="https://img.shields.io/travis/peterKaleta/react-token-autocomplete.svg"/>
+          <img src="https://img.shields.io/codecov/c/github/peterKaleta/react-token-autocomplete.svg"/>
         </div>
         <div style={styles.badge}>
+          <img src="https://travis-ci.org/peterKaleta/react-token-autocomplete.svg"/>
         </div>
 
 
