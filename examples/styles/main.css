@@ -55,7 +55,7 @@ h1, h2, h3{
 }
 
 .playgroundToggleCodeBar{
-  font-family: 'Helvetica Neue'
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .playground.collapsableCode .playgroundCode {
