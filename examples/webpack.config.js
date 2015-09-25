@@ -4,17 +4,22 @@ var webpackConf = require('peters-toolbelt').webpack;
 
 var plugins = [];
 
-plugins.push(new HtmlWebpackPlugin({
-  filename: 'index.html',
-  template: './examples/index.template.html'
-}));
 
 var outputPath;
+var addTracking;
 if (process.env.BRANCH === 'gh-pages') {
   outputPath = path.join(__dirname, '../');
+  addTracking = true;
 } else {
   outputPath = path.join(__dirname, '/dist');
+  addTracking = false;
 }
+
+plugins.push(new HtmlWebpackPlugin({
+  filename: 'index.html',
+  template: './examples/index.template.html',
+  tracking: addTracking
+}));
 
 var conf = new webpackConf({
                 entry: path.join(__dirname, '/index.jsx'),
