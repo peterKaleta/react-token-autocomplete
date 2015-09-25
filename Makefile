@@ -33,3 +33,6 @@ test-watch:
 
 ghpages:
 	./scripts/gh-pages.sh
+
+coverage:
+	./scripts/report-coverage.sh
