@@ -11,9 +11,9 @@ plugins.push(new HtmlWebpackPlugin({
 
 var outputPath;
 if (process.env.BRANCH === 'gh-pages') {
-  outputPath = __dirname;
+  outputPath = path.join(__dirname, '../');
 } else {
-  outputPath.join(__dirname, '/dist');
+  outputPath = path.join(__dirname, '/dist');
 }
 
 var conf = new webpackConf({
