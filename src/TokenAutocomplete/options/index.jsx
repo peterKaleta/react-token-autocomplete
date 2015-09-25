@@ -1,7 +1,7 @@
 import React from 'react';
 import radium from 'radium';
 import styles from './styles';
-import {noop, isEmpty, map} from 'lodash';
+import {noop, map} from 'lodash';
 import keyCodes from 'utils/keyCodes';
 import Option from './option';
 import {decorators} from 'peters-toolbelt';
@@ -76,10 +76,6 @@ export default class OptionList extends React.Component {
     );
   }
 
-
-  shouldAddCustomTag() {
-    return !this.props.limitToOptions && !isEmpty(this.props.term);
-  }
 
   renderOptions() {
     return map(this.props.options, (option, index) => {

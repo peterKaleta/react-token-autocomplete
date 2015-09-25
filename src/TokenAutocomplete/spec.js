@@ -109,6 +109,7 @@ describe('TokenAutocomplete', () => {
     });
 
     it('to allow custom tags', () => {
+
       const component = TestUtils.renderComponent(TokenAutocomplete, {
         options: ['aaa', 'ccc'],
         defaultValues: ['bbb'],
@@ -177,6 +178,21 @@ describe('TokenAutocomplete', () => {
         TestUtils.hitBackspace(component);
 
         expect(spy.calledWith('bbbb', component.state.values)).to.be.true;
+    });
+
+    it('to parse user entered values', () => {
+
+      let spy = sinon.spy(value => '1' + value);
+      const component = TestUtils.renderComponent(TokenAutocomplete, {
+        parseCustom: spy,
+        defaultValues: [],
+        limitToOptions: false
+      });
+
+      TestUtils.changeInputValue(component, 'aaaaa');
+      TestUtils.hitEnter(component);
+      expect(spy.calledWith('aaaaa')).to.be.true;
+      expect(component.state.values.get(0)).to.equal('1aaaaa');
     });
 
   });

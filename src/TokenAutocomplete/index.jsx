@@ -28,6 +28,7 @@ export default class TokenAutocomplete extends React.Component {
     limitToOptions: React.PropTypes.bool,
     parseOption: React.PropTypes.func,
     parseToken: React.PropTypes.func,
+    parseCustom: React.PropTypes.func,
     //handles
     onInputChange: React.PropTypes.func,
     onAdd: React.PropTypes.func,
@@ -49,11 +50,11 @@ export default class TokenAutocomplete extends React.Component {
     limitToOptions: false,
     parseOption: identity,
     parseToken: identity,
+    parseCustom: identity,
     //handles
     onInputChange: noop,
     onAdd: noop,
     onRemove: noop
-
   }
 
   state = {
@@ -169,7 +170,7 @@ export default class TokenAutocomplete extends React.Component {
     if (!this.props.limitToOptions &&
         !isEmpty(this.state.inputValue) &&
         !include(availableOptions, this.state.inputValue)) {
-      availableOptions.unshift(this.state.inputValue);
+      availableOptions.unshift(this.props.parseCustom(this.state.inputValue));
     }
 
     return availableOptions;

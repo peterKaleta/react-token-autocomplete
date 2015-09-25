@@ -9,6 +9,13 @@
       return value.name;
     }
   }
+  parseCustom={
+    function(value){
+      return {
+        name: value
+      }
+    }
+  }
   options={[
     {name: 'apple'},
     {name: 'banana'},
