@@ -1,13 +1,13 @@
 import React from 'react';
 import radium from 'radium';
-import TokenAutocomplete from '../src';
 import {map} from 'lodash';
 
 const styles = {
   wrapper: {
+    background: '#fff',
+    width: '100%'
   }
 };
-
 
 const PROPS_DESCRIPTION = [
   [
@@ -86,22 +86,9 @@ const PROPS_DESCRIPTION = [
 ];
 
 @radium
-export default class Examples extends React.Component {
+export default class PropTable extends React.Component {
 
-  static displayName = 'examples';
-
-  static propTypes = {
-
-  }
-
-  contextTypes = {
-  }
-
-  static defaultProps = {
-  }
-
-  state = {
-  }
+  static displayName = 'PropTable';
 
   renderTableContents () {
     return map(PROPS_DESCRIPTION, row => {
@@ -118,35 +105,15 @@ export default class Examples extends React.Component {
 
   render() {
     return (
-      <div ref="wrapper" style={styles.wrapper}>
-
-        <h1>react-token-autocomplete</h1>
-
-        <section>
-          <h2>Basic use case</h2>
-          <p>Dropdown with filter baked in</p>
-          <TokenAutocomplete
-            placeholder="type to limit suggestions"
-            options={['apple', 'banana', 'carrot', 'watermelon']}
-          />
-
-
-        </section>
-
-
-        <table>
-          <thead>
-            <th>props</th>
-            <th>type</th>
-            <th>default</th>
-            <th>description</th>
-          </thead>
-          { this.renderTableContents() }
-        </table>
-
-
-
-      </div>
+      <table ref="wrapper" style={styles.wrapper}>
+        <thead>
+          <th>props</th>
+          <th>type</th>
+          <th>default</th>
+          <th>description</th>
+        </thead>
+        { this.renderTableContents() }
+      </table>
     );
   }
 }

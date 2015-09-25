@@ -25,6 +25,7 @@ export default {
   },
   inputWrapper: {
     border: '1px solid #999',
+    borderRadius: 2,
     padding: '1px 4px',
     display: 'flex',
     fontWeight: 400,

@@ -1,0 +1,18 @@
+<TokenAutocomplete
+  parseToken={
+    function(value){
+      return value.name;
+    }
+  }
+  parseOption={
+    function(value){
+      return value.name;
+    }
+  }
+  options={[
+    {name: 'apple'},
+    {name: 'banana'},
+    {name: 'carrot'},
+    {name: 'watermelon'}
+  ]}
+/>
