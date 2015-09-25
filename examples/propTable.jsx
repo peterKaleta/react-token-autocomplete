@@ -65,7 +65,7 @@ const PROPS_DESCRIPTION = [
     'callback when new token is selected'
   ],
   [
-    'onInputChange',
+    'onRemove',
     'function',
     'noop',
     'callback when token is removed'
@@ -81,6 +81,12 @@ const PROPS_DESCRIPTION = [
     'function',
     'identity',
     'parse value to suggestion label'
+  ],
+  [
+    'parseCustom',
+    'function',
+    'identity',
+    'parse user entered values before adding to values'
   ]
 
 ];
