@@ -2,7 +2,7 @@ var RewirePlugin = require('rewire-webpack');
 var webpack = require('webpack');
 var path = require('path');
 
-var CI = !process.env.WATCH_TESTS;
+var CI = process.env.NODE_ENV !== 'development';
 var conf = {
   cache: true,
   devtool: 'inline-source-map',
