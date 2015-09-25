@@ -9,7 +9,7 @@ plugins.push(new HtmlWebpackPlugin({
   template: './examples/index.template.html'
 }));
 
-let outputPath;
+var outputPath;
 if (process.env.BRANCH === 'gh-pages') {
   outputPath = __dirname;
 } else {
