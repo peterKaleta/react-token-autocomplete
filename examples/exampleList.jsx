@@ -74,7 +74,7 @@ export default class Examples extends React.Component {
 
         <div>
           <code style={styles.code}>
-            npm install react-token-input
+            npm install react-token-autocomplete
           </code>
         </div>
 
