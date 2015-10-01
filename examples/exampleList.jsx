@@ -92,6 +92,13 @@ export default class Examples extends React.Component {
           You can also limit user choices to suggestions.
         </Example>
 
+        <Example
+            title="Simulate select behaviour"
+          sample={Samples.simulateSelect}>
+          It can work as a simple select.
+        </Example>
+
+
         <h2 id="additional">Additional fun</h2>
 
         <Example
