@@ -19,7 +19,12 @@ function blur(component) {
 
 function focus(component) {
   var inputNode = React.findDOMNode(component.refs.input);
-  TestUtils.Simulate.focus(inputNode);
+  if (inputNode) {
+    TestUtils.Simulate.focus(inputNode);
+  } else {
+    component.focus();
+  }
+
 }
 
 function hitEnter(component) {
