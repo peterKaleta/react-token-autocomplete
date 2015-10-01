@@ -63,6 +63,10 @@ describe('TokenAutocomplete', () => {
       expect(component.props.onRemove).to.equal(noop);
     });
 
+    it('is not simulating select', () => {
+      expect(component.props.simulateSelect).to.be.false;
+    });
+
     //state
     it('is unfocused by default', () => {
        expect(component.state.focused).to.be.false;
@@ -211,6 +215,20 @@ describe('TokenAutocomplete', () => {
 
   });
 
+  it('throws error when more than one default value is passed when simulating select', () => {
+
+    const WARN_MSG = 'Warning: Failed propType: when props.simulateSelect is set to TRUE, you should pass more than a single value in props.defaultValues';
+    const consoleWarnSpy = sinon.spy(console, 'warn');
+
+    TestUtils.renderComponent(TokenAutocomplete, {
+      simulateSelect: true,
+      defaultValues: ['bbb', 'ccc']
+    });
+
+    expect(consoleWarnSpy.getCall(0).args).to.include(WARN_MSG);
+
+  });
+
   describe('passes', () => {
 
     describe('to options list', () => {
@@ -230,7 +248,28 @@ describe('TokenAutocomplete', () => {
         expect(component.refs.options.props.limitToOptions).to.be.false;
       });
 
+
     });
+
+    describe('to tokens', () => {
+
+      it('fullWidth setting based on the simulateSelect props', () => {
+
+        const component1 = TestUtils.renderComponent(TokenAutocomplete, {
+          simulateSelect: true,
+          defaultValues: ['bbb']
+        });
+        const component2 = TestUtils.renderComponent(TokenAutocomplete, {
+          defaultValues: ['bbb']
+        });
+
+        expect(component1.refs['token0'].props.fullWidth).to.be.true;
+        expect(component2.refs['token0'].props.fullWidth).to.be.false;
+
+      });
+
+    });
+
 
   });
 

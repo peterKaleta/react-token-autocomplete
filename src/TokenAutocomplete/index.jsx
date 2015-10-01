@@ -2,13 +2,26 @@ import React from 'react';
 import radium from 'radium';
 import OptionList from './options';
 import Token from './token';
-import {include, difference, filter, noop, identity, isEmpty} from 'lodash';
+import {include, difference, filter, noop, identity, isArray, isEmpty} from 'lodash';
 import {contains} from 'underscore.string';
 import Immutable from 'immutable';
 import styles from './styles';
 import keyCodes from 'utils/keyCodes';
 import {decorators} from 'peters-toolbelt';
 const {StyleDefaults} = decorators;
+
+
+function defaultValuesPropTypes(props, propName, component) {
+  const prop = props[propName];
+
+  if (props.simulateSelect && isArray(prop) && prop.length > 1) {
+      return new Error(
+        'when props.simulateSelect is set to TRUE, you should pass more than a single value in props.defaultValues'
+      );
+  }
+
+  return React.PropTypes.array(props, propName, component);
+}
 
 @radium
 @StyleDefaults(styles)
@@ -21,10 +34,11 @@ export default class TokenAutocomplete extends React.Component {
     options: React.PropTypes.array,
     placeholder: React.PropTypes.string,
     treshold: React.PropTypes.number,
-    defaultValues: React.PropTypes.array,
+    defaultValues: defaultValuesPropTypes,
     processing: React.PropTypes.bool,
     focus: React.PropTypes.bool,
     //behaviour
+    simulateSelect: React.PropTypes.bool,
     limitToOptions: React.PropTypes.bool,
     parseOption: React.PropTypes.func,
     parseToken: React.PropTypes.func,
@@ -47,6 +61,7 @@ export default class TokenAutocomplete extends React.Component {
     focus: false,
     processing: false,
     //behaviour
+    simulateSelect: false,
     limitToOptions: false,
     parseOption: identity,
     parseToken: identity,
@@ -207,8 +222,10 @@ export default class TokenAutocomplete extends React.Component {
       return (
         <Token
           key={key}
+          ref={'token' + key}
           index={key}
           value={value}
+          fullWidth={this.props.simulateSelect}
           parse={this.props.parseToken}
           handleRemove={this.deleteValue}/>
       );
