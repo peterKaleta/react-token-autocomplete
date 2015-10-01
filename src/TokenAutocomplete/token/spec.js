@@ -2,7 +2,7 @@ import React from 'react/addons';
 import Token from './';
 import TestUtils from 'TestUtils';
 import _ from 'lodash';
-
+import styles from './styles';
 let component;
 
 describe('Option list', () => {
@@ -30,6 +30,11 @@ describe('Option list', () => {
       const wrapperNode = React.findDOMNode(component.refs.value);
       expect(wrapperNode.textContent).to.equal('someValue');
     });
+
+    it('is not fullwidth', () => {
+      expect(component.props.fullWidth).to.be.false;
+    });
+
 
   });
 
@@ -66,6 +71,14 @@ describe('Option list', () => {
       { parse: parser, value: 'someValue'});
     const wrapperNode = React.findDOMNode(component.refs.value);
     expect(wrapperNode.textContent).to.equal('sth someValue');
+  });
+
+  it('applies full width styles when fullWidth prop is passed', () => {
+    const component = TestUtils.renderComponent(Token, {fullWidth: true});
+
+    expect(component.refs.wrapper.props.style.width).to.equal('100%');
+    expect(component.refs.wrapper.props.style.border).to.equal('none');
+
   });
 
 });
