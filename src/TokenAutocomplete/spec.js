@@ -6,9 +6,13 @@ import {noop} from 'lodash';
 
 let component;
 
+const consoleWarnSpy = sinon.spy(console, 'warn');
+
+
 describe('TokenAutocomplete', () => {
 
   afterEach(done => {
+    consoleWarnSpy.reset();
     React.unmountComponentAtNode(document.body);
     document.body.innerHTML = '';
     done();
@@ -215,14 +219,26 @@ describe('TokenAutocomplete', () => {
 
   });
 
-  it('throws error when more than one default value is passed when simulating select', () => {
+  it('throws warning when more than one default value is passed when simulating select', () => {
 
     const WARN_MSG = 'Warning: Failed propType: when props.simulateSelect is set to TRUE, you should pass more than a single value in props.defaultValues';
-    const consoleWarnSpy = sinon.spy(console, 'warn');
 
     TestUtils.renderComponent(TokenAutocomplete, {
       simulateSelect: true,
       defaultValues: ['bbb', 'ccc']
+    });
+
+    expect(consoleWarnSpy.getCall(0).args).to.include(WARN_MSG);
+
+  });
+
+  it('throws warning when non-zero treshold is defined when simulating select', () => {
+
+    const WARN_MSG = 'Warning: Failed propType: when props.simulateSelect is set to TRUE, you should not pass non-zero treshold';
+
+    TestUtils.renderComponent(TokenAutocomplete, {
+      simulateSelect: true,
+      treshold: 3
     });
 
     expect(consoleWarnSpy.getCall(0).args).to.include(WARN_MSG);
@@ -453,6 +469,13 @@ describe('TokenAutocomplete', () => {
     it('input is not displayed when value is provided', () => {
       expect(component.refs.input).not.to.exist;
     });
+
+    it('current value is replaced when new one is selected', () => {
+  //    TestUtils.focus(component);
+  //    expect(component.refs.options).to.exist;
+    });
+
+
 
   });
 });

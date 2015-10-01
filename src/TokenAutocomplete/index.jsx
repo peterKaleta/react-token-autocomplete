@@ -11,7 +11,7 @@ import {decorators} from 'peters-toolbelt';
 const {StyleDefaults} = decorators;
 
 
-function defaultValuesPropTypes(props, propName, component) {
+function defaultValuesPropType(props, propName, component) {
   const prop = props[propName];
 
   if (props.simulateSelect && isArray(prop) && prop.length > 1) {
@@ -23,6 +23,19 @@ function defaultValuesPropTypes(props, propName, component) {
   return React.PropTypes.array(props, propName, component);
 }
 
+function tresholdPropType(props, propName, component) {
+  const prop = props[propName];
+
+  if (props.simulateSelect && prop > 0) {
+      return new Error(
+        'when props.simulateSelect is set to TRUE, you should not pass non-zero treshold'
+      );
+  }
+
+  return React.PropTypes.number(props, propName, component);
+}
+
+
 @radium
 @StyleDefaults(styles)
 export default class TokenAutocomplete extends React.Component {
@@ -33,8 +46,8 @@ export default class TokenAutocomplete extends React.Component {
     //initial state
     options: React.PropTypes.array,
     placeholder: React.PropTypes.string,
-    treshold: React.PropTypes.number,
-    defaultValues: defaultValuesPropTypes,
+    treshold: tresholdPropType,
+    defaultValues: defaultValuesPropType,
     processing: React.PropTypes.bool,
     focus: React.PropTypes.bool,
     //behaviour
