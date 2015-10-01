@@ -440,4 +440,19 @@ describe('TokenAutocomplete', () => {
 
   });
 
+  describe('when simulating select', () => {
+    beforeEach(() => {
+       component = TestUtils.renderComponent(TokenAutocomplete, {
+        options: ['bbb', 'ccc'],
+        defaultValues: ['bbb'],
+        simulateSelect: true
+      });
+
+    });
+
+    it('input is not displayed when value is provided', () => {
+      expect(component.refs.input).not.to.exist;
+    });
+
+  });
 });

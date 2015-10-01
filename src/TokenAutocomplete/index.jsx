@@ -164,7 +164,6 @@ export default class TokenAutocomplete extends React.Component {
 
   }
 
-
   //HELPERS
 
   getAvailableOptions = () => {
@@ -236,20 +235,29 @@ export default class TokenAutocomplete extends React.Component {
     return this.props.processing ? <div ref='processing' style={this.props.style.processing}/> : null;
   }
 
+  renderInput = () => {
+    return (
+      <input
+        style={this.props.style.input}
+        onKeyDown={this.onKeyDown}
+        onChange={this.onInputChange}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
+        value={this.state.inputValue}
+        placeholder={this.props.placeholder}
+        ref="input"/>
+    );
+  }
+
   render() {
+
+    const shouldRenderInput = !this.props.simulateSelect || !this.state.values.size;
+
     return (
       <div ref="wrapper" style={this.props.style.wrapper}>
         <div ref="inputWrapper" style={this.props.style.inputWrapper}>
           {this.renderTokens()}
-          <input
-            style={this.props.style.input}
-            onKeyDown={this.onKeyDown}
-            onChange={this.onInputChange}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
-            value={this.state.inputValue}
-            placeholder={this.props.placeholder}
-            ref="input"/>
+          {shouldRenderInput ? this.renderInput() : null}
           {this.renderProcessing()}
         </div>
         {this.renderOptionsDropdown()}
