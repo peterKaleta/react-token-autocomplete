@@ -13,8 +13,7 @@ function changeInputValue(component, value) {
 }
 
 function blur(component) {
-  var inputNode = React.findDOMNode(component.refs.input);
-  TestUtils.Simulate.blur(inputNode);
+  component.blur();
 }
 
 function focus(component) {
