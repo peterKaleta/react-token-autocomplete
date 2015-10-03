@@ -1,5 +1,5 @@
 <TokenAutocomplete
   simulateSelect
-  defaultValues=['banana'],
+  defaultValues={['banana']}
   options={['apple', 'banana']}
 />
