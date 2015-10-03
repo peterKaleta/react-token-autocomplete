@@ -2,7 +2,7 @@ import React from 'react';
 import radium from 'radium';
 import OptionList from './options';
 import Token from './token';
-import {include, difference, filter, noop, identity, isArray, isEmpty} from 'lodash';
+import {include, difference, filter, noop, identity, isArray, isUndefined, isEmpty} from 'lodash';
 import {contains} from 'underscore.string';
 import Immutable from 'immutable';
 import styles from './styles';
@@ -34,7 +34,6 @@ function tresholdPropType(props, propName, component) {
 
   return React.PropTypes.number(props, propName, component);
 }
-
 
 @radium
 @StyleDefaults(styles)
@@ -97,12 +96,33 @@ export default class TokenAutocomplete extends React.Component {
   componentDidMount() {
     let values = Immutable.List(this.props.defaultValues);
     this.setState({values});
-    this.a = 0;
-    if (this.props.focus) {
-      this.focus();
+    if (!isUndefined(this.props.focus)) {
+      this.setState({focused: this.props.focus});
+    }
+      if (window) {
+      window.addEventListener('click', this.handleClick);
     }
   }
 
+  componentWillUnmount() {
+    if (window) {
+      window.removeEventListener('click', this.onKeyDown);
+    }
+  }
+
+
+  handleClick = e => {
+
+    const clickedOutside = !React.findDOMNode(this).contains(e.target);
+
+       if (clickedOutside && this.state.focus) {
+          this.blur();
+       }
+
+       if (!clickedOutside && !this.state.focus) {
+         this.focus();
+       }
+   }
 
   //EVENT HANDLERS
 
@@ -131,20 +151,18 @@ export default class TokenAutocomplete extends React.Component {
     }
   }
 
-  onFocus = e => {
-    this.setState({focused: true});
-  }
-
-  onBlur = e => {
-    this.setState({focused: false});
-  }
-
 
   //ACTIONS
 
   focus = () => {
-    React.findDOMNode(this.refs.input).focus();
-    this.onFocus();
+    if (this.refs.input) {
+      React.findDOMNode(this.refs.input).focus();
+    }
+    this.setState({focused: true});
+  }
+
+  blur = () => {
+    this.setState({focused: false});
   }
 
   deleteValue = index => {
@@ -174,6 +192,7 @@ export default class TokenAutocomplete extends React.Component {
       });
 
     }
+    this.focus();
 
   }
 
@@ -253,9 +272,8 @@ export default class TokenAutocomplete extends React.Component {
       <input
         style={this.props.style.input}
         onKeyDown={this.onKeyDown}
+        onFocus={this.focus}
         onChange={this.onInputChange}
-        onFocus={this.onFocus}
-        onBlur={this.onBlur}
         value={this.state.inputValue}
         placeholder={this.props.placeholder}
         ref="input"/>
@@ -268,7 +286,7 @@ export default class TokenAutocomplete extends React.Component {
 
     return (
       <div ref="wrapper" style={this.props.style.wrapper}>
-        <div ref="inputWrapper" style={this.props.style.inputWrapper}>
+        <div ref="inputWrapper" onClick={this.focus} style={this.props.style.inputWrapper}>
           {this.renderTokens()}
           {shouldRenderInput ? this.renderInput() : null}
           {this.renderProcessing()}

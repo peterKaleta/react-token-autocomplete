@@ -34,11 +34,15 @@ export default class OptionList extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('keydown', this.onKeyDown);
+    if (window) {
+      window.addEventListener('keydown', this.onKeyDown);
+    }
   }
 
   componentWillUnmount() {
-    window.removeEventListener('keydown', this.onKeyDown);
+    if (window) {
+      window.removeEventListener('keydown', this.onKeyDown);
+    }
   }
 
   componentWillReceiveProps(newProps) {
@@ -68,6 +72,7 @@ export default class OptionList extends React.Component {
     return (
       <Option
         key={index}
+        ref={'option' + index}
         index={index}
         parse={this.parseOption}
         handleSelect={this.handleSelect}
@@ -75,7 +80,6 @@ export default class OptionList extends React.Component {
         selected={index === this.state.selected}/>
     );
   }
-
 
   renderOptions() {
     return map(this.props.options, (option, index) => {

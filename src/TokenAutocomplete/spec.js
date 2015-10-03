@@ -457,7 +457,9 @@ describe('TokenAutocomplete', () => {
   });
 
   describe('when simulating select', () => {
+
     beforeEach(() => {
+
        component = TestUtils.renderComponent(TokenAutocomplete, {
         options: ['bbb', 'ccc'],
         defaultValues: ['bbb'],
@@ -471,8 +473,12 @@ describe('TokenAutocomplete', () => {
     });
 
     it('current value is replaced when new one is selected', () => {
-  //    TestUtils.focus(component);
-  //    expect(component.refs.options).to.exist;
+      TestUtils.focus(component);
+      let firstOption = component.refs.options.refs.option0;
+      TestUtils.Simulate.click(React.findDOMNode(firstOption));
+      expect(component.refs.token1).not.to.exist;
+      expect(component.refs.token0.props.value).to.equal('ccc');
+
     });
 
 
