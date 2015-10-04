@@ -17,23 +17,15 @@ function blur(component) {
 }
 
 function focus(component) {
-  var inputNode = React.findDOMNode(component.refs.input);
-  if (inputNode) {
-    TestUtils.Simulate.focus(inputNode);
-  } else {
-    component.focus();
-  }
-
+  component.focus();
 }
 
 function hitEnter(component) {
-  var inputNode = React.findDOMNode(component.refs.input);
-  TestUtils.Simulate.keyDown(inputNode, {keyCode: 13});
+  component.onKeyDown({keyCode: 13});
 }
 
 function hitBackspace(component) {
-  var inputNode = React.findDOMNode(component.refs.input);
-  TestUtils.Simulate.keyDown(inputNode, {keyCode: 8});
+  component.onKeyDown({keyCode: 8});
 }
 
 export default {

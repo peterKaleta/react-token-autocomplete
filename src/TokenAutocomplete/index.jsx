@@ -96,33 +96,39 @@ export default class TokenAutocomplete extends React.Component {
   componentDidMount() {
     let values = Immutable.List(this.props.defaultValues);
     this.setState({values});
+
     if (!isUndefined(this.props.focus)) {
       this.setState({focused: this.props.focus});
     }
-      if (window) {
+
+    if (this.props.focus) {
+      this.bindListeners();
+    }
+
+    if (window) {
       window.addEventListener('click', this.handleClick);
     }
+
   }
 
   componentWillUnmount() {
     if (window) {
-      window.removeEventListener('click', this.onKeyDown);
+      window.removeEventListener('click', this.handleClick);
     }
   }
 
+  bindListeners() {
+    if (!this.keyDownListener) {
+      this.keyDownListener = window.addEventListener('keydown', this.onKeyDown);
+    }
+  }
 
-  handleClick = e => {
-
-    const clickedOutside = !React.findDOMNode(this).contains(e.target);
-
-       if (clickedOutside && this.state.focus) {
-          this.blur();
-       }
-
-       if (!clickedOutside && !this.state.focus) {
-         this.focus();
-       }
-   }
+  unbindListeners() {
+    if (this.keyDownListener) {
+      window.removeEventListener(this.keyDownListener);
+      delete this.keyDownListener;
+    }
+  }
 
   //EVENT HANDLERS
 
@@ -151,6 +157,17 @@ export default class TokenAutocomplete extends React.Component {
     }
   }
 
+  handleClick = e => {
+    const clickedOutside = !React.findDOMNode(this).contains(e.target);
+
+     if (clickedOutside && this.state.focused) {
+        this.blur();
+     }
+
+     if (!clickedOutside && !this.state.focused) {
+       this.focus();
+     }
+   }
 
   //ACTIONS
 
@@ -158,10 +175,16 @@ export default class TokenAutocomplete extends React.Component {
     if (this.refs.input) {
       React.findDOMNode(this.refs.input).focus();
     }
+    this.bindListeners();
     this.setState({focused: true});
   }
 
   blur = () => {
+    if (this.refs.input) {
+      React.findDOMNode(this.refs.input).blur();
+    }
+
+    this.unbindListeners();
     this.setState({focused: false});
   }
 
@@ -177,14 +200,17 @@ export default class TokenAutocomplete extends React.Component {
 
   addSelectedValue = () => {
 
-    let areOptionsAvailable = this.getAvailableOptions().length;
-    let newValue = areOptionsAvailable ? this.refs.options.getSelected() : void 0;
-
+    const areOptionsAvailable = this.getAvailableOptions().length;
+    const newValue = areOptionsAvailable ? this.refs.options.getSelected() : void 0;
     const isAlreadySelected = include(this.state.values.toArray(), newValue);
+    const shouldAddValue = !!newValue && !isAlreadySelected;
 
-    if (!!newValue && !isAlreadySelected) {
+    if (shouldAddValue) {
 
-      const values = this.state.values.push(newValue);
+      let values = this.props.simulateSelect
+        ? Immutable.List([newValue])
+        : this.state.values.push(newValue);
+
       this.props.onAdd(newValue, values);
       this.setState({
         values,
@@ -192,7 +218,12 @@ export default class TokenAutocomplete extends React.Component {
       });
 
     }
-    this.focus();
+
+    if (this.props.simulateSelect) {
+      this.blur();
+    } else {
+      this.focus();
+    }
 
   }
 
@@ -203,8 +234,12 @@ export default class TokenAutocomplete extends React.Component {
     let availableOptions = [];
 
     if (this.isTresholdReached()) {
-      //notselected
-      availableOptions = difference(this.props.options, this.state.values.toArray());
+      //notselected if not simulating select
+      if (this.props.simulateSelect) {
+        availableOptions = this.props.options;
+      } else {
+        availableOptions = difference(this.props.options, this.state.values.toArray());
+      }
 
       //filter
       availableOptions = filter(availableOptions, option => {
@@ -213,7 +248,7 @@ export default class TokenAutocomplete extends React.Component {
 
     }
 
-    if (!this.props.limitToOptions &&
+    if (this.shouldAllowCustomValue() &&
         !isEmpty(this.state.inputValue) &&
         !include(availableOptions, this.state.inputValue)) {
       availableOptions.unshift(this.props.parseCustom(this.state.inputValue));
@@ -223,28 +258,32 @@ export default class TokenAutocomplete extends React.Component {
 
   }
 
+  shouldAllowCustomValue = () => {
+    return !this.props.limitToOptions && !this.props.simulateSelect;
+  }
+
+  shouldShowOptions = () => {
+    return this.isTresholdReached() && this.state.focused;
+  }
+
   isTresholdReached = () => {
     return this.state.inputValue.length >= this.props.treshold;
   }
 
-
   //RENDERERS
 
   renderOptionsDropdown = () => {
-
-    if (this.isTresholdReached() && this.state.focused) {
+    if (this.shouldShowOptions()) {
       let passProps = {
           options: this.getAvailableOptions(),
           term: this.state.inputValue,
           handleAddSelected: this.addSelectedValue,
-          limitToOptions: this.props.limitToOptions,
           parseOption: this.props.parseOption
       };
       return <OptionList ref="options" {...passProps}/>;
     } else {
       return null;
     }
-
 
   }
 
@@ -271,7 +310,6 @@ export default class TokenAutocomplete extends React.Component {
     return (
       <input
         style={this.props.style.input}
-        onKeyDown={this.onKeyDown}
         onFocus={this.focus}
         onChange={this.onInputChange}
         value={this.state.inputValue}

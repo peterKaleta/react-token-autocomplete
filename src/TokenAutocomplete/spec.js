@@ -260,11 +260,6 @@ describe('TokenAutocomplete', () => {
         expect(component.refs.options.props.term).to.equal('def');
       });
 
-      it('limit to options', () => {
-        expect(component.refs.options.props.limitToOptions).to.be.false;
-      });
-
-
     });
 
     describe('to tokens', () => {
@@ -297,7 +292,6 @@ describe('TokenAutocomplete', () => {
     expect(component.refs.options).not.to.exist;
 
     TestUtils.changeInputValue(component, 'abc');
-
 
     expect(component.refs.options).to.exist;
 
@@ -383,6 +377,7 @@ describe('TokenAutocomplete', () => {
     const component = TestUtils.renderComponent(TokenAutocomplete, {
       defaultValues: ['aaa1', 'aaa2', 'aaa3']
     });
+    TestUtils.focus(component);
 
     TestUtils.hitBackspace(component);
     expect(component.state.values.size).to.equal(2);
@@ -442,6 +437,7 @@ describe('TokenAutocomplete', () => {
   it('doesn\'t allow duplicates', () => {
 
     const component = TestUtils.renderComponent(TokenAutocomplete, {
+      focus: true,
       limitToOptions: false
     });
 
@@ -473,15 +469,14 @@ describe('TokenAutocomplete', () => {
     });
 
     it('current value is replaced when new one is selected', () => {
+
       TestUtils.focus(component);
-      let firstOption = component.refs.options.refs.option0;
+      let firstOption = component.refs.options.refs.option1;
+      TestUtils.SimulateNative.mouseOver(React.findDOMNode(firstOption));
       TestUtils.Simulate.click(React.findDOMNode(firstOption));
-      expect(component.refs.token1).not.to.exist;
       expect(component.refs.token0.props.value).to.equal('ccc');
 
     });
-
-
 
   });
 });

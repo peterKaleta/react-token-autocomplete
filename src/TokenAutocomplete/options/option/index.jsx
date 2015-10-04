@@ -15,27 +15,25 @@ export default class Option extends React.Component {
     selected: React.PropTypes.bool,
     index: React.PropTypes.number,
     handleSelect: React.PropTypes.func,
-    handleAdd: React.PropTypes.func,
+    handleClick: React.PropTypes.func,
     parse: React.PropTypes.func
   }
 
   static defaultProps = {
     handleSelect: noop,
-    handleAdd: noop,
+    handleClick: noop,
     selected: false,
     index: 0,
     parse: identity
   }
-
 
   onMouseEnter = () => {
     this.props.handleSelect(this.props.index);
   }
 
   onClick = () => {
-    this.props.handleAdd(this.props.index);
+    this.props.handleClick(this.props.index);
   }
-
 
   render() {
     return (

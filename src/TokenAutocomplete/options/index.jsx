@@ -16,16 +16,14 @@ export default class OptionList extends React.Component {
   static propTypes = {
     options: React.PropTypes.array,
     alreadySelected: React.PropTypes.array,
-    term: React.PropTypes.string,
-    limitToOptions: React.PropTypes.bool
+    term: React.PropTypes.string
   }
 
   static defaultProps = {
     options: [],
     term: '',
     emptyInfo: 'no suggestions',
-    handleAddSelected: noop,
-    limitToOptions: true
+    handleAddSelected: noop
   }
 
   state = {
@@ -75,6 +73,7 @@ export default class OptionList extends React.Component {
         ref={'option' + index}
         index={index}
         parse={this.parseOption}
+        handleClick={this.props.handleAddSelected}
         handleSelect={this.handleSelect}
         value={option}
         selected={index === this.state.selected}/>
@@ -107,11 +106,12 @@ export default class OptionList extends React.Component {
 
   handleSelect = index => {
     this.setState({
-      selected: index
+      selected: index,
+      a: '123'
     });
   }
 
-  getSelected() {
+   getSelected = () => {
     return this.props.options[this.state.selected];
   }
 
@@ -120,11 +120,10 @@ export default class OptionList extends React.Component {
   }
 
   render() {
-
     const displayEmptyInfo = !this.props.options.length;
 
     return (
-      <div ref="wrapper" style={this.props.style.wrapper} onMouseDown={this.props.handleAddSelected}>
+      <div ref="wrapper" style={this.props.style.wrapper}>
         {displayEmptyInfo ? this.renderEmptyInfo() : this.renderOptions() }
       </div>
 
