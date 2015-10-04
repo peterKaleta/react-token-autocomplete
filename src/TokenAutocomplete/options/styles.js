@@ -6,7 +6,7 @@ export default {
     marginTop: 2,
     maxHeight: 275,
     overflowX: 'hidden',
-    overflowY: 'scroll',
+    overflowY: 'auto',
     backgroundColor: '#fff'
   },
   emptyInfo: {

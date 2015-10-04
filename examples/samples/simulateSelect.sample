@@ -1,5 +1,6 @@
 <TokenAutocomplete
   simulateSelect
-  defaultValues={['banana']}
+  filterOptions={false}
+  placeholder="select value from dropdown"
   options={['apple', 'banana']}
 />

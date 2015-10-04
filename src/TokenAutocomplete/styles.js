@@ -56,5 +56,12 @@ export default {
       borderLeft: '5px solid transparent',
       top: 12,
       right: 10
+  },
+  fakePlaceholder: {
+    fontSize: 13,
+    paddingLeft: 6,
+    paddingTop: 5,
+    color: '#aaa',
+    cursor: 'default'
   }
 };

@@ -145,7 +145,6 @@ export default class TokenAutocomplete extends React.Component {
 
   onKeyDown = e => {
 
-    e.preventDefault();
 
     switch (e.keyCode) {
       case keyCodes.ESC:
@@ -155,6 +154,7 @@ export default class TokenAutocomplete extends React.Component {
         this.addSelectedValue();
         break;
       case keyCodes.BACKSPACE:
+        e.preventDefault();
         if (!this.state.inputValue.length) {
           this.setState({
             inputValue: this.state.inputValue.slice(0, -1)
@@ -278,6 +278,10 @@ export default class TokenAutocomplete extends React.Component {
     return this.props.filterOptions && (!this.props.simulateSelect || !this.state.values.size);
   }
 
+  shouldShowFakePlaceholder = () => {
+    return !this.shouldShowInput() && !this.state.values.size;
+  }
+
   isTresholdReached = () => {
     return this.state.inputValue.length >= this.props.treshold;
   }
@@ -318,6 +322,16 @@ export default class TokenAutocomplete extends React.Component {
     return this.props.processing ? <div ref='processing' style={this.props.style.processing}/> : null;
   }
 
+  renderFakePlaceholder = () => {
+    return this.shouldShowFakePlaceholder()
+      ? (<div
+          ref="fakePlaceholder"
+          style={this.props.style.fakePlaceholder}>
+            {this.props.placeholder}
+         </div>)
+      : null;
+  }
+
   renderInput = () => {
     return this.shouldShowInput()
       ? (<input
@@ -327,7 +341,7 @@ export default class TokenAutocomplete extends React.Component {
           value={this.state.inputValue}
           placeholder={this.props.placeholder}
           ref="input"/>)
-      : null;
+      : this.renderFakePlaceholder();
   }
 
   renderDropdownIndicator = () => {

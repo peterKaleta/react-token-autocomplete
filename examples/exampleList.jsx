@@ -30,18 +30,6 @@ export default class Examples extends React.Component {
 
   static displayName = 'examples';
 
-  static propTypes = {
-
-  }
-
-  contextTypes = {
-  }
-
-  static defaultProps = {
-  }
-
-  state = {
-  }
 
   render() {
     return (
@@ -93,9 +81,9 @@ export default class Examples extends React.Component {
         </Example>
 
         <Example
-            title="Simulate select behaviour"
+            title="Use it like good ol' Dropdown"
           sample={Samples.simulateSelect}>
-          It can work as a simple select.
+          It can work as a simple select (with or without filtering).
         </Example>
 
 
