@@ -126,10 +126,8 @@ export default class TokenAutocomplete extends React.Component {
   }
 
   unbindListeners() {
-    if (this.keyDownListener) {
-      window.removeEventListener(this.keyDownListener);
-      delete this.keyDownListener;
-    }
+    window.removeEventListener('keydown', this.onKeyDown);
+    delete this.keyDownListener;
   }
 
   //EVENT HANDLERS
@@ -145,7 +143,6 @@ export default class TokenAutocomplete extends React.Component {
 
   onKeyDown = e => {
 
-
     switch (e.keyCode) {
       case keyCodes.ESC:
         this.blur();
@@ -154,12 +151,13 @@ export default class TokenAutocomplete extends React.Component {
         this.addSelectedValue();
         break;
       case keyCodes.BACKSPACE:
-        e.preventDefault();
         if (!this.state.inputValue.length) {
           this.setState({
             inputValue: this.state.inputValue.slice(0, -1)
           });
           this.deleteValue(this.state.values.size - 1);
+          e.preventDefault();
+
         }
         break;
     }
