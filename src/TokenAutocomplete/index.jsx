@@ -269,6 +269,10 @@ export default class TokenAutocomplete extends React.Component {
     return this.isTresholdReached() && this.state.focused;
   }
 
+  shouldShowInput = () => {
+    return !this.props.simulateSelect || !this.state.values.size;
+  }
+
   isTresholdReached = () => {
     return this.state.inputValue.length >= this.props.treshold;
   }
@@ -310,15 +314,15 @@ export default class TokenAutocomplete extends React.Component {
   }
 
   renderInput = () => {
-    return (
-      <input
-        style={this.props.style.input}
-        onFocus={this.focus}
-        onChange={this.onInputChange}
-        value={this.state.inputValue}
-        placeholder={this.props.placeholder}
-        ref="input"/>
-    );
+    return this.shouldShowInput()
+      ? (<input
+          style={this.props.style.input}
+          onFocus={this.focus}
+          onChange={this.onInputChange}
+          value={this.state.inputValue}
+          placeholder={this.props.placeholder}
+          ref="input"/>)
+      : null;
   }
 
   renderDropdownIndicator = () => {
@@ -328,14 +332,11 @@ export default class TokenAutocomplete extends React.Component {
   }
 
   render() {
-
-    const shouldRenderInput = !this.props.simulateSelect || !this.state.values.size;
-
     return (
       <div ref="wrapper" style={this.props.style.wrapper}>
         <div ref="inputWrapper" onClick={this.focus} style={this.props.style.inputWrapper}>
           {this.renderTokens()}
-          {shouldRenderInput ? this.renderInput() : null}
+          {this.renderInput()}
           {this.renderProcessing()}
           {this.renderDropdownIndicator()}
         </div>
