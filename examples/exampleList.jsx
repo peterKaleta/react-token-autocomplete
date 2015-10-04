@@ -30,18 +30,6 @@ export default class Examples extends React.Component {
 
   static displayName = 'examples';
 
-  static propTypes = {
-
-  }
-
-  contextTypes = {
-  }
-
-  static defaultProps = {
-  }
-
-  state = {
-  }
 
   render() {
     return (
@@ -91,6 +79,13 @@ export default class Examples extends React.Component {
           sample={Samples.limitToSuggestions}>
           You can also limit user choices to suggestions.
         </Example>
+
+        <Example
+            title="Use it like good ol' Dropdown"
+          sample={Samples.simulateSelect}>
+          It can work as a simple select (with or without filtering).
+        </Example>
+
 
         <h2 id="additional">Additional fun</h2>
 

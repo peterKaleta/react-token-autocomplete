@@ -11,6 +11,12 @@ export default {
     border: '1px solid #bbb',
     width: 'auto'
   },
+
+  wrapperFullWidth: {
+    flexGrow: 1,
+    border: 'none'
+  },
+
   removeBtn: {
     marginLeft: 2,
     top: 0,

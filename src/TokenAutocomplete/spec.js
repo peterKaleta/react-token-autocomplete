@@ -6,9 +6,13 @@ import {noop} from 'lodash';
 
 let component;
 
+const consoleWarnSpy = sinon.spy(console, 'warn');
+
+
 describe('TokenAutocomplete', () => {
 
   afterEach(done => {
+    consoleWarnSpy.reset();
     React.unmountComponentAtNode(document.body);
     document.body.innerHTML = '';
     done();
@@ -61,6 +65,14 @@ describe('TokenAutocomplete', () => {
 
     it('handle onRemove add with noop', () => {
       expect(component.props.onRemove).to.equal(noop);
+    });
+
+    it('is not simulating select', () => {
+      expect(component.props.simulateSelect).to.be.false;
+    });
+
+    it('allows filtering options', () => {
+      expect(component.props.filterOptions).to.be.true;
     });
 
     //state
@@ -195,6 +207,16 @@ describe('TokenAutocomplete', () => {
       expect(component.state.values.get(0)).to.equal('1aaaaa');
     });
 
+    it('to block filtering options', () => {
+
+      const component = TestUtils.renderComponent(TokenAutocomplete, {
+        filterOptions: false
+      });
+
+      expect(component.refs.input).not.to.exist;
+
+    });
+
   });
 
 
@@ -208,6 +230,32 @@ describe('TokenAutocomplete', () => {
     TestUtils.changeInputValue(component, 'abc');
 
     expect(component.state.inputValue).to.equal('abc');
+
+  });
+
+  it('throws warning when more than one default value is passed when simulating select', () => {
+
+    const WARN_MSG = 'Warning: Failed propType: when props.simulateSelect is set to TRUE, you should pass more than a single value in props.defaultValues';
+
+    TestUtils.renderComponent(TokenAutocomplete, {
+      simulateSelect: true,
+      defaultValues: ['bbb', 'ccc']
+    });
+
+    expect(consoleWarnSpy.getCall(0).args).to.include(WARN_MSG);
+
+  });
+
+  it('throws warning when non-zero treshold is defined when simulating select', () => {
+
+    const WARN_MSG = 'Warning: Failed propType: when props.simulateSelect is set to TRUE, you should not pass non-zero treshold';
+
+    TestUtils.renderComponent(TokenAutocomplete, {
+      simulateSelect: true,
+      treshold: 3
+    });
+
+    expect(consoleWarnSpy.getCall(0).args).to.include(WARN_MSG);
 
   });
 
@@ -226,11 +274,27 @@ describe('TokenAutocomplete', () => {
         expect(component.refs.options.props.term).to.equal('def');
       });
 
-      it('limit to options', () => {
-        expect(component.refs.options.props.limitToOptions).to.be.false;
+    });
+
+    describe('to tokens', () => {
+
+      it('fullWidth setting based on the simulateSelect props', () => {
+
+        const component1 = TestUtils.renderComponent(TokenAutocomplete, {
+          simulateSelect: true,
+          defaultValues: ['bbb']
+        });
+        const component2 = TestUtils.renderComponent(TokenAutocomplete, {
+          defaultValues: ['bbb']
+        });
+
+        expect(component1.refs['token0'].props.fullWidth).to.be.true;
+        expect(component2.refs['token0'].props.fullWidth).to.be.false;
+
       });
 
     });
+
 
   });
 
@@ -242,7 +306,6 @@ describe('TokenAutocomplete', () => {
     expect(component.refs.options).not.to.exist;
 
     TestUtils.changeInputValue(component, 'abc');
-
 
     expect(component.refs.options).to.exist;
 
@@ -323,16 +386,27 @@ describe('TokenAutocomplete', () => {
 
   });
 
-  it('on backspace when input is empty deletes the last value', () => {
+  it('deletes the last value on backspace when input is empty ', () => {
 
     const component = TestUtils.renderComponent(TokenAutocomplete, {
       defaultValues: ['aaa1', 'aaa2', 'aaa3']
     });
+    TestUtils.focus(component);
 
     TestUtils.hitBackspace(component);
     expect(component.state.values.size).to.equal(2);
     TestUtils.hitBackspace(component);
     expect(component.state.values.size).to.equal(1);
+  });
+
+  it('blurs on escape', () => {
+    const component = TestUtils.renderComponent(TokenAutocomplete);
+    TestUtils.focus(component);
+
+    expect(component.state.focused).to.be.true;
+    TestUtils.hitEscape(component);
+    expect(component.state.focused).to.be.false;
+
   });
 
   it('handles token removal', () => {
@@ -387,6 +461,7 @@ describe('TokenAutocomplete', () => {
   it('doesn\'t allow duplicates', () => {
 
     const component = TestUtils.renderComponent(TokenAutocomplete, {
+      focus: true,
       limitToOptions: false
     });
 
@@ -400,5 +475,38 @@ describe('TokenAutocomplete', () => {
 
 
   });
+
+  describe('when simulating select', () => {
+
+    beforeEach(() => {
+
+       component = TestUtils.renderComponent(TokenAutocomplete, {
+        options: ['bbb', 'ccc'],
+        defaultValues: ['bbb'],
+        simulateSelect: true
+      });
+
+    });
+
+    it('input is not displayed when value is provided', () => {
+      expect(component.refs.input).not.to.exist;
+    });
+
+    it('current value is replaced when new one is selected', () => {
+
+      TestUtils.focus(component);
+      let firstOption = component.refs.options.refs.option1;
+      TestUtils.SimulateNative.mouseOver(React.findDOMNode(firstOption));
+      TestUtils.Simulate.click(React.findDOMNode(firstOption));
+      expect(component.refs.token0.props.value).to.equal('ccc');
+
+    });
+
+    it('contains dropdownIndicator', () => {
+      expect(component.refs.dropdownIndicator).to.exist;
+    });
+
+  });
+
 
 });

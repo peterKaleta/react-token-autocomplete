@@ -36,9 +36,9 @@ export default class StateTable extends React.Component {
   static displayName = 'StateTable';
 
   renderTableContents () {
-    return map(PROPS_DESCRIPTION, row => {
+    return map(PROPS_DESCRIPTION, (row, index) => {
       return (
-        <tr>
+        <tr key={index}>
           <td key="0">{row[0]}</td>
           <td key="1">{row[1]}</td>
           <td key="2">{row[2]}</td>

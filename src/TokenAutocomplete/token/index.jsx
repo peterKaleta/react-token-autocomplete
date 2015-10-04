@@ -20,7 +20,8 @@ export default class Token extends React.Component {
   static defaultProps = {
     handleRemove: noop,
     parse: identity,
-    index: 0
+    index: 0,
+    fullWidth: false
   }
 
   state = {
@@ -34,18 +35,29 @@ export default class Token extends React.Component {
 
   }
 
-  render() {
+  renderRemoveBtn = () => {
     return (
-      <div ref="wrapper" style={this.props.style.wrapper}>
-        <div ref="value" style={this.props.style.value}>
+      <div
+        style={this.props.style.removeBtn}
+        ref="removeBtn"
+        className='token-remove-btn'
+        onClick={this.onRemoveBtnClick}>
+        x
+      </div>
+    );
+  }
+
+  render() {
+
+    const {style} = this.props;
+
+    return (
+      <div ref="wrapper" style={[style.wrapper, this.props.fullWidth && style.wrapperFullWidth]}>
+        <div ref="value" style={style.value}>
           { this.props.parse(this.props.value) }
         </div>
-        <div
-          style={this.props.style.removeBtn}
-          ref="removeBtn"
-          className='token-remove-btn'
-          onClick={this.onRemoveBtnClick}>x</div>
-        </div>
+        { !this.props.fullWidth ? this.renderRemoveBtn() : null}
+      </div>
     );
   }
 }

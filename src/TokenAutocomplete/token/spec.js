@@ -2,7 +2,6 @@ import React from 'react/addons';
 import Token from './';
 import TestUtils from 'TestUtils';
 import _ from 'lodash';
-
 let component;
 
 describe('Option list', () => {
@@ -30,6 +29,11 @@ describe('Option list', () => {
       const wrapperNode = React.findDOMNode(component.refs.value);
       expect(wrapperNode.textContent).to.equal('someValue');
     });
+
+    it('is not fullwidth', () => {
+      expect(component.props.fullWidth).to.be.false;
+    });
+
 
   });
 
@@ -67,5 +71,23 @@ describe('Option list', () => {
     const wrapperNode = React.findDOMNode(component.refs.value);
     expect(wrapperNode.textContent).to.equal('sth someValue');
   });
+
+  describe('when fullWidth prop is passed', () => {
+
+    beforeEach(() => {
+      component = TestUtils.renderComponent(Token, {fullWidth: true});
+    });
+
+    it('applies proper styles', () => {
+      expect(component.refs.wrapper.props.style.WebkitFlexGrow).to.equal(1);
+      expect(component.refs.wrapper.props.style.border).to.equal('none');
+    });
+
+    it('won\'t show remove btn', () => {
+      expect(component.refs.removeBtn).not.to.exist;
+    });
+
+  });
+
 
 });

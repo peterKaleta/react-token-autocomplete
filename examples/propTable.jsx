@@ -41,6 +41,12 @@ const PROPS_DESCRIPTION = [
     'should input be focused by default'
   ],
   [
+    'filterOptions',
+    'boolean',
+    'true',
+    'allows user to filter options by typing into the input'
+  ],
+  [
     'processing',
     'boolean',
     'false',
@@ -87,6 +93,12 @@ const PROPS_DESCRIPTION = [
     'function',
     'identity',
     'parse user entered values before adding to values'
+  ],
+  [
+    'simulateSelect',
+    'boolean',
+    'false',
+    'transforms token autocomplete into a standard dropdown'
   ]
 
 ];
@@ -97,9 +109,9 @@ export default class PropTable extends React.Component {
   static displayName = 'PropTable';
 
   renderTableContents () {
-    return map(PROPS_DESCRIPTION, row => {
+    return map(PROPS_DESCRIPTION, (row, index) => {
       return (
-        <tr>
+        <tr key={index}>
           <td key="0">{row[0]}</td>
           <td key="1">{row[1]}</td>
           <td key="2">{row[2]}</td>
@@ -113,10 +125,10 @@ export default class PropTable extends React.Component {
     return (
       <table ref="wrapper" style={styles.wrapper}>
         <thead>
-          <th>props</th>
-          <th>type</th>
-          <th>default</th>
-          <th>description</th>
+          <th key="0">props</th>
+          <th key="1">type</th>
+          <th key="2">default</th>
+          <th key="3">description</th>
         </thead>
         { this.renderTableContents() }
       </table>

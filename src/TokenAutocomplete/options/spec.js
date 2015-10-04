@@ -34,10 +34,6 @@ describe('Option list', () => {
         expect(component.props.emptyInfo).to.equal('no suggestions');
     });
 
-    it('has limitToOptions flag set', () => {
-      expect(component.props.limitToOptions).to.be.true;
-    });
-
   });
 
   //UNIT

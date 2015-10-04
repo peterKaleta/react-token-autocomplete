@@ -1,4 +1,5 @@
 import React from 'react/addons';
+import {noop} from 'lodash';
 const {TestUtils} = React.addons;
 
 function renderComponent(Component, props = {}) {
@@ -13,23 +14,23 @@ function changeInputValue(component, value) {
 }
 
 function blur(component) {
-  var inputNode = React.findDOMNode(component.refs.input);
-  TestUtils.Simulate.blur(inputNode);
+  component.blur();
 }
 
 function focus(component) {
-  var inputNode = React.findDOMNode(component.refs.input);
-  TestUtils.Simulate.focus(inputNode);
+  component.focus();
 }
 
 function hitEnter(component) {
-  var inputNode = React.findDOMNode(component.refs.input);
-  TestUtils.Simulate.keyDown(inputNode, {keyCode: 13});
+  component.onKeyDown({keyCode: 13, preventDefault: noop});
 }
 
 function hitBackspace(component) {
-  var inputNode = React.findDOMNode(component.refs.input);
-  TestUtils.Simulate.keyDown(inputNode, {keyCode: 8});
+  component.onKeyDown({keyCode: 8, preventDefault: noop});
+}
+
+function hitEscape(component) {
+  component.onKeyDown({keyCode: 27, preventDefault: noop});
 }
 
 export default {
@@ -39,5 +40,6 @@ export default {
   hitBackspace,
   blur,
   focus,
+  hitEscape,
   ...TestUtils
 };

@@ -51,11 +51,11 @@ describe('Single option', () => {
 
     });
 
-    it('calls handleAdd when clicked', () => {
+    it('calls handleClick when clicked', () => {
       let spy = sinon.spy();
 
       component = TestUtils.renderComponent(Option, {
-        handleAdd: spy
+        handleClick: spy
       });
 
       TestUtils.Simulate.click(React.findDOMNode(component.refs.wrapper));

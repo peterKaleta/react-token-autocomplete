@@ -14,6 +14,7 @@ export default {
   input: {
     verticalAlign: 'middle',
     border: 'none',
+    cursor: 'default',
     flexGrow: 1,
     display: 'inline-block',
     fontSize: 13,
@@ -30,7 +31,8 @@ export default {
     display: 'flex',
     fontWeight: 400,
     overflow: 'hidden',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    minHeight: 26
   },
   processing: {
     width: 18,
@@ -43,5 +45,23 @@ export default {
     borderBottom: '2px solid #ddd',
     borderTop: '2px solid #888',
     borderRadius: '100%'
+  },
+  dropdownIndicator: {
+      position: 'absolute',
+      height: 0,
+      width: 0,
+      borderTop: '7px solid #999',
+      borderBottom: '7px solid transparent',
+      borderRight: '5px solid transparent',
+      borderLeft: '5px solid transparent',
+      top: 12,
+      right: 10
+  },
+  fakePlaceholder: {
+    fontSize: 13,
+    paddingLeft: 6,
+    paddingTop: 5,
+    color: '#aaa',
+    cursor: 'default'
   }
 };
