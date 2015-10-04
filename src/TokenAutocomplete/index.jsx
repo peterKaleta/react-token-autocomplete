@@ -50,7 +50,7 @@ export default class TokenAutocomplete extends React.Component {
     processing: React.PropTypes.bool,
     focus: React.PropTypes.bool,
     //behaviour
-    filterOptions:  React.PropTypes.bool,
+    filterOptions: React.PropTypes.bool,
     simulateSelect: React.PropTypes.bool,
     limitToOptions: React.PropTypes.bool,
     parseOption: React.PropTypes.func,
@@ -144,6 +144,9 @@ export default class TokenAutocomplete extends React.Component {
   }
 
   onKeyDown = e => {
+
+    e.preventDefault();
+
     switch (e.keyCode) {
       case keyCodes.ESC:
         this.blur();

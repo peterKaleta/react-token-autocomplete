@@ -31,7 +31,8 @@ export default {
     display: 'flex',
     fontWeight: 400,
     overflow: 'hidden',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    minHeight: 26
   },
   processing: {
     width: 18,
@@ -46,14 +47,14 @@ export default {
     borderRadius: '100%'
   },
   dropdownIndicator: {
-      flexGrow: 0,
+      position: 'absolute',
       height: 0,
       width: 0,
       borderTop: '7px solid #999',
       borderBottom: '7px solid transparent',
       borderRight: '5px solid transparent',
       borderLeft: '5px solid transparent',
-      marginTop: 10,
-      marginRight: 6
+      top: 12,
+      right: 10
   }
 };
