@@ -28,6 +28,10 @@ function hitBackspace(component) {
   component.onKeyDown({keyCode: 8});
 }
 
+function hitEscape(component) {
+  component.onKeyDown({keyCode: 81});
+}
+
 export default {
   renderComponent,
   changeInputValue,
@@ -35,5 +39,6 @@ export default {
   hitBackspace,
   blur,
   focus,
+  hitEscape,
   ...TestUtils
 };
