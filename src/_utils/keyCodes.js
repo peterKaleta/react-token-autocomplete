@@ -3,5 +3,5 @@ export default {
   UP: 38,
   DOWN: 40,
   BACKSPACE: 8,
-  ESC: 81
+  ESC: 27
 };

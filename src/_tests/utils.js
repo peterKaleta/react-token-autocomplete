@@ -29,7 +29,7 @@ function hitBackspace(component) {
 }
 
 function hitEscape(component) {
-  component.onKeyDown({keyCode: 81});
+  component.onKeyDown({keyCode: 27});
 }
 
 export default {
