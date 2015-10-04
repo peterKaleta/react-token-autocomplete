@@ -372,7 +372,7 @@ describe('TokenAutocomplete', () => {
 
   });
 
-  it('on backspace when input is empty deletes the last value', () => {
+  it('deletes the last value on backspace when input is empty ', () => {
 
     const component = TestUtils.renderComponent(TokenAutocomplete, {
       defaultValues: ['aaa1', 'aaa2', 'aaa3']
@@ -383,6 +383,16 @@ describe('TokenAutocomplete', () => {
     expect(component.state.values.size).to.equal(2);
     TestUtils.hitBackspace(component);
     expect(component.state.values.size).to.equal(1);
+  });
+
+  it('blurs on escape', () => {
+    const component = TestUtils.renderComponent(TokenAutocomplete);
+    TestUtils.focus(component);
+
+    expect(component.state.focused).to.be.true;
+    TestUtils.hitEscape(component);
+    expect(component.state.focused).to.be.false;
+
   });
 
   it('handles token removal', () => {

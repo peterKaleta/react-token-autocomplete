@@ -143,6 +143,9 @@ export default class TokenAutocomplete extends React.Component {
 
   onKeyDown = e => {
     switch (e.keyCode) {
+      case keyCodes.ESC:
+        this.blur();
+        break;
       case keyCodes.ENTER:
         this.addSelectedValue();
         break;
