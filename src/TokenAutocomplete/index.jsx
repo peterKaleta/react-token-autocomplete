@@ -321,6 +321,12 @@ export default class TokenAutocomplete extends React.Component {
     );
   }
 
+  renderDropdownIndicator = () => {
+    return this.props.simulateSelect
+      ? <div ref="dropdownIndicator" style={this.props.style.dropdownIndicator} />
+      : null;
+  }
+
   render() {
 
     const shouldRenderInput = !this.props.simulateSelect || !this.state.values.size;
@@ -331,6 +337,7 @@ export default class TokenAutocomplete extends React.Component {
           {this.renderTokens()}
           {shouldRenderInput ? this.renderInput() : null}
           {this.renderProcessing()}
+          {this.renderDropdownIndicator()}
         </div>
         {this.renderOptionsDropdown()}
       </div>

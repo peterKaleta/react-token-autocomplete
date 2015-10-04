@@ -488,5 +488,10 @@ describe('TokenAutocomplete', () => {
 
     });
 
+    it('contains dropdownIndicator', () => {
+      expect(component.refs.dropdownIndicator).to.exist;
+    });
+
   });
+
 });

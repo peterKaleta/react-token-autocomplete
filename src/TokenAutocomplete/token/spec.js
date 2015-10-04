@@ -2,7 +2,6 @@ import React from 'react/addons';
 import Token from './';
 import TestUtils from 'TestUtils';
 import _ from 'lodash';
-import styles from './styles';
 let component;
 
 describe('Option list', () => {
@@ -73,12 +72,22 @@ describe('Option list', () => {
     expect(wrapperNode.textContent).to.equal('sth someValue');
   });
 
-  it('applies full width styles when fullWidth prop is passed', () => {
-    const component = TestUtils.renderComponent(Token, {fullWidth: true});
+  describe('when fullWidth prop is passed', () => {
 
-    expect(component.refs.wrapper.props.style.width).to.equal('100%');
-    expect(component.refs.wrapper.props.style.border).to.equal('none');
+    beforeEach(() => {
+      component = TestUtils.renderComponent(Token, {fullWidth: true});
+    });
+
+    it('applies proper styles', () => {
+      expect(component.refs.wrapper.props.style.WebkitFlexGrow).to.equal(1);
+      expect(component.refs.wrapper.props.style.border).to.equal('none');
+    });
+
+    it('won\'t show remove btn', () => {
+      expect(component.refs.removeBtn).not.to.exist;
+    });
 
   });
+
 
 });

@@ -14,6 +14,7 @@ export default {
   input: {
     verticalAlign: 'middle',
     border: 'none',
+    cursor: 'default',
     flexGrow: 1,
     display: 'inline-block',
     fontSize: 13,
@@ -43,5 +44,16 @@ export default {
     borderBottom: '2px solid #ddd',
     borderTop: '2px solid #888',
     borderRadius: '100%'
+  },
+  dropdownIndicator: {
+      flexGrow: 0,
+      height: 0,
+      width: 0,
+      borderTop: '7px solid #999',
+      borderBottom: '7px solid transparent',
+      borderRight: '5px solid transparent',
+      borderLeft: '5px solid transparent',
+      marginTop: 10,
+      marginRight: 6
   }
 };

@@ -13,7 +13,7 @@ export default {
   },
 
   wrapperFullWidth: {
-    width: '100%',
+    flexGrow: 1,
     border: 'none'
   },
 
