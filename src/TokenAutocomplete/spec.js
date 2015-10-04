@@ -71,6 +71,10 @@ describe('TokenAutocomplete', () => {
       expect(component.props.simulateSelect).to.be.false;
     });
 
+    it('allows filtering options', () => {
+      expect(component.props.filterOptions).to.be.true;
+    });
+
     //state
     it('is unfocused by default', () => {
        expect(component.state.focused).to.be.false;
@@ -201,6 +205,16 @@ describe('TokenAutocomplete', () => {
       TestUtils.hitEnter(component);
       expect(spy.calledWith('aaaaa')).to.be.true;
       expect(component.state.values.get(0)).to.equal('1aaaaa');
+    });
+
+    it('to block filtering options', () => {
+
+      const component = TestUtils.renderComponent(TokenAutocomplete, {
+        filterOptions: false
+      });
+
+      expect(component.refs.input).not.to.exist;
+
     });
 
   });
@@ -493,5 +507,6 @@ describe('TokenAutocomplete', () => {
     });
 
   });
+
 
 });

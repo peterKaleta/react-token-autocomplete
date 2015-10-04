@@ -50,6 +50,7 @@ export default class TokenAutocomplete extends React.Component {
     processing: React.PropTypes.bool,
     focus: React.PropTypes.bool,
     //behaviour
+    filterOptions:  React.PropTypes.bool,
     simulateSelect: React.PropTypes.bool,
     limitToOptions: React.PropTypes.bool,
     parseOption: React.PropTypes.func,
@@ -73,6 +74,7 @@ export default class TokenAutocomplete extends React.Component {
     focus: false,
     processing: false,
     //behaviour
+    filterOptions: true,
     simulateSelect: false,
     limitToOptions: false,
     parseOption: identity,
@@ -270,7 +272,7 @@ export default class TokenAutocomplete extends React.Component {
   }
 
   shouldShowInput = () => {
-    return !this.props.simulateSelect || !this.state.values.size;
+    return this.props.filterOptions && (!this.props.simulateSelect || !this.state.values.size);
   }
 
   isTresholdReached = () => {
