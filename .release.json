@@ -7,8 +7,5 @@
  },
  "npm": {
     "publish": true
- },
- "src": {
-    "pushRepo": true
  }
 }
