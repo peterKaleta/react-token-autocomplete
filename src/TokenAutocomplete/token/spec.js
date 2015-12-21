@@ -79,7 +79,6 @@ describe('Option list', () => {
     });
 
     it('applies proper styles', () => {
-      expect(component.refs.wrapper.props.style.WebkitFlexGrow).to.equal(1);
       expect(component.refs.wrapper.props.style.border).to.equal('none');
     });
 

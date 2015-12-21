@@ -2,11 +2,14 @@ var path = require('path');
 var webpackConf = require('peters-toolbelt').webpack;
 
 var plugins = [];
+
 var conf = new webpackConf({
                 entry: './src',
                 output: {
                     path: path.join(__dirname, '/dist'),
-                    filename: 'index.js'
+                    filename: 'index.js',
+                    library: 'TokenAutocomplete',
+                    libraryTarget: 'umd'
                 },
                 resolve: {
                   alias: {
@@ -21,5 +24,7 @@ var conf = new webpackConf({
             .iNeedSCSS()
             .iNeedHotDevServer()
             .getConfig();
+
+//console.log('CURRENT CONFIG', JSON.stringify(conf, null, 4));
 
 module.exports = conf;
