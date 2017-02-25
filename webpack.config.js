@@ -25,6 +25,7 @@ var conf = new webpackConf({
             .iNeedHotDevServer()
             .getConfig();
 
-//console.log('CURRENT CONFIG', JSON.stringify(conf, null, 4));
+/*RegExp.prototype.toJSON = RegExp.prototype.toString;
+console.log('CURRENT CONFIG', JSON.stringify(conf, null, 4));*/
 
 module.exports = conf;
