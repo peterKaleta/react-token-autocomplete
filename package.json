@@ -17,6 +17,7 @@
     "dist"
   ],
   "scripts": {
+    "dev": "vite --config examples/vite.config.ts",
     "build": "vite build",
     "test": "vitest run",
     "test:watch": "vitest",
