@@ -1,6 +1,6 @@
 {
   "name": "react-token-autocomplete",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -16,12 +16,15 @@
     "url": "https://github.com/peterKaleta/react-token-autocomplete/issues"
   },
   "homepage": "https://github.com/peterKaleta/react-token-autocomplete#readme",
+  "peerDependencies": {
+    "react": "0.13.x"
+  },
   "dependencies": {
     "immutable": "^3.7.5",
     "lodash": "^3.10.1",
-    "radium": "^0.13.8",
+    "radium": "^0.19.6",
     "react": "^0.13.3",
-    "underscore.string": "^3.2.1"
+    "underscore.string": "3.3.4"
   },
   "devDependencies": {
     "babel": "^5.8.23",
