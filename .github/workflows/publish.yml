@@ -4,6 +4,11 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to publish (e.g. v1.0.1)'
+        required: true
 
 jobs:
   publish:
@@ -24,13 +29,13 @@ jobs:
         run: npm ci
 
       - name: Publish to npm (latest — v1.x)
-        if: startsWith(github.ref_name, 'v1.')
+        if: startsWith(github.ref_name, 'v1.') || startsWith(inputs.tag, 'v1.')
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish to npm (legacy — v0.x)
-        if: startsWith(github.ref_name, 'v0.')
+        if: startsWith(github.ref_name, 'v0.') || startsWith(inputs.tag, 'v0.')
         run: npm publish --access public --tag legacy
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
