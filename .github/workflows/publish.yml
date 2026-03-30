@@ -40,4 +40,9 @@ jobs:
           [ "$PKG_VERSION" = "$TAG_VERSION" ]
 
       - name: Publish
-        run: npm publish --access public
+        run: |
+          if [[ "${GITHUB_REF_NAME}" == v0.* ]]; then
+            npm publish --access public --tag legacy
+          else
+            npm publish --access public
+          fi
