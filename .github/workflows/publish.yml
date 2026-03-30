@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      id-token: write  # required for OIDC
     steps:
       - uses: actions/checkout@v4
 
@@ -23,12 +24,8 @@ jobs:
 
       - name: Publish to npm (latest — v1.x)
         if: startsWith(github.ref_name, 'v1.')
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access public --provenance
 
       - name: Publish to npm (legacy — v0.x)
         if: startsWith(github.ref_name, 'v0.')
-        run: npm publish --access public --tag legacy
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access public --tag legacy --provenance
