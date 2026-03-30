@@ -1,4 +1,0 @@
-<TokenAutocomplete
-  processing={true}
-  options={['apple', 'banana', 'carrot', 'watermelon']}
-/>

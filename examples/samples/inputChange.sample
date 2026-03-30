@@ -1,6 +1,0 @@
-<TokenAutocomplete
-  onInputChange={
-    function(value){ alert(value); }
-  }
-  options={['apple', 'banana', 'carrot', 'watermelon']}
-/>

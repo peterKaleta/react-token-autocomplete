@@ -1,4 +1,0 @@
-<TokenAutocomplete
-  treshold={3}
-  options={['apple', 'banana', 'carrot', 'watermelon']}
-/>
