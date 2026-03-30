@@ -1,3 +1,4 @@
+import React, { useState, createRef, act } from 'react'
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -316,6 +317,116 @@ describe('TokenAutocomplete', () => {
       await user.type(input, 'hello')
       await user.keyboard('{Enter}')
       expect(onAdd).toHaveBeenCalledWith('HELLO')
+    })
+  })
+
+  describe('controlled mode', () => {
+    function ControlledWrapper({ initialValues = [] as string[], ...props }) {
+      const [values, setValues] = useState<string[]>(initialValues)
+      return (
+        <TokenAutocomplete
+          options={['alpha', 'beta', 'gamma']}
+          value={values}
+          onChange={setValues}
+          {...props}
+        />
+      )
+    }
+
+    it('renders controlled values', () => {
+      render(<ControlledWrapper initialValues={['alpha', 'beta']} />)
+      expect(screen.getAllByTestId('token')).toHaveLength(2)
+    })
+
+    it('adds tokens via onChange in controlled mode', async () => {
+      const user = userEvent.setup()
+      render(<ControlledWrapper limitToOptions />)
+      const input = screen.getByTestId('token-input')
+      await user.click(input)
+      await user.type(input, 'a')
+      await user.keyboard('{Enter}')
+      expect(screen.getByTestId('token')).toHaveTextContent('alpha')
+    })
+
+    it('removes tokens via onChange in controlled mode', async () => {
+      const user = userEvent.setup()
+      render(<ControlledWrapper initialValues={['alpha', 'beta']} />)
+      const tokens = screen.getAllByTestId('token')
+      await user.click(within(tokens[0]).getByTestId('token-remove'))
+      expect(screen.getAllByTestId('token')).toHaveLength(1)
+      expect(screen.getByTestId('token')).toHaveTextContent('beta')
+    })
+
+    it('calls onChange with full array on add', async () => {
+      const user = userEvent.setup()
+      const onChange = vi.fn()
+      render(
+        <TokenAutocomplete
+          options={['alpha', 'beta']}
+          value={['alpha']}
+          onChange={onChange}
+          limitToOptions
+        />,
+      )
+      const input = screen.getByTestId('token-input')
+      await user.click(input)
+      await user.type(input, 'b')
+      await user.keyboard('{Enter}')
+      expect(onChange).toHaveBeenCalledWith(['alpha', 'beta'])
+    })
+
+    it('calls onChange with full array on remove', async () => {
+      const user = userEvent.setup()
+      const onChange = vi.fn()
+      render(
+        <TokenAutocomplete
+          options={['alpha', 'beta']}
+          value={['alpha', 'beta']}
+          onChange={onChange}
+        />,
+      )
+      const tokens = screen.getAllByTestId('token')
+      await user.click(within(tokens[0]).getByTestId('token-remove'))
+      expect(onChange).toHaveBeenCalledWith(['beta'])
+    })
+
+    it('calls onAdd alongside onChange', async () => {
+      const user = userEvent.setup()
+      const onAdd = vi.fn()
+      const onChange = vi.fn()
+      render(<ControlledWrapper onAdd={onAdd} limitToOptions />)
+      const input = screen.getByTestId('token-input')
+      await user.click(input)
+      await user.type(input, 'a')
+      await user.keyboard('{Enter}')
+      expect(onAdd).toHaveBeenCalledWith('alpha')
+    })
+  })
+
+  describe('ref forwarding', () => {
+    it('forwards ref to the input element', () => {
+      const ref = createRef<HTMLInputElement>()
+      render(
+        <TokenAutocomplete
+          ref={ref}
+          options={['alpha']}
+        />,
+      )
+      expect(ref.current).toBeInstanceOf(HTMLInputElement)
+    })
+
+    it('can focus via ref', () => {
+      const ref = createRef<HTMLInputElement>()
+      render(
+        <TokenAutocomplete
+          ref={ref}
+          options={['alpha']}
+        />,
+      )
+      act(() => {
+        ref.current?.focus()
+      })
+      expect(document.activeElement).toBe(ref.current)
     })
   })
 })

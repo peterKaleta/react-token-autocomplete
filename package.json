@@ -21,7 +21,10 @@
     "build": "vite build",
     "test": "vitest run",
     "test:watch": "vitest",
-    "lint": "tsc --noEmit"
+    "prepublishOnly": "npm run build",
+    "lint": "tsc --noEmit",
+    "e2e": "playwright test",
+    "e2e:update": "playwright test --update-snapshots"
   },
   "repository": {
     "type": "git",
@@ -38,6 +41,8 @@
     "react-dom": "^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.11.1",
+    "@playwright/test": "^1.58.2",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
     "@testing-library/user-event": "^14.5.2",

@@ -10,6 +10,7 @@ export interface OptionsProps {
   className?: string
   optionClassName?: string
   optionSelectedClassName?: string
+  ariaLabel?: string
 }
 
 export function Options({
@@ -21,11 +22,12 @@ export function Options({
   className,
   optionClassName,
   optionSelectedClassName,
+  ariaLabel = 'Suggestions',
 }: OptionsProps) {
   if (options.length === 0) return null
 
   return (
-    <ul role="listbox" data-testid="options" className={className}>
+    <ul role="listbox" aria-label={ariaLabel} data-testid="options" className={className}>
       {options.map((option, index) => (
         <Option
           key={option}

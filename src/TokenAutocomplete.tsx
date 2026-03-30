@@ -1,11 +1,16 @@
 import type { ReactNode } from 'react'
-import { useEffect } from 'react'
+import { forwardRef, useEffect, useImperativeHandle } from 'react'
 import { Token } from './Token'
 import { Options } from './Options'
 import { useTokenAutocomplete } from './useTokenAutocomplete'
 
 export interface TokenAutocompleteProps {
+  /** Controlled value — makes the component controlled. */
+  value?: string[]
+  /** Called with the full values array on every add/remove (controlled mode). */
+  onChange?: (values: string[]) => void
   options?: string[]
+  /** Initial values for uncontrolled mode. Ignored when `value` is provided. */
   defaultValues?: string[]
   placeholder?: string
   threshold?: number
@@ -29,34 +34,44 @@ export interface TokenAutocompleteProps {
   optionSelectedClassName?: string
   placeholderClassName?: string
   processingClassName?: string
+  ariaLabel?: string
 }
 
-export function TokenAutocomplete({
-  options = [],
-  defaultValues = [],
-  placeholder = '',
-  threshold = 0,
-  processing = false,
-  autoFocus = false,
-  filterOptions = true,
-  simulateSelect = false,
-  limitToOptions = false,
-  parseOption,
-  parseToken,
-  parseCustom,
-  onInputChange,
-  onAdd,
-  onRemove,
-  className,
-  inputClassName,
-  tokenClassName,
-  tokenRemoveClassName,
-  optionsClassName,
-  optionClassName,
-  optionSelectedClassName,
-  placeholderClassName,
-  processingClassName,
-}: TokenAutocompleteProps) {
+export const TokenAutocomplete = forwardRef<
+  HTMLInputElement,
+  TokenAutocompleteProps
+>(function TokenAutocomplete(
+  {
+    value,
+    onChange,
+    options = [],
+    defaultValues = [],
+    placeholder = '',
+    threshold = 0,
+    processing = false,
+    autoFocus = false,
+    filterOptions = true,
+    simulateSelect = false,
+    limitToOptions = false,
+    parseOption,
+    parseToken,
+    parseCustom,
+    onInputChange,
+    onAdd,
+    onRemove,
+    className,
+    inputClassName,
+    tokenClassName,
+    tokenRemoveClassName,
+    optionsClassName,
+    optionClassName,
+    optionSelectedClassName,
+    placeholderClassName,
+    processingClassName,
+    ariaLabel,
+  },
+  ref,
+) {
   const {
     values,
     inputValue,
@@ -74,6 +89,8 @@ export function TokenAutocomplete({
     inputRef,
     containerRef,
   } = useTokenAutocomplete({
+    value,
+    onChange,
     options,
     defaultValues,
     threshold,
@@ -85,6 +102,9 @@ export function TokenAutocomplete({
     onAdd,
     onRemove,
   })
+
+  // Forward ref to the internal input for react-hook-form focus management
+  useImperativeHandle(ref, () => inputRef.current as HTMLInputElement, [inputRef])
 
   useEffect(() => {
     if (autoFocus) {
@@ -122,6 +142,7 @@ export function TokenAutocomplete({
           onChange={(e) => setInputValue(e.target.value)}
           onFocus={focus}
           onKeyDown={handleKeyDown}
+          aria-label={ariaLabel || placeholder || 'Token input'}
         />
       )}
 
@@ -149,4 +170,4 @@ export function TokenAutocomplete({
       )}
     </div>
   )
-}
+})

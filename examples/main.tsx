@@ -31,7 +31,7 @@ function BasicExample() {
         optionsClassName="absolute z-10 left-0 right-0 top-full mt-1 bg-white border rounded-lg shadow-lg max-h-60 overflow-auto"
         optionClassName="px-3 py-2 cursor-pointer hover:bg-gray-50 text-sm"
         optionSelectedClassName="bg-blue-50"
-        placeholderClassName="text-gray-400 text-sm absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none"
+        placeholderClassName="text-gray-500 text-sm absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none"
       />
       {log.length > 0 && (
         <div className="mt-3 text-xs text-gray-400 font-mono">
@@ -56,7 +56,7 @@ function ThresholdExample() {
         optionsClassName="absolute z-10 left-0 right-0 top-full mt-1 bg-white border rounded-lg shadow-lg max-h-60 overflow-auto"
         optionClassName="px-3 py-2 cursor-pointer hover:bg-gray-50 text-sm"
         optionSelectedClassName="bg-purple-50"
-        placeholderClassName="text-gray-400 text-sm absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none"
+        placeholderClassName="text-gray-500 text-sm absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none"
       />
     </Section>
   )
@@ -76,7 +76,7 @@ function LimitToOptionsExample() {
         optionsClassName="absolute z-10 left-0 right-0 top-full mt-1 bg-white border rounded-lg shadow-lg max-h-60 overflow-auto"
         optionClassName="px-3 py-2 cursor-pointer hover:bg-gray-50 text-sm"
         optionSelectedClassName="bg-emerald-50"
-        placeholderClassName="text-gray-400 text-sm absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none"
+        placeholderClassName="text-gray-500 text-sm absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none"
       />
     </Section>
   )
@@ -96,7 +96,7 @@ function SimulateSelectExample() {
         optionsClassName="absolute z-10 left-0 right-0 top-full mt-1 bg-white border rounded-lg shadow-lg max-h-60 overflow-auto"
         optionClassName="px-3 py-2 cursor-pointer hover:bg-gray-50 text-sm"
         optionSelectedClassName="bg-amber-50"
-        placeholderClassName="text-gray-400 text-sm absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none"
+        placeholderClassName="text-gray-500 text-sm absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none"
       />
     </Section>
   )
@@ -125,7 +125,7 @@ function ProcessingExample() {
         optionsClassName="absolute z-10 left-0 right-0 top-full mt-1 bg-white border rounded-lg shadow-lg max-h-60 overflow-auto"
         optionClassName="px-3 py-2 cursor-pointer hover:bg-gray-50 text-sm"
         optionSelectedClassName="bg-rose-50"
-        placeholderClassName="text-gray-400 text-sm absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none"
+        placeholderClassName="text-gray-500 text-sm absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none"
         processingClassName="animate-spin h-4 w-4 border-2 border-rose-500 border-t-transparent rounded-full"
       />
     </Section>
@@ -157,8 +157,33 @@ function ParseExample() {
         optionsClassName="absolute z-10 left-0 right-0 top-full mt-1 bg-white border rounded-lg shadow-lg max-h-60 overflow-auto"
         optionClassName="px-3 py-2 cursor-pointer hover:bg-gray-50 text-sm"
         optionSelectedClassName="bg-sky-50"
-        placeholderClassName="text-gray-400 text-sm absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none"
+        placeholderClassName="text-gray-500 text-sm absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none"
       />
+    </Section>
+  )
+}
+
+function ControlledExample() {
+  const [values, setValues] = useState<string[]>(['React'])
+  return (
+    <Section title="Controlled" description="Controlled mode with value + onChange, ready for react-hook-form.">
+      <TokenAutocomplete
+        options={FRAMEWORKS}
+        value={values}
+        onChange={setValues}
+        placeholder="Add a framework..."
+        className="flex flex-wrap items-center gap-1 border rounded-lg p-2 focus-within:ring-2 focus-within:ring-teal-500 bg-white min-h-[42px] relative"
+        inputClassName="outline-none flex-1 min-w-[120px] bg-transparent text-sm"
+        tokenClassName="inline-flex items-center gap-1 bg-teal-100 text-teal-800 px-2 py-0.5 rounded-full text-sm"
+        tokenRemoveClassName="hover:text-red-600 cursor-pointer text-teal-400 ml-0.5"
+        optionsClassName="absolute z-10 left-0 right-0 top-full mt-1 bg-white border rounded-lg shadow-lg max-h-60 overflow-auto"
+        optionClassName="px-3 py-2 cursor-pointer hover:bg-gray-50 text-sm"
+        optionSelectedClassName="bg-teal-50"
+        placeholderClassName="text-gray-500 text-sm absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none"
+      />
+      <div className="mt-3 text-xs text-gray-500 font-mono">
+        state: {JSON.stringify(values)}
+      </div>
     </Section>
   )
 }
@@ -169,6 +194,7 @@ function DefaultValuesExample() {
       <TokenAutocomplete
         options={FRAMEWORKS}
         defaultValues={['React', 'Vue']}
+        ariaLabel="Add a framework"
         className="flex flex-wrap items-center gap-1 border rounded-lg p-2 focus-within:ring-2 focus-within:ring-indigo-500 bg-white min-h-[42px] relative"
         inputClassName="outline-none flex-1 min-w-[120px] bg-transparent text-sm"
         tokenClassName="inline-flex items-center gap-1 bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-full text-sm"
@@ -183,13 +209,14 @@ function DefaultValuesExample() {
 
 function App() {
   return (
-    <div className="max-w-2xl mx-auto py-12 px-4 space-y-8">
-      <div>
+    <main className="max-w-2xl mx-auto py-12 px-4 space-y-8">
+      <header>
         <h1 className="text-3xl font-bold">react-token-autocomplete</h1>
-        <p className="text-gray-500 mt-1">Style-agnostic token input for React. All examples styled with Tailwind.</p>
-      </div>
+        <p className="text-gray-600 mt-1">Style-agnostic token input for React. All examples styled with Tailwind.</p>
+      </header>
 
       <BasicExample />
+      <ControlledExample />
       <DefaultValuesExample />
       <ThresholdExample />
       <LimitToOptionsExample />
@@ -197,10 +224,10 @@ function App() {
       <ProcessingExample />
       <ParseExample />
 
-      <div className="text-center text-xs text-gray-400 py-4">
+      <footer className="text-center text-xs text-gray-600 py-4">
         <p>Keyboard: <kbd className="px-1 py-0.5 border rounded text-gray-600">Enter</kbd> to add, <kbd className="px-1 py-0.5 border rounded text-gray-600">Backspace</kbd> to remove, <kbd className="px-1 py-0.5 border rounded text-gray-600">Esc</kbd> to close, <kbd className="px-1 py-0.5 border rounded text-gray-600">↑↓</kbd> to navigate</p>
-      </div>
-    </div>
+      </footer>
+    </main>
   )
 }
 

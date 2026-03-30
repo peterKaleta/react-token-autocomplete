@@ -1,7 +1,13 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
 
 export interface UseTokenAutocompleteOptions {
+  /** Controlled value — when provided, the component is controlled. */
+  value?: string[]
+  /** Controlled onChange — called with the full values array on every add/remove. */
+  onChange?: (values: string[]) => void
+  /** Available options to select from. */
   options?: string[]
+  /** Initial values for uncontrolled mode. Ignored when `value` is provided. */
   defaultValues?: string[]
   threshold?: number
   filterOptions?: boolean
@@ -34,6 +40,8 @@ export interface UseTokenAutocompleteReturn {
 }
 
 export function useTokenAutocomplete({
+  value: controlledValue,
+  onChange,
   options = [],
   defaultValues = [],
   threshold = 0,
@@ -45,13 +53,26 @@ export function useTokenAutocomplete({
   onAdd,
   onRemove,
 }: UseTokenAutocompleteOptions = {}): UseTokenAutocompleteReturn {
-  const [values, setValues] = useState<string[]>(defaultValues)
+  const isControlled = controlledValue !== undefined
+  const [internalValues, setInternalValues] = useState<string[]>(defaultValues)
+  const values = isControlled ? controlledValue : internalValues
+
   const [inputValue, setInputValueState] = useState('')
   const [focused, setFocused] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(0)
 
   const inputRef = useRef<HTMLInputElement | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
+
+  const updateValues = useCallback(
+    (next: string[]) => {
+      if (!isControlled) {
+        setInternalValues(next)
+      }
+      onChange?.(next)
+    },
+    [isControlled, onChange],
+  )
 
   const getAvailableOptions = useCallback(() => {
     let available = options.filter((opt) => !values.includes(opt))
@@ -92,26 +113,24 @@ export function useTokenAutocomplete({
     (value: string) => {
       if (!value || values.includes(value)) return
 
-      if (simulateSelect) {
-        setValues([value])
-      } else {
-        setValues((prev) => [...prev, value])
-      }
+      const next = simulateSelect ? [value] : [...values, value]
+      updateValues(next)
       setInputValueState('')
       setSelectedIndex(0)
       onAdd?.(value)
     },
-    [values, simulateSelect, onAdd],
+    [values, simulateSelect, updateValues, onAdd],
   )
 
   const removeValue = useCallback(
     (index: number) => {
       const removed = values[index]
       if (removed === undefined) return
-      setValues((prev) => prev.filter((_, i) => i !== index))
+      const next = values.filter((_, i) => i !== index)
+      updateValues(next)
       onRemove?.(removed, index)
     },
-    [values, onRemove],
+    [values, updateValues, onRemove],
   )
 
   const addSelectedValue = useCallback(() => {

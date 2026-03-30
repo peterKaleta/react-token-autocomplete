@@ -30,3 +30,13 @@ node_modules
 
 .env
 .env-production
+
+# Build output (built on npm publish via prepublishOnly)
+dist
+
+# Local tooling
+.claude
+
+# Playwright
+test-results
+playwright-report

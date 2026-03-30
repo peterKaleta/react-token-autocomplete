@@ -50,8 +50,10 @@ Every element exposes a `className` prop — no style overrides or CSS specifici
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| `value` | `string[]` | — | Controlled value (see [Controlled Mode](#controlled-mode--react-hook-form)) |
+| `onChange` | `(values: string[]) => void` | — | Called with full values array on every add/remove |
 | `options` | `string[]` | `[]` | Available options to select from |
-| `defaultValues` | `string[]` | `[]` | Initial selected tokens |
+| `defaultValues` | `string[]` | `[]` | Initial selected tokens (uncontrolled mode only) |
 | `placeholder` | `string` | `''` | Placeholder text when empty |
 | `threshold` | `number` | `0` | Min characters before showing suggestions |
 | `processing` | `boolean` | `false` | Show a loading indicator |
@@ -88,6 +90,71 @@ Every element exposes a `className` prop — no style overrides or CSS specifici
 | `Escape` | Close the dropdown |
 | `Backspace` | Remove last token (when input is empty) |
 | `ArrowUp` / `ArrowDown` | Navigate options |
+
+## Controlled Mode / react-hook-form
+
+The component supports both **uncontrolled** (`defaultValues`) and **controlled** (`value` + `onChange`) modes. Controlled mode works seamlessly with form libraries like react-hook-form.
+
+### Basic controlled usage
+
+```tsx
+import { useState } from 'react'
+import { TokenAutocomplete } from 'react-token-autocomplete'
+
+function App() {
+  const [tags, setTags] = useState<string[]>([])
+
+  return (
+    <TokenAutocomplete
+      options={['React', 'Vue', 'Svelte']}
+      value={tags}
+      onChange={setTags}
+    />
+  )
+}
+```
+
+### With react-hook-form
+
+The component forwards a `ref` to its internal `<input>` element, so react-hook-form's `Controller` can manage focus automatically.
+
+```tsx
+import { useForm, Controller } from 'react-hook-form'
+import { TokenAutocomplete } from 'react-token-autocomplete'
+
+interface FormData {
+  tags: string[]
+}
+
+function TagForm() {
+  const { control, handleSubmit } = useForm<FormData>({
+    defaultValues: { tags: [] },
+  })
+
+  return (
+    <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <Controller
+        name="tags"
+        control={control}
+        rules={{ validate: (v) => v.length > 0 || 'At least one tag required' }}
+        render={({ field }) => (
+          <TokenAutocomplete
+            ref={field.ref}
+            value={field.value}
+            onChange={field.onChange}
+            options={['React', 'Vue', 'Svelte', 'Angular', 'Solid']}
+            placeholder="Add tags..."
+            limitToOptions
+          />
+        )}
+      />
+      <button type="submit">Submit</button>
+    </form>
+  )
+}
+```
+
+> **Note:** `onAdd` and `onRemove` still fire alongside `onChange`, so you can use them for analytics or side effects without interfering with form state.
 
 ## Headless Hook
 
@@ -175,9 +242,11 @@ import type {
 
 ```bash
 npm install        # install dependencies
+npm run dev        # run examples playground
 npm run build      # build library (ESM + CJS + types)
-npm test           # run tests
-npm run test:watch # run tests in watch mode
+npm test           # run unit tests
+npm run test:watch # run unit tests in watch mode
+npm run e2e        # run Playwright e2e tests (mobile, tablet, desktop)
 npm run lint       # type-check with tsc
 ```
 
