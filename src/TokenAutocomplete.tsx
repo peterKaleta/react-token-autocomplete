@@ -25,6 +25,8 @@ export interface TokenAutocompleteProps {
   onInputChange?: (value: string) => void
   onAdd?: (value: string) => void
   onRemove?: (value: string, index: number) => void
+  /** Separator for splitting pasted text into multiple tokens. Defaults to comma. Set to false to disable. */
+  pasteSeparator?: string | false
   className?: string
   inputClassName?: string
   tokenClassName?: string
@@ -59,6 +61,7 @@ export const TokenAutocomplete = forwardRef<
     onInputChange,
     onAdd,
     onRemove,
+    pasteSeparator,
     className,
     inputClassName,
     tokenClassName,
@@ -84,6 +87,7 @@ export const TokenAutocomplete = forwardRef<
     removeValue,
     focus,
     handleKeyDown,
+    handlePaste,
     handleOptionMouseEnter,
     handleOptionSelect,
     inputRef,
@@ -101,6 +105,7 @@ export const TokenAutocomplete = forwardRef<
     onInputChange,
     onAdd,
     onRemove,
+    pasteSeparator,
   })
 
   // Forward ref to the internal input for react-hook-form focus management
@@ -142,6 +147,7 @@ export const TokenAutocomplete = forwardRef<
           onChange={(e) => setInputValue(e.target.value)}
           onFocus={focus}
           onKeyDown={handleKeyDown}
+          onPaste={handlePaste}
           aria-label={ariaLabel || placeholder || 'Token input'}
         />
       )}

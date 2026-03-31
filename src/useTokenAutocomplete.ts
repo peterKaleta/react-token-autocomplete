@@ -17,6 +17,8 @@ export interface UseTokenAutocompleteOptions {
   onInputChange?: (value: string) => void
   onAdd?: (value: string) => void
   onRemove?: (value: string, index: number) => void
+  /** Separator for splitting pasted text into multiple tokens. Defaults to comma. Set to false to disable paste splitting. */
+  pasteSeparator?: string | false
 }
 
 export interface UseTokenAutocompleteReturn {
@@ -33,6 +35,7 @@ export interface UseTokenAutocompleteReturn {
   focus: () => void
   blur: () => void
   handleKeyDown: (e: React.KeyboardEvent) => void
+  handlePaste: (e: React.ClipboardEvent) => void
   handleOptionMouseEnter: (value: string) => void
   handleOptionSelect: (value: string) => void
   inputRef: React.RefObject<HTMLInputElement | null>
@@ -52,6 +55,7 @@ export function useTokenAutocomplete({
   onInputChange,
   onAdd,
   onRemove,
+  pasteSeparator = ',',
 }: UseTokenAutocompleteOptions = {}): UseTokenAutocompleteReturn {
   const isControlled = controlledValue !== undefined
   const [internalValues, setInternalValues] = useState<string[]>(defaultValues)
@@ -188,6 +192,34 @@ export function useTokenAutocomplete({
     [addSelectedValue, blur, inputValue, values.length, removeValue, getAvailableOptions],
   )
 
+  const handlePaste = useCallback(
+    (e: React.ClipboardEvent) => {
+      if (pasteSeparator === false) return
+
+      const text = e.clipboardData.getData('text')
+      if (!text.includes(pasteSeparator)) return
+
+      e.preventDefault()
+      const items = text.split(pasteSeparator).map((s) => s.trim()).filter(Boolean)
+      let current = values
+      for (const raw of items) {
+        const item = parseCustom ? parseCustom(raw) : raw
+        if (limitToOptions && !options.includes(item)) continue
+        if (current.includes(item)) continue
+        if (simulateSelect) {
+          current = [item]
+        } else {
+          current = [...current, item]
+        }
+        onAdd?.(item)
+      }
+      updateValues(current)
+      setInputValueState('')
+      setSelectedIndex(0)
+    },
+    [pasteSeparator, values, parseCustom, limitToOptions, options, simulateSelect, updateValues, onAdd],
+  )
+
   const handleOptionMouseEnter = useCallback(
     (value: string) => {
       const opts = getAvailableOptions()
@@ -237,6 +269,7 @@ export function useTokenAutocomplete({
     focus,
     blur,
     handleKeyDown,
+    handlePaste,
     handleOptionMouseEnter,
     handleOptionSelect,
     inputRef,
