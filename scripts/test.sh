@@ -1,5 +1,5 @@
 #!/bin/bash
-export $( cat .env|xargs)
+[ -f .env ] && export $( cat .env|xargs)
 
 while getopts 'w' FLAG
 do
