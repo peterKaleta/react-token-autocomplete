@@ -29,7 +29,7 @@ const PROPS_DESCRIPTION = [
     'values already selected'
   ],
   [
-    'treshold',
+    'threshold',
     'number',
     '0',
     'minimal input length to display suggestions'

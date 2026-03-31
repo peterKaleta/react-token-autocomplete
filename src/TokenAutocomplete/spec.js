@@ -38,8 +38,8 @@ describe('TokenAutocomplete', () => {
         expect(component.props.defaultValues).to.be.empty;
     });
 
-    it('has treshold of 0', () => {
-        expect(component.props.treshold).to.be.equal(0);
+    it('has threshold of 0', () => {
+        expect(component.props.threshold).to.be.equal(0);
     });
 
     it('has predefined placeholder', () => {
@@ -246,13 +246,13 @@ describe('TokenAutocomplete', () => {
 
   });
 
-  it('throws warning when non-zero treshold is defined when simulating select', () => {
+  it('throws warning when non-zero threshold is defined when simulating select', () => {
 
-    const WARN_MSG = 'Warning: Failed propType: when props.simulateSelect is set to TRUE, you should not pass non-zero treshold';
+    const WARN_MSG = 'Warning: Failed propType: when props.simulateSelect is set to TRUE, you should not pass non-zero threshold';
 
     TestUtils.renderComponent(TokenAutocomplete, {
       simulateSelect: true,
-      treshold: 3
+      threshold: 3
     });
 
     expect(consoleWarnSpy.getCall(0).args).to.include(WARN_MSG);
@@ -300,7 +300,7 @@ describe('TokenAutocomplete', () => {
 
   //FUNCTIONAL
 
-  it('displays a list when options are provided and treshold is achieved', () => {
+  it('displays a list when options are provided and threshold is achieved', () => {
 
     const component = TestUtils.renderComponent(TokenAutocomplete);
     expect(component.refs.options).not.to.exist;

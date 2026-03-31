@@ -90,8 +90,8 @@ export default class Examples extends React.Component {
         <h2 id="additional">Additional fun</h2>
 
         <Example
-          title="Suggestions treshold"
-          sample={Samples.treshold}>
+          title="Suggestions threshold"
+          sample={Samples.threshold}>
           Set minimal term length user needs to type before showing suggestions
         </Example>
 

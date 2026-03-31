@@ -4,7 +4,7 @@ import basic from 'raw!./basic.sample';
 import inputChange from 'raw!./inputChange.sample';
 import processing from 'raw!./processing.sample';
 import addRemoveToken from 'raw!./addRemoveToken.sample';
-import treshold from 'raw!./treshold.sample';
+import threshold from 'raw!./threshold.sample';
 import parse from 'raw!./parse.sample';
 import simulateSelect from 'raw!./simulateSelect.sample';
 
@@ -14,7 +14,7 @@ export default {
     processing,
     inputChange,
     addRemoveToken,
-    treshold,
+    threshold,
     parse,
     simulateSelect
 };

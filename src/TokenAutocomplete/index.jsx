@@ -23,12 +23,12 @@ function defaultValuesPropType(props, propName, component) {
   return React.PropTypes.array(props, propName, component);
 }
 
-function tresholdPropType(props, propName, component) {
+function thresholdPropType(props, propName, component) {
   const prop = props[propName];
 
   if (props.simulateSelect && prop > 0) {
       return new Error(
-        'when props.simulateSelect is set to TRUE, you should not pass non-zero treshold'
+        'when props.simulateSelect is set to TRUE, you should not pass non-zero threshold'
       );
   }
 
@@ -45,7 +45,7 @@ export default class TokenAutocomplete extends React.Component {
     //initial state
     options: React.PropTypes.array,
     placeholder: React.PropTypes.string,
-    treshold: tresholdPropType,
+    threshold: thresholdPropType,
     defaultValues: defaultValuesPropType,
     processing: React.PropTypes.bool,
     focus: React.PropTypes.bool,
@@ -70,7 +70,7 @@ export default class TokenAutocomplete extends React.Component {
     options: [],
     defaultValues: [],
     placeholder: 'add new tag',
-    treshold: 0,
+    threshold: 0,
     focus: false,
     processing: false,
     //behaviour
@@ -281,7 +281,7 @@ export default class TokenAutocomplete extends React.Component {
   }
 
   isTresholdReached = () => {
-    return this.state.inputValue.length >= this.props.treshold;
+    return this.state.inputValue.length >= this.props.threshold;
   }
 
   //RENDERERS
