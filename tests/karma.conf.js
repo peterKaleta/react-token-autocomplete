@@ -39,7 +39,7 @@ module.exports = function(config) {
   config.set({
     singleRun: !WATCH,
     autoWatch: true,
-    browsers: [ CI ? 'ChromeHeadless' : 'PhantomJS2'],
+    browsers: [ CI ? 'Firefox' : 'PhantomJS2'],
     browserNoActivityTimeout: 60000,
     browserDisconnectTimeout: 10000,
     frameworks: ['mocha', 'chai', 'sinon'],
