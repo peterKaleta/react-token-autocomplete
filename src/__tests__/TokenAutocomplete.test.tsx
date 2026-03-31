@@ -403,6 +403,85 @@ describe('TokenAutocomplete', () => {
     })
   })
 
+  describe('paste support', () => {
+    it('splits pasted comma-separated text into tokens', async () => {
+      const user = userEvent.setup()
+      renderComponent()
+      const input = screen.getByTestId('token-input')
+      await user.click(input)
+      await user.paste('alpha, beta, gamma')
+      expect(screen.getAllByTestId('token')).toHaveLength(3)
+    })
+
+    it('trims whitespace from pasted values', async () => {
+      const user = userEvent.setup()
+      const onAdd = vi.fn()
+      renderComponent({ onAdd })
+      const input = screen.getByTestId('token-input')
+      await user.click(input)
+      await user.paste('  alpha ,  beta  ')
+      expect(onAdd).toHaveBeenCalledWith('alpha')
+      expect(onAdd).toHaveBeenCalledWith('beta')
+    })
+
+    it('skips duplicates when pasting', async () => {
+      const user = userEvent.setup()
+      renderComponent({ defaultValues: ['alpha'] })
+      const input = screen.getByTestId('token-input')
+      await user.click(input)
+      await user.paste('alpha, beta')
+      expect(screen.getAllByTestId('token')).toHaveLength(2)
+    })
+
+    it('respects limitToOptions when pasting', async () => {
+      const user = userEvent.setup()
+      renderComponent({ limitToOptions: true })
+      const input = screen.getByTestId('token-input')
+      await user.click(input)
+      await user.paste('alpha, unknown, beta')
+      expect(screen.getAllByTestId('token')).toHaveLength(2)
+    })
+
+    it('applies parseCustom to pasted values', async () => {
+      const user = userEvent.setup()
+      renderComponent({ parseCustom: (v: string) => v.toUpperCase() })
+      const input = screen.getByTestId('token-input')
+      await user.click(input)
+      await user.paste('hello, world')
+      const tokens = screen.getAllByTestId('token')
+      expect(tokens[0]).toHaveTextContent('HELLO')
+      expect(tokens[1]).toHaveTextContent('WORLD')
+    })
+
+    it('allows single value paste without separator (normal behavior)', async () => {
+      const user = userEvent.setup()
+      renderComponent()
+      const input = screen.getByTestId('token-input')
+      await user.click(input)
+      await user.paste('hello')
+      // No comma — should go into the input, not create a token
+      expect(screen.queryByTestId('token')).not.toBeInTheDocument()
+    })
+
+    it('supports custom pasteSeparator', async () => {
+      const user = userEvent.setup()
+      renderComponent({ pasteSeparator: ';' })
+      const input = screen.getByTestId('token-input')
+      await user.click(input)
+      await user.paste('alpha; beta; gamma')
+      expect(screen.getAllByTestId('token')).toHaveLength(3)
+    })
+
+    it('can disable paste splitting with pasteSeparator={false}', async () => {
+      const user = userEvent.setup()
+      renderComponent({ pasteSeparator: false as const })
+      const input = screen.getByTestId('token-input')
+      await user.click(input)
+      await user.paste('alpha, beta')
+      expect(screen.queryByTestId('token')).not.toBeInTheDocument()
+    })
+  })
+
   describe('ref forwarding', () => {
     it('forwards ref to the input element', () => {
       const ref = createRef<HTMLInputElement>()
